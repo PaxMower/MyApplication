@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "1004806045438",
+    "firebase_url": "https://login-e263c.firebaseio.com",
+    "project_id": "login-e263c",
+    "storage_bucket": "login-e263c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004806045438:android:2d812b77273c62ca",
+        "android_client_info": {
+          "package_name": "com.casas.login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1004806045438-m7agvfga3avckhkvplpek8lndjv4r6bh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnSPuJ4sGtlXoYu7gDfAKcWM8vfR8whPI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004806045438:android:0d9a9f464bc9700c",
+        "android_client_info": {
+          "package_name": "com.casa.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1004806045438-m7agvfga3avckhkvplpek8lndjv4r6bh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnSPuJ4sGtlXoYu7gDfAKcWM8vfR8whPI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

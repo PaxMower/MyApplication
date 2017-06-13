@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_uno"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="uno" />
+        <item
+            android:id="@+id/nav_dos"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="dos" />
+        <item
+            android:id="@+id/nav_tres"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="tres" />
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Salir" />
+    </group>
+
+</menu>
