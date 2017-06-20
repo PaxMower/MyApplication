@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText mMailField, mPassField;
     private Button mButtonLog;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() != null){ //el usuario está logeado ya
-                    startActivity(new Intent(MainActivity.this, MenuActivity.class));
+                    startActivity(new Intent(LoginActivity.this, MenuActivity.class));
                 }
             }
         };
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)/*probar --> email.isEmpty() || pass.isEmpty()*/){
 
-            Toast.makeText(MainActivity.this, "Campos vacios", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, "Campos vacios", Toast.LENGTH_LONG).show();
 
         }else{
 
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(!task.isSuccessful()){
-                        Toast.makeText(MainActivity.this, "Error usuario y/o contraseña", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Error usuario y/o contraseña", Toast.LENGTH_LONG).show();
                     }
                 }
             });
