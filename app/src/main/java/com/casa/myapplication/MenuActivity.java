@@ -6,8 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class MenuActivity extends AppCompatActivity{
 
     private TextView mUserData;
+    private Button mNewOrder, mWatchOrders;
 
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -27,18 +29,37 @@ public class MenuActivity extends AppCompatActivity{
         //mFirebaseAuth = FirebaseAuth.getInstance();
         //mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-
-
         mUserData = (TextView) findViewById(R.id.userDataField);
-
         mUserData.setText("Bienvenido "+ mFirebaseUser.getEmail());
+
+        mNewOrder = (Button) findViewById(R.id.new_order);
+        mWatchOrders = (Button) findViewById(R.id.watch_orders);
+
+        mNewOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuActivity.this, NewOrderActivity.class));
+            }
+        });
+
+        mWatchOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuActivity.this, WatchOrdersActivity.class));
+            }
+        });
+
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
 
-        MenuInflater menuInflater = getMenuInflater(); // para crear el menu de 3 puntos en la actionBar
-        menuInflater.inflate(R.menu.menu, menu);
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu the_menu) {
+
+        MenuInflater menuInflater = getMenuInflater(); // para crear el menu de 3 puntos en la ActionBar
+        menuInflater.inflate(R.menu.menu, the_menu);
 
         return true;
         //return super.onCreateOptionsMenu(menu);
@@ -49,7 +70,7 @@ public class MenuActivity extends AppCompatActivity{
 
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Toast.makeText(MenuActivity.this, "Error usuario y/o contraseña", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(MenuActivity.this, SettingsActivity.class));
                 return true;
 
             case R.id.action_exit:
