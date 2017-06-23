@@ -2,7 +2,7 @@ package com.casa.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MenuActivity extends AppCompatActivity{
+public class MenuActivity extends ActionBarActivity {//AppCompatActivity{
 
     private TextView mUserData;
     private Button mNewOrder, mWatchOrders;
@@ -32,13 +32,21 @@ public class MenuActivity extends AppCompatActivity{
         mUserData = (TextView) findViewById(R.id.userDataField);
         mUserData.setText("Bienvenido "+ mFirebaseUser.getEmail());
 
+        onClickButtons();
+    }
+
+
+
+
+
+    public void onClickButtons(){
         mNewOrder = (Button) findViewById(R.id.new_order);
         mWatchOrders = (Button) findViewById(R.id.watch_orders);
 
         mNewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MenuActivity.this, NewOrderActivity.class));
+
             }
         });
 
@@ -48,8 +56,6 @@ public class MenuActivity extends AppCompatActivity{
                 startActivity(new Intent(MenuActivity.this, WatchOrdersActivity.class));
             }
         });
-
-
     }
 
 
@@ -70,7 +76,7 @@ public class MenuActivity extends AppCompatActivity{
 
         switch (item.getItemId()) {
             case R.id.action_settings:
-                startActivity(new Intent(MenuActivity.this, SettingsActivity.class));
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
 
             case R.id.action_exit:
