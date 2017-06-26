@@ -28,7 +28,6 @@ public class SettingsActivity extends AppCompatActivity{
 
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
-
     }
 
     @Override
