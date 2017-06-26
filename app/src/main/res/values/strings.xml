@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">Trans.Port.Truck</string>
+    <string name="app_menu">Menú inicial</string>
+    <string name="app_new_order">Nueva orden</string>
+    <string name="app_watch_order">Ver viajes</string>
+    <string name="app_settings">Ajustes</string>
+
     <string name="new_order">Nuevo viaje</string>
     <string name="watch_orders">Ver viajes</string>
     <string name="exit">Salir</string>
     <string name="settings">Ajustes</string>
-    <string name="app_menu">Menú inicial</string>
+
+    <string name="button_login">Acceder</string>
+
 </resources>

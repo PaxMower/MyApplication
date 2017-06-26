@@ -17,6 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity"  android:label="@string/app_menu"/>
+        <activity android:name=".NewOrderActivity"  android:label="@string/app_new_order"/>
+        <activity android:name=".WatchOrdersActivity"  android:label="@string/app_watch_order"/>
+        <activity android:name=".SettingsActivity"  android:label="@string/app_settings"/>
     </application>
 
 </manifest>

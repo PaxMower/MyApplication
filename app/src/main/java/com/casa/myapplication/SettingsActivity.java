@@ -26,6 +26,9 @@ public class SettingsActivity extends AppCompatActivity{
 
         mTextView = (TextView) findViewById(R.id.textViewSettings);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
+
     }
 
     @Override
@@ -47,10 +50,13 @@ public class SettingsActivity extends AppCompatActivity{
                 return true;
 
             case R.id.action_exit:
-
                 mFirebaseAuth.signOut();
                 finish();
                 startActivity(new Intent(this, LoginActivity.class));
+                return true;
+
+            case android.R.id.home:
+                this.finish();
                 return true;
 
             default:
