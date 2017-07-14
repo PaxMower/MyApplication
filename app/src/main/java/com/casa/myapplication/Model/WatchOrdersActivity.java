@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.ExpandableListView;
 
 import com.casa.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,21 +19,32 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class WatchOrdersActivity extends AppCompatActivity {
 
-    private TextView mTextView;
+    private ExpandableListView mOrderList;
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_orders);
 
-        mTextView = (TextView) findViewById(R.id.textViewWatch);
+        mOrderList = (ExpandableListView) findViewById(R.id.expListView);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mostrará como un UP
 
     }
+
+
+
+
+
+
+
+
+
 
 
     @Override

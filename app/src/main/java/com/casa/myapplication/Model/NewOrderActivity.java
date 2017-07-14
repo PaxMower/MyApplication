@@ -1,8 +1,11 @@
 package com.casa.myapplication.Model;
 
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 /**
@@ -28,13 +32,15 @@ public class NewOrderActivity extends AppCompatActivity {
     private Button mSend;
     private String TAG = "";
 
-    private DatabaseReference mDatabase;// = FirebaseDatabase.getInstance().getReference("Viajes");
+    private DatabaseReference mDatabase;// = FirebaseDatabase.getInstance().getReference();
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order);
 
+        //*****AÑADIR BOTÓN BACK AL TOOLBAR*****//
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
 
@@ -46,41 +52,46 @@ public class NewOrderActivity extends AppCompatActivity {
         mYear = (EditText) findViewById(R.id.year);
         mSend = (Button) findViewById(R.id.sendOrder);
 
-        firebaseData();
+        RetrieveFirebaseData();
 
     }
 
     //En este método irán las llamadas a las BBDD
-    public void firebaseData(){
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void RetrieveFirebaseData(){
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Viajes");
+        final String orderDate = getCalendarDateTime();
 
-        mSend.setOnClickListener(new View.OnClickListener() {
+
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mSend.setOnClickListener(new View.OnClickListener() { //listener que se ejecuta cuando se pulsa el botón
             @Override
             public void onClick(View v) {
+
                 HashMap<String, String> dataMap = new HashMap<String, String>();
 
-                dataMap.put("Chofer", mDriver.getText().toString());
-                dataMap.put("Matrícula camión", mTruckID.getText().toString());
-                dataMap.put("Orden", mOrder.getText().toString());
-                dataMap.put("Día", mDay.getText().toString());
-                dataMap.put("Mes", mMonth.getText().toString());
-                dataMap.put("Año", mYear.getText().toString());
+                dataMap.put("driver",mDriver.getText().toString());
+                dataMap.put("truck ID",mTruckID.getText().toString());
+                dataMap.put("Order",mOrder.getText().toString());
+                dataMap.put("Day",mDay.getText().toString());
+                dataMap.put("Month",mMonth.getText().toString());
+                dataMap.put("Year",mYear.getText().toString());
 
-                mDatabase.push().setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                mDatabase.child("pepe@pepe").child("Orders").child(orderDate).push().setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(NewOrderActivity.this, "Datos enviados",Toast.LENGTH_LONG ).show();
                         }else{
-                            Toast.makeText(NewOrderActivity.this, "Error al enviar los datos...",Toast.LENGTH_LONG ).show();
+                            Toast.makeText(NewOrderActivity.this, "Error",Toast.LENGTH_LONG ).show();
                         }
                     }
                 });
 
             }
         });
-
 
     }
 
@@ -104,4 +115,19 @@ public class NewOrderActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);*/
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public String getCalendarDateTime(){
+        Calendar c = Calendar.getInstance();
+        //System.out.println("Current time => " + c.getTime());
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+        String formattedDate = df.format(c.getTime());
+
+        System.out.println("**************************************"+formattedDate.toString());
+        return formattedDate;
+    }
+
+
+
 }
