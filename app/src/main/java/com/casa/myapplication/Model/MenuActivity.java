@@ -2,19 +2,22 @@ package com.casa.myapplication.Model;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.casa.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MenuActivity extends ActionBarActivity {//AppCompatActivity{
+public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppCompatActivity{
+
+    private long lastPressTime = 1;
 
     private TextView mUserData;
     private Button mNewOrder, mWatchOrders;
@@ -34,11 +37,8 @@ public class MenuActivity extends ActionBarActivity {//AppCompatActivity{
         mUserData.setText("Bienvenido "+ mFirebaseUser.getEmail());
 
         onClickButtons();
+
     }
-
-
-
-
 
     public void onClickButtons(){
         mNewOrder = (Button) findViewById(R.id.new_order);
@@ -58,9 +58,6 @@ public class MenuActivity extends ActionBarActivity {//AppCompatActivity{
             }
         });
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu the_menu) {
@@ -94,4 +91,19 @@ public class MenuActivity extends ActionBarActivity {//AppCompatActivity{
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
+
+        if ((currentTime - lastPressTime) < 2000) {
+            System.exit(0);
+        } else {
+            Toast.makeText(this, "Vuelva a pulsar para salir", Toast.LENGTH_SHORT).show();
+            lastPressTime = currentTime;
+        }
+    }
+
+
+
 }
