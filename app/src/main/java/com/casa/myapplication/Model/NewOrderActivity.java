@@ -1,5 +1,6 @@
 package com.casa.myapplication.Model;
 
+import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ import java.util.HashMap;
 public class NewOrderActivity extends AppCompatActivity {
 
     private EditText mDriver, mTruckID, mOrder, mDay, mMonth, mYear;
-    private Button mSend;
+    private Button mSend, mMap;
     private String TAG = "";
 
     private DatabaseReference mDatabase;// = FirebaseDatabase.getInstance().getReference();
@@ -40,7 +41,7 @@ public class NewOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order);
 
-        //*****AÑADIR BOTÓN BACK AL TOOLBAR*****//
+        //Add back buttons on toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
 
@@ -51,19 +52,24 @@ public class NewOrderActivity extends AppCompatActivity {
         mMonth = (EditText) findViewById(R.id.month);
         mYear = (EditText) findViewById(R.id.year);
         mSend = (Button) findViewById(R.id.sendOrder);
+        mMap = (Button) findViewById(R.id.button_open_map);
 
-        RetrieveFirebaseData();
+        mMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
+            }});
+
+
+        SendFirebaseData();
 
     }
 
     //En este método irán las llamadas a las BBDD
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void RetrieveFirebaseData(){
+    public void SendFirebaseData(){
 
         final String orderDate = getCalendarDateTime();
-
-
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mSend.setOnClickListener(new View.OnClickListener() { //listener que se ejecuta cuando se pulsa el botón
@@ -89,42 +95,29 @@ public class NewOrderActivity extends AppCompatActivity {
                         }
                     }
                 });
-
             }
         });
 
     }
 
-    //si se selecciona el boton back, se cierra la actividad actual
+    //Close actual activity when back button is selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-
             case android.R.id.home:
                 this.finish();
                 return true;
-
-
             default:
                 return super.onOptionsItemSelected(item);
-
         }
-        /*if(item.getItemId() == android.R.id.home){
-            this.finish();
-        }
-        return super.onOptionsItemSelected(item);*/
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String getCalendarDateTime(){
         Calendar c = Calendar.getInstance();
-        //System.out.println("Current time => " + c.getTime());
-
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
         String formattedDate = df.format(c.getTime());
-
-        System.out.println("**************************************"+formattedDate.toString());
         return formattedDate;
     }
 

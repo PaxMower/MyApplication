@@ -2,6 +2,7 @@ package com.casa.myapplication.Model;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppCompatActivity{
 
-    private long lastPressTime = 1;
+    private boolean isUserClickedBackButton = false;
 
     private TextView mUserData;
     private Button mNewOrder, mWatchOrders;
@@ -93,17 +94,25 @@ public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppC
     }
 
     @Override
-    public void onBackPressed() {
-        long currentTime = System.currentTimeMillis();
-
-        if ((currentTime - lastPressTime) < 2000) {
-            System.exit(0);
-        } else {
-            Toast.makeText(this, "Vuelva a pulsar para salir", Toast.LENGTH_SHORT).show();
-            lastPressTime = currentTime;
+    public void onBackPressed(){
+        if(!isUserClickedBackButton){
+            Toast.makeText(this, "Vuelva a presionar para salir",Toast.LENGTH_LONG).show();
+            isUserClickedBackButton = true;
+        }else{
+            super.onBackPressed();
         }
-    }
 
+        new CountDownTimer(1500, 1000){
+            @Override
+            public void onTick(long millisUntilFinished){
+
+            }
+            @Override
+            public void onFinish(){
+                isUserClickedBackButton = false;
+            }
+        }.start();
+    }
 
 
 }

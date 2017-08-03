@@ -62,11 +62,19 @@
                 android:inputType="textPersonName" />
 
             <Button
+                android:id="@+id/button_open_map"
+                android:layout_width="133dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="120dp"
+                android:text="@string/button_open_maps"
+                android:textAlignment="center" />
+
+            <Button
                 android:id="@+id/sendOrder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="300dp"
-                android:text="Button" />
+                android:text="@string/button_order" />
         </LinearLayout>
     </ScrollView>
 
