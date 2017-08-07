@@ -14,13 +14,14 @@
     <string name="driver">Chofer</string>
     <string name="truck_id">Matrícula camión</string>
     <string name="order_id">Número de orden</string>
-    <string name="day">Día</string>
-    <string name="month">Mes</string>
-    <string name="year">Año</string>
+    <string name="day">Fecha</string>
 
     <string name="button_login">Acceder</string>
     <string name="button_order">Comenzar viaje</string>
     <string name="button_open_maps">Ver mapa</string>
     <string name="title_activity_maps">Map</string>
+    <string name="button_terrain">Terreno</string>
+    <string name="button_satellite">Satelite</string>
+    <string name="button_position">Posición actual</string>
 
 </resources>

@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 public class NewOrderActivity extends AppCompatActivity {
 
-    private EditText mDriver, mTruckID, mOrder, mDay, mMonth, mYear;
+    private EditText mDriver, mTruckID, mOrder, mDate;
     private Button mSend, mMap;
     private String TAG = "";
 
@@ -48,9 +48,7 @@ public class NewOrderActivity extends AppCompatActivity {
         mDriver = (EditText) findViewById(R.id.driver);
         mTruckID = (EditText) findViewById(R.id.truck_id);
         mOrder = (EditText) findViewById(R.id.order_id);
-        mDay = (EditText) findViewById(R.id.day);
-        mMonth = (EditText) findViewById(R.id.month);
-        mYear = (EditText) findViewById(R.id.year);
+        mDate = (EditText) findViewById(R.id.day);
         mSend = (Button) findViewById(R.id.sendOrder);
         mMap = (Button) findViewById(R.id.button_open_map);
 
@@ -59,6 +57,7 @@ public class NewOrderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
             }});
+
 
 
         SendFirebaseData();
@@ -81,9 +80,7 @@ public class NewOrderActivity extends AppCompatActivity {
                 dataMap.put("driver",mDriver.getText().toString());
                 dataMap.put("truck ID",mTruckID.getText().toString());
                 dataMap.put("Order",mOrder.getText().toString());
-                dataMap.put("Day",mDay.getText().toString());
-                dataMap.put("Month",mMonth.getText().toString());
-                dataMap.put("Year",mYear.getText().toString());
+                dataMap.put("Day",mDate.getText().toString());
 
                 mDatabase.child("pepe@pepe").child("Orders").child(orderDate).push().setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
