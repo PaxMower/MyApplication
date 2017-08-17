@@ -20,7 +20,7 @@
             android:layout_height="200dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/common_ic_googleplayservices" />
+            app:srcCompat="@android:drawable/ic_dialog_dialer" />
 
         <EditText
             android:id="@+id/mailField"

@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = mMailField.getText().toString().trim();
         String pass = mPassField.getText().toString().trim();
 
-        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)/*probar --> email.isEmpty() || pass.isEmpty()*/){
+        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)){ /*probar --> email.isEmpty() || pass.isEmpty()*/
 
             Toast.makeText(LoginActivity.this, "Campos vacios", Toast.LENGTH_LONG).show();
 
