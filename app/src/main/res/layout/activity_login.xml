@@ -20,7 +20,7 @@
             android:layout_height="200dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/common_ic_googleplayservices" />
+            app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
         <EditText
             android:id="@+id/mailField"

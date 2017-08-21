@@ -21,7 +21,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAnSPuJ4sGtlXoYu7gDfAKcWM8vfR8whPI"
+          "current_key": "AIzaSyDuoAA6QrWFTzHRR9Pkdlb1dof9tIugOUw"
         }
       ],
       "services": {
@@ -46,13 +46,21 @@
       },
       "oauth_client": [
         {
+          "client_id": "1004806045438-q0g8k31kad5ct9vdl7kpnj97ep707ak7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.casa.myapplication",
+            "certificate_hash": "61a3441b38004e2b319d37a400ae360c04e5937f"
+          }
+        },
+        {
           "client_id": "1004806045438-m7agvfga3avckhkvplpek8lndjv4r6bh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAnSPuJ4sGtlXoYu7gDfAKcWM8vfR8whPI"
+          "current_key": "AIzaSyDuoAA6QrWFTzHRR9Pkdlb1dof9tIugOUw"
         }
       ],
       "services": {
@@ -60,8 +68,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1004806045438-m7agvfga3avckhkvplpek8lndjv4r6bh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
