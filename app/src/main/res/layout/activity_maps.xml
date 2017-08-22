@@ -15,27 +15,23 @@
         android:id="@+id/button_terrain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_terrain"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="50dp"
+        android:text="@string/button_terrain" />
 
     <Button
         android:id="@+id/button_satellite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_satellite"
         android:layout_alignParentTop="true"
+        android:layout_margin="50dp"
+        android:layout_toEndOf="@+id/button_terrain"
         android:layout_toRightOf="@+id/button_terrain"
-        android:layout_toEndOf="@+id/button_terrain" />
+        android:text="@string/button_satellite" />
 
-    <Button
-        android:id="@+id/button_position"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/button_position" />
+
+
 
 </RelativeLayout>

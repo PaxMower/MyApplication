@@ -84,8 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(!task.isSuccessful()){
-                        Exception exception = task.getException();
-                        System.out.println(exception.toString());
+                        System.out.println(task.getException().toString());
                         Toast.makeText(LoginActivity.this, "Error usuario y/o contraseña", Toast.LENGTH_LONG).show();
                     }
                 }
