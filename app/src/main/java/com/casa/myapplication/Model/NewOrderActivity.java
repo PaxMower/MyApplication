@@ -58,8 +58,6 @@ public class NewOrderActivity extends AppCompatActivity {
                 startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
             }});
 
-
-
         SendFirebaseData();
 
     }
