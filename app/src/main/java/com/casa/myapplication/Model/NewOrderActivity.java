@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.casa.myapplication.R;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -29,8 +31,10 @@ import java.util.HashMap;
 
 public class NewOrderActivity extends AppCompatActivity {
 
-    private EditText mDriver, mTruckID, mOrder, mDate;
-    private Button mSend, mMap;
+    private EditText mDriver, mDate, mTruckID, mTruckNumber, mPlatformNumber;
+    private EditText mContainerChargeDay, getmContainerChargeHour, mClient, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour;
+    private RadioButton mSimple, mMultimple, mTransfers;
+    private Button mSend, mMap, mTime;
     private String TAG = "";
 
     private DatabaseReference mDatabase;// = FirebaseDatabase.getInstance().getReference();
@@ -46,18 +50,27 @@ public class NewOrderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
 
         mDriver = (EditText) findViewById(R.id.driver);
-        mTruckID = (EditText) findViewById(R.id.truck_id);
-        mOrder = (EditText) findViewById(R.id.order_id);
-        mDate = (EditText) findViewById(R.id.day);
-        mSend = (Button) findViewById(R.id.sendOrder);
-        mMap = (Button) findViewById(R.id.button_open_map);
+        mDate = (EditText) findViewById(R.id.date);
+        mTruckID = (EditText) findViewById(R.id.truck_num);
+        mTruckNumber = (EditText) findViewById(R.id.truck_id);
+        mPlatformNumber = (EditText) findViewById(R.id.platform_id);
+        mContainerChargeDay = (EditText) findViewById(R.id.charging_order_day);
+        getmContainerChargeHour = (EditText) findViewById(R.id.charging_order_hour);
+        mClient = (EditText) findViewById(R.id.client);
+        mCharger = (EditText) findViewById(R.id.charger);
+        mDestiny = (EditText) findViewById(R.id.destiny);
+        mContainerNumber = (EditText) findViewById(R.id.container_number);
+        mArrivalHour = (EditText) findViewById(R.id.arrival_time);
+        mDepartureHour = (EditText) findViewById(R.id.departure_time);
+        mSimple = (RadioButton) findViewById(R.id.simpleOrder);
+        mMultimple = (RadioButton) findViewById(R.id.multiple_order);
+        mTransfers = (RadioButton) findViewById(R.id.transfers);
+        mMap = (Button) findViewById(R.id.view_map);
+        mSend = (Button) findViewById(R.id.save_order);
+        mTime = (Button) findViewById(R.id.button_obtain_time);
 
-        mMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
-            }});
 
+        formButtons();
         SendFirebaseData();
 
     }
@@ -66,7 +79,7 @@ public class NewOrderActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void SendFirebaseData(){
 
-        final String orderDate = getCalendarDateTime();
+        final String orderDate = getDate();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mSend.setOnClickListener(new View.OnClickListener() { //listener que se ejecuta cuando se pulsa el botón
@@ -77,8 +90,6 @@ public class NewOrderActivity extends AppCompatActivity {
 
                 dataMap.put("driver",mDriver.getText().toString());
                 dataMap.put("truck ID",mTruckID.getText().toString());
-                dataMap.put("Order",mOrder.getText().toString());
-                dataMap.put("Day",mDate.getText().toString());
 
                 mDatabase.child("pepe@pepe").child("Orders").child(orderDate).push().setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -95,6 +106,24 @@ public class NewOrderActivity extends AppCompatActivity {
 
     }
 
+    public void formButtons(){
+        mMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
+            }});
+
+        mTime.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                mDate.setText(getHour().toString());
+            }
+        });
+
+    }
+
+
     //Close actual activity when back button is selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -109,11 +138,17 @@ public class NewOrderActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public String getCalendarDateTime(){
+    public String getDate(){
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
         String formattedDate = df.format(c.getTime());
         return formattedDate;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public Date getHour(){
+        Date currentTime = Calendar.getInstance().getTime();
+        return currentTime;
     }
 
 

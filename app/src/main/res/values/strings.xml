@@ -17,6 +17,8 @@
     <string name="platform_id">Número plataforma</string>
     <string name="order_id">Número de orden</string>
     <string name="date">Fecha</string>
+    <string name="charging_order_day">Día carga contenedor</string>
+    <string name="charging_order_hour">Hora carga contenedor</string>
     <string name="client">Cliente</string>
     <string name="charger">Cargador</string>
     <string name="destiny">Destino</string>
@@ -26,15 +28,22 @@
 
 
     <string name="button_login">Acceder</string>
-    <string name="button_order">Guardar viaje</string>
+    <string name="button_order">Comenzar viaje</string>
     <string name="button_open_maps">Ver mapa</string>
     <string name="title_activity_maps">Map</string>
     <string name="button_terrain">Terreno</string>
     <string name="button_satellite">Satelite</string>
     <string name="button_position">Posición actual</string>
+    <string name="button_obtain_time">Obtener hora</string>
+
 
     <string name="multiple_order">Viaje múltiple</string>
     <string name="transfers">Translados</string>
+    <string name="simple_order">Viaje simple</string>
+
+
+
+
 
 
 </resources>
