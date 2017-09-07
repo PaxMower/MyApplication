@@ -1,123 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/driver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/driver"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/truck_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:elevation="1dp"
+            android:ems="10"
+            android:hint="@string/truck_number"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/truck_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/truck_id"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/platform_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/platform_id"
+            android:inputType="textPersonName" />
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/date"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.92"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="@string/date"
+                android:inputType="date" />
+
+            <Button
+                android:id="@+id/button_obtain_date"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="3dp"
+                android:background="@android:drawable/ic_menu_today"
+                android:theme="@style/AppTheme" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/client"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="50dp"
+            android:ems="10"
+            android:hint="@string/client"
+            android:inputType="textPersonName" />
 
-            <EditText
-                android:id="@+id/driver"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/driver"
-                android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/charger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/charger"
+            android:inputType="textPersonName" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+        <EditText
+            android:id="@+id/destiny"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/destiny"
+            android:inputType="textPersonName" />
 
-                <Button
-                    android:id="@+id/button_obtain_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/button_obtain_time" />
+        <EditText
+            android:id="@+id/container_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/container_id"
+            android:inputType="textPersonName" />
 
-                <EditText
-                    android:id="@+id/date"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/date"
-                    android:inputType="date" />
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/truck_num"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:elevation="1dp"
-                android:ems="10"
-                android:hint="@string/truck_number"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/truck_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/truck_id"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/platform_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/platform_id"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/charging_order_day"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:ems="10"
-                android:hint="@string/charging_order_day"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/charging_order_hour"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/charging_order_hour"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/client"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/client"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/charger"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/charger"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/destiny"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="@string/destiny" />
-
-            <EditText
-                android:id="@+id/container_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="@string/container_id" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/arrival_time"
@@ -128,6 +122,20 @@
                 android:hint="@string/arrival_time"
                 android:inputType="textPersonName" />
 
+            <Button
+                android:id="@+id/button_obtain_arrival_time"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:background="@android:drawable/ic_lock_idle_alarm" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/departure_time"
                 android:layout_width="match_parent"
@@ -137,50 +145,159 @@
                 android:hint="@string/departure_time"
                 android:inputType="textPersonName" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/simpleOrder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="@string/simple_order"
-                    android:textColorLink="@color/colorPrimary" />
-
-                <RadioButton
-                    android:id="@+id/transfers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/transfers" />
-
-                <RadioButton
-                    android:id="@+id/multiple_order"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/multiple_order" />
-            </LinearLayout>
-
             <Button
-                android:id="@+id/view_map"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="@string/button_open_maps" />
-
-            <Button
-                android:id="@+id/save_order"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="@string/button_order" />
+                android:id="@+id/button_obtain_departure_time"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:background="@android:drawable/ic_lock_idle_alarm" />
 
         </LinearLayout>
-    </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/charging_order_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.91"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="@string/charging_order_day"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/button_obtain_charge_day"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="-3dp"
+                android:background="@android:drawable/ic_menu_today" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/charging_order_hour"
+                android:layout_width="288dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/charging_order_hour"
+                android:inputType="textPersonName"
+                android:focusable="false"
+                android:layout_weight="1.50" />
+
+            <Button
+                android:id="@+id/button_obtain_charge_hour"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:background="@android:drawable/ic_lock_idle_alarm" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="@string/discharging_order_day"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/button_obtain_discharge_hour"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:background="@android:drawable/ic_menu_today" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="288dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="@string/discharging_order_hour"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/button_obtain_discharge_hour"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight=" "
+                android:background="@android:drawable/ic_lock_idle_alarm" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/simpleOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/simple_order"
+                android:textColorLink="@color/colorPrimary" />
+
+            <RadioButton
+                android:id="@+id/transfers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/transfers" />
+
+            <RadioButton
+                android:id="@+id/multiple_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/multiple_order" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/view_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/button_open_maps" />
+
+        <Button
+            android:id="@+id/save_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/button_order" />
+
+    </LinearLayout>
+</ScrollView>
 
 

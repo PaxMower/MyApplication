@@ -19,10 +19,12 @@
     <string name="date">Fecha</string>
     <string name="charging_order_day">Día carga contenedor</string>
     <string name="charging_order_hour">Hora carga contenedor</string>
+    <string name="discharging_order_day">Día descarga contenedor</string>
+    <string name="discharging_order_hour">Hora descarga contenedor</string>
     <string name="client">Cliente</string>
     <string name="charger">Cargador</string>
     <string name="destiny">Destino</string>
-    <string name="container_id">Número container</string>
+    <string name="container_id">Número contenedor</string>
     <string name="arrival_time">Hora llegada</string>
     <string name="departure_time">Hora salida</string>
 
