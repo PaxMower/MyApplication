@@ -1,6 +1,8 @@
 package com.casa.myapplication.Model;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +40,7 @@ public class NewOrderActivity extends AppCompatActivity {
     private RadioButton mSimple, mMultimple, mTransfers;
     private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bArrivalHour, bDepartureHour, bDischargeDay, bDischargeHour;
     private String TAG = "";
+    private Boolean bucket = false; // false = empty; true = data inside
 
     private DatabaseReference mDatabase;// = FirebaseDatabase.getInstance().getReference();
 
@@ -76,9 +80,28 @@ public class NewOrderActivity extends AppCompatActivity {
         bDischargeDay = (Button) findViewById(R.id.button_obtain_discharge_hour);
         bDischargeHour = (Button) findViewById(R.id.button_obtain_discharge_hour);
 
+        saveSharedPreferences();
         formButtons();
         SendFirebaseData();
 
+    }
+
+    //Method for save data on device memory
+    public void saveSharedPreferences(){
+        SharedPreferences sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putString("mDriver", mDriver.getText().toString());
+
+        editor.apply();
+    }
+
+    //Method for load data on device memory
+    public void loadSharedPreferences(){
+        SharedPreferences sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+
+        String driver = sharedPref.getString("mDriver", "");
+        mDriver.setText(driver);
     }
 
     public void formButtons(){
@@ -120,8 +143,6 @@ public class NewOrderActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
 
@@ -146,6 +167,7 @@ public class NewOrderActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(NewOrderActivity.this, "Datos enviados",Toast.LENGTH_LONG ).show();
+                            setBucket(false); //put false for indicate that there are no data on device memory
                         }else{
                             Toast.makeText(NewOrderActivity.this, "Error",Toast.LENGTH_LONG ).show();
                         }
@@ -194,21 +216,62 @@ public class NewOrderActivity extends AppCompatActivity {
         return date;
     }
 
+    @Override
+    protected void onStart(){
+        Log.d(TAG, "onStart");
+        if (getBucket()){
+            loadSharedPreferences();
+        }
+        super.onStart();
 
+    }
 
-    /*
-    *
-    Calendar calendar = Calendar.getInstance(Locale.getDefault());
-    int hour = calendar.get(Calendar.HOUR_OF_DAY);
-    int minute = calendar.get(Calendar.MINUTE);
-    int second = calendar.get(Calendar.SECOND);
-    int date = calendar.get(Calendar.DAY_OF_MONTH);
-    int month = calendar.get(Calendar.MONTH);
-    int year = calendar.get(Calendar.YEAR);
-    *
-    *
-    *
-    * */
+    @Override
+    protected void onResume(){
+        Log.d(TAG, "onResume");
+        if (getBucket()){
+            loadSharedPreferences();
+        }
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause(){
+        Log.d(TAG, "onPause");
+        saveSharedPreferences();
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onStop(){
+        Log.d(TAG, "onStop");
+        saveSharedPreferences();
+        super.onStop();
+
+    }
+
+    @Override
+    protected void onDestroy(){
+        Log.d(TAG, "onDestroy");
+        saveSharedPreferences();
+        super.onDestroy();
+
+    }
+
+    //constructor
+    public NewOrderActivity(Boolean bucket) {
+        this.bucket = bucket;
+    }
+
+    public Boolean getBucket() {
+        return bucket;
+    }
+
+    public void setBucket(Boolean bucket) {
+        this.bucket = bucket;
+    }
 
 
 }

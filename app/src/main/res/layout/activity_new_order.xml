@@ -211,7 +211,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/discharging_order_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -235,7 +235,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/discharging_order_hour"
                 android:layout_width="288dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -249,7 +249,6 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="5dp"
-                android:layout_weight=" "
                 android:background="@android:drawable/ic_lock_idle_alarm" />
         </LinearLayout>
 
