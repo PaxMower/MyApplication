@@ -1,5 +1,6 @@
 package com.casa.myapplication.Model;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -36,11 +38,12 @@ import java.util.Locale;
 public class NewOrderActivity extends AppCompatActivity {
 
     private EditText mDriver, mDate, mTruckID, mTruckNumber, mPlatformNumber;
-    private EditText mContainerChargeDay, mContainerChargeHour, mClient, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour;
+    private EditText mContainerChargeDay, mContainerChargeHour, mClient, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour, mContainerDischargeHour, mContainerDischargeDay;
     private RadioButton mSimple, mMultimple, mTransfers;
     private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bArrivalHour, bDepartureHour, bDischargeDay, bDischargeHour;
     private String TAG = "";
     private Boolean bucket = false; // false = empty; true = data inside
+    private Calendar mCurrentDate = Calendar.getInstance();
 
     private DatabaseReference mDatabase;// = FirebaseDatabase.getInstance().getReference();
 
@@ -67,6 +70,8 @@ public class NewOrderActivity extends AppCompatActivity {
         mContainerNumber = (EditText) findViewById(R.id.container_number);
         mArrivalHour = (EditText) findViewById(R.id.arrival_time);
         mDepartureHour = (EditText) findViewById(R.id.departure_time);
+        mContainerDischargeHour = (EditText) findViewById(R.id.discharging_order_hour);
+        mContainerDischargeDay = (EditText) findViewById(R.id.discharging_order_day);
         mSimple = (RadioButton) findViewById(R.id.simpleOrder);
         mMultimple = (RadioButton) findViewById(R.id.multiple_order);
         mTransfers = (RadioButton) findViewById(R.id.transfers);
@@ -76,8 +81,8 @@ public class NewOrderActivity extends AppCompatActivity {
         bChargeDay = (Button) findViewById(R.id.button_obtain_charge_day);
         bChargeHour = (Button) findViewById(R.id.button_obtain_charge_hour);
         bArrivalHour = (Button) findViewById(R.id.button_obtain_arrival_time);
-        bDepartureHour = (Button) findViewById(R.id.button_obtain_charge_hour);
-        bDischargeDay = (Button) findViewById(R.id.button_obtain_discharge_hour);
+        bDepartureHour = (Button) findViewById(R.id.button_obtain_departure_time);
+        bDischargeDay = (Button) findViewById(R.id.button_obtain_discharge_day);
         bDischargeHour = (Button) findViewById(R.id.button_obtain_discharge_hour);
 
         saveSharedPreferences();
@@ -92,8 +97,9 @@ public class NewOrderActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
 
         editor.putString("mDriver", mDriver.getText().toString());
-
         editor.apply();
+        bucket = true;
+
     }
 
     //Method for load data on device memory
@@ -105,21 +111,31 @@ public class NewOrderActivity extends AppCompatActivity {
     }
 
     public void formButtons(){
+        //open map with the position
         bMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
             }});
 
+        //put the current date
         bTime.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                //mDate.
+                mDate.setText(getDate());
             }
         });
 
         bChargeHour.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                mContainerChargeHour.setText(getHour());
+            }
+        });
+
+        bDischargeHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
@@ -143,6 +159,33 @@ public class NewOrderActivity extends AppCompatActivity {
             }
         });
 
+        bChargeDay.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        mContainerChargeDay.setText(dayOfMonth+"/"+month+"/"+year);
+                    }
+                },mCurrentDate.get(Calendar.YEAR),mCurrentDate.get(Calendar.MONTH)+1, mCurrentDate.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+            }
+        });
+
+        bDischargeDay.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        mContainerChargeDay.setText(dayOfMonth+"/"+month+"/"+year);
+                    }
+                },mCurrentDate.get(Calendar.YEAR),mCurrentDate.get(Calendar.MONTH)+1, mCurrentDate.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+            }
+        });
     }
 
 
@@ -160,14 +203,15 @@ public class NewOrderActivity extends AppCompatActivity {
                 HashMap<String, String> dataMap = new HashMap<String, String>();
 
                 dataMap.put("driver",mDriver.getText().toString());
-                dataMap.put("truck ID",mTruckID.getText().toString());
+                //dataMap.put("truck ID",mTruckID.getText().toString());
 
                 mDatabase.child("pepe@pepe").child("Orders").child(orderDate).push().setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(NewOrderActivity.this, "Datos enviados",Toast.LENGTH_LONG ).show();
-                            setBucket(false); //put false for indicate that there are no data on device memory
+
+                            bucket = false; //put false for indicate that there are no data on device memory
                         }else{
                             Toast.makeText(NewOrderActivity.this, "Error",Toast.LENGTH_LONG ).show();
                         }
@@ -195,7 +239,7 @@ public class NewOrderActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String getDate(){
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = df.format(c.getTime());
         return formattedDate;
     }
@@ -219,7 +263,7 @@ public class NewOrderActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         Log.d(TAG, "onStart");
-        if (getBucket()){
+        if (bucket){
             loadSharedPreferences();
         }
         super.onStart();
@@ -229,7 +273,7 @@ public class NewOrderActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         Log.d(TAG, "onResume");
-        if (getBucket()){
+        if (bucket){
             loadSharedPreferences();
         }
         super.onResume();
@@ -258,19 +302,6 @@ public class NewOrderActivity extends AppCompatActivity {
         saveSharedPreferences();
         super.onDestroy();
 
-    }
-
-    //constructor
-    public NewOrderActivity(Boolean bucket) {
-        this.bucket = bucket;
-    }
-
-    public Boolean getBucket() {
-        return bucket;
-    }
-
-    public void setBucket(Boolean bucket) {
-        this.bucket = bucket;
     }
 
 

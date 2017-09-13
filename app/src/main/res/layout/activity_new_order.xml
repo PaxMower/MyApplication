@@ -190,11 +190,9 @@
                 android:id="@+id/charging_order_hour"
                 android:layout_width="288dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/charging_order_hour"
-                android:inputType="textPersonName"
                 android:focusable="false"
-                android:layout_weight="1.50" />
+                android:hint="@string/charging_order_hour"
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/button_obtain_charge_hour"
@@ -215,13 +213,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
                 android:focusable="false"
                 android:hint="@string/discharging_order_day"
                 android:inputType="textPersonName" />
 
             <Button
-                android:id="@+id/button_obtain_discharge_hour"
+                android:id="@+id/button_obtain_discharge_day"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="5dp"
@@ -236,7 +233,7 @@
 
             <EditText
                 android:id="@+id/discharging_order_hour"
-                android:layout_width="288dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
