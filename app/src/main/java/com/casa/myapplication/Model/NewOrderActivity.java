@@ -3,6 +3,7 @@ package com.casa.myapplication.Model;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.util.Calendar;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -31,7 +33,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * Created by Gastby on 21/06/2017.
@@ -45,10 +46,10 @@ public class NewOrderActivity extends AppCompatActivity {
     private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bArrivalHour, bDepartureHour, bDischargeDay, bDischargeHour;
     private String TAG = "";
     private Boolean bucket = false; // false = empty; true = data inside
-    private Calendar mCalendarCharge = Calendar.getInstance();
-    private Calendar mCalendarDischarge = Calendar.getInstance();
-    private Calendar mTimeCharge = Calendar.getInstance();
-    private Calendar mTimeDischarge = Calendar.getInstance();
+    private Calendar mCalendarPicker = Calendar.getInstance();
+    //private Calendar mCalendarDischarge = Calendar.getInstance();
+    private Calendar mTimePicker = Calendar.getInstance();
+    //private Calendar mTimeDischarge = Calendar.getInstance();
 
     private DatabaseReference mDatabase;// = FirebaseDatabase.getInstance().getReference();
 
@@ -82,7 +83,7 @@ public class NewOrderActivity extends AppCompatActivity {
         mTransfers = (RadioButton) findViewById(R.id.transfers);
         bMap = (Button) findViewById(R.id.view_map);
         bSend = (Button) findViewById(R.id.save_order);
-        bTime = (Button) findViewById(R.id.button_obtain_date);
+        //bTime = (Button) findViewById(R.id.button_obtain_date);
         bChargeDay = (Button) findViewById(R.id.button_obtain_charge_day);
         bChargeHour = (Button) findViewById(R.id.button_obtain_charge_hour);
         bArrivalHour = (Button) findViewById(R.id.button_obtain_arrival_time);
@@ -90,8 +91,10 @@ public class NewOrderActivity extends AppCompatActivity {
         bDischargeDay = (Button) findViewById(R.id.button_obtain_discharge_day);
         bDischargeHour = (Button) findViewById(R.id.button_obtain_discharge_hour);
 
+
+
         saveSharedPreferences();
-        formButtons();
+        formData();
         SendFirebaseData();
 
     }
@@ -115,7 +118,12 @@ public class NewOrderActivity extends AppCompatActivity {
         mDriver.setText(driver);
     }
 
-    public void formButtons(){
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void formData(){
+
+        //put the current date on the form
+        mDate.setText(getDate());
+
         //open map with the position
         bMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,36 +131,81 @@ public class NewOrderActivity extends AppCompatActivity {
                 startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
             }});
 
-        //put the current date
-        bTime.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v) {
-                mDate.setText(getDate());
-            }
-        });
-
+        //Put the hour which the company charged you
         bChargeHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                mContainerChargeHour.setText(getHour());
+                TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                    }
+                },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                timePickerDialog.show();
             }
         });
 
+        //Put the hour which the company discharged you
         bDischargeHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                mContainerChargeHour.setText(getHour());
+
+                TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        mContainerDischargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                    }
+                },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                timePickerDialog.show();
             }
         });
 
+        //Put the hour which the compani charged you
         bArrivalHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                mArrivalHour.setText(getHour());
+
+                if(!mArrivalHour.getText().toString().matches("")){
+
+                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
+                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
+                            .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                        @Override
+                                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                            mArrivalHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                                        }
+                                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                                    timePickerDialog.show();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alertBuild.create();
+                    alertBuild.show();
+
+                }else {
+
+                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            mArrivalHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                        }
+                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                    timePickerDialog.show();
+
+                }
+
             }
         });
 
@@ -160,7 +213,13 @@ public class NewOrderActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                mDepartureHour.setText(getHour());
+                TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        mDepartureHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                    }
+                },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                timePickerDialog.show();
             }
         });
 
@@ -173,7 +232,7 @@ public class NewOrderActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         mContainerChargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                     }
-                },mCalendarCharge.get(Calendar.YEAR),mCalendarCharge.get(Calendar.MONTH), mCalendarCharge.get(Calendar.DAY_OF_MONTH));
+                },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
             }
         });
@@ -187,7 +246,7 @@ public class NewOrderActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         mContainerDischargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                     }
-                },mCalendarDischarge.get(Calendar.YEAR),mCalendarDischarge.get(Calendar.MONTH), mCalendarDischarge.get(Calendar.DAY_OF_MONTH));
+                },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
             }
         });
@@ -202,7 +261,7 @@ public class NewOrderActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
                     }
-                },mTimeCharge.get(Calendar.HOUR_OF_DAY), mTimeDischarge.get(Calendar.MINUTE), true);
+                },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
                 timePickerDialog.show();
             }
         });
@@ -216,7 +275,7 @@ public class NewOrderActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         mContainerDischargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
                     }
-                },mTimeDischarge.get(Calendar.HOUR_OF_DAY), mTimeDischarge.get(Calendar.MINUTE), true);
+                },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
                 timePickerDialog.show();
             }
         });
@@ -280,14 +339,12 @@ public class NewOrderActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String getHour(){
-        Calendar calendar = Calendar.getInstance(Locale.getDefault());
-        DecimalFormat hourFormat = new DecimalFormat("00");
-        DecimalFormat minuteFormat = new DecimalFormat("00");
-        //DecimalFormat secondFormat = new DecimalFormat("00");
+        //Calendar calendar = Calendar.getInstance();
+        DecimalFormat formatTime = new DecimalFormat("00");
+        //DecimalFormat minuteFormat = new DecimalFormat("00");
 
-        String hour = hourFormat.format(Calendar.HOUR_OF_DAY);
-        String minute = minuteFormat.format(Calendar.MINUTE);
-        //String second = secondFormat.format(Calendar.SECOND);
+        String hour = formatTime.format(mTimePicker.get(Calendar.HOUR_OF_DAY));
+        String minute = formatTime.format(mTimePicker.get(Calendar.MINUTE));
 
         String date = hour+":"+minute;
 
