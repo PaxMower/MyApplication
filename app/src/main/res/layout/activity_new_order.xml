@@ -27,7 +27,7 @@
 
             <EditText
                 android:id="@+id/driver"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -43,8 +43,8 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/truck_number"
                 android:textSize="18sp" />
@@ -88,7 +88,7 @@
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="wrap_content"
+                android:layout_width="112dp"
                 android:layout_height="55dp"
                 android:text="@string/platform_id"
                 android:textSize="18sp" />
@@ -98,8 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="textEnd" />
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
@@ -126,6 +125,39 @@
                 android:focusable="false"
                 android:inputType="date" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/simpleOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/simple_order"
+                android:textColorLink="@color/colorSecondary" />
+
+            <RadioButton
+                android:id="@+id/transfers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/transfers"
+                android:textColorLink="@color/colorSecondary" />
+
+            <RadioButton
+                android:id="@+id/multiple_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/multiple_order"
+                android:textColorLink="@color/colorSecondary" />
         </LinearLayout>
 
         <LinearLayout
@@ -200,6 +232,52 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:text="@string/address"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.18"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="108dp"
+                android:layout_height="match_parent"
+                android:text="@string/phone_number"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.78"
+                android:ems="10"
+                android:inputType="phone" />
         </LinearLayout>
 
         <LinearLayout
@@ -211,7 +289,7 @@
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/container_id"
                 android:textSize="18sp" />
@@ -226,8 +304,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <EditText
@@ -240,7 +317,7 @@
 
             <Button
                 android:id="@+id/button_obtain_arrival_time"
-                android:layout_width="206dp"
+                android:layout_width="129dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="5dp"
                 android:background="@color/colorSecondary"
@@ -264,7 +341,7 @@
 
             <Button
                 android:id="@+id/button_obtain_departure_time"
-                android:layout_width="203dp"
+                android:layout_width="129dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="5dp"
                 android:background="@color/colorSecondary"
@@ -366,39 +443,25 @@
                 android:layout_height="40dp"
                 android:layout_marginRight="5dp"
                 android:background="@android:drawable/ic_lock_idle_alarm" />
+
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textView12"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="50dp"
+            android:text="@string/text_area"
+            android:textSize="18sp" />
 
-            <RadioButton
-                android:id="@+id/simpleOrder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="@string/simple_order"
-                android:textColorLink="@color/colorSecondary" />
-
-            <RadioButton
-                android:id="@+id/transfers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/transfers"
-                android:textColorLink="@color/colorSecondary" />
-
-            <RadioButton
-                android:id="@+id/multiple_order"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/multiple_order"
-                android:textColorLink="@color/colorSecondary" />
-        </LinearLayout>
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textMultiLine" />
 
         <Button
             android:id="@+id/view_map"
@@ -407,6 +470,16 @@
             android:layout_marginTop="50dp"
             android:background="@color/colorSecondary"
             android:text="@string/button_open_maps"
+            android:textColor="@color/cardview_light_background" />
+
+        <Button
+            android:id="@+id/petrol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:background="@color/colorSecondary"
+            android:text="@string/petrol"
             android:textColor="@color/cardview_light_background" />
 
         <Button

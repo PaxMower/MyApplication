@@ -40,10 +40,10 @@ import java.util.HashMap;
 
 public class NewOrderActivity extends AppCompatActivity {
 
-    private EditText mDriver, mDate, mTruckID, mTruckNumber, mPlatformNumber;
+    private EditText mDriver, mDate, mTruckID, mTruckNumber, mPlatformNumber, mAddress, mPhone;
     private EditText mContainerChargeDay, mContainerChargeHour, mClient, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour, mContainerDischargeHour, mContainerDischargeDay;
     private RadioButton mSimple, mMultimple, mTransfers;
-    private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bArrivalHour, bDepartureHour, bDischargeDay, bDischargeHour;
+    private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bArrivalHour, bDepartureHour, bDischargeDay, bDischargeHour, bPetrol;
     private String TAG = "";
     private Boolean bucket = false; // false = empty; true = data inside
     private Calendar mCalendarPicker = Calendar.getInstance();
@@ -64,6 +64,8 @@ public class NewOrderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
 
         mDriver = (EditText) findViewById(R.id.driver);
+        mAddress = (EditText) findViewById(R.id.address);
+        mPhone = (EditText) findViewById(R.id.phone);
         mDate = (EditText) findViewById(R.id.date);
         mTruckID = (EditText) findViewById(R.id.truck_num);
         mTruckNumber = (EditText) findViewById(R.id.truck_id);
@@ -83,6 +85,7 @@ public class NewOrderActivity extends AppCompatActivity {
         mTransfers = (RadioButton) findViewById(R.id.transfers);
         bMap = (Button) findViewById(R.id.view_map);
         bSend = (Button) findViewById(R.id.save_order);
+        bPetrol = (Button) findViewById(R.id.petrol);
         //bTime = (Button) findViewById(R.id.button_obtain_date);
         bChargeDay = (Button) findViewById(R.id.button_obtain_charge_day);
         bChargeHour = (Button) findViewById(R.id.button_obtain_charge_hour);
@@ -136,13 +139,45 @@ public class NewOrderActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
-                    }
-                },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
-                timePickerDialog.show();
+
+                if(!mContainerChargeHour.getText().toString().matches("")){
+
+                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
+                    alertBuild.setMessage("Ya se ha anotado una fecha en este campo, ¿Desea cambiarla?")
+                            .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                        @Override
+                                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                            mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                                        }
+                                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                                    timePickerDialog.show();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alertBuild.create();
+                    alertBuild.show();
+
+                }else {
+
+                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                        }
+                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                    timePickerDialog.show();
+
+                }
+
             }
         });
 
@@ -152,13 +187,44 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        mContainerDischargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
-                    }
-                },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
-                timePickerDialog.show();
+                if(!mContainerDischargeHour.getText().toString().matches("")){
+
+                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
+                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
+                            .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                        @Override
+                                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                            mContainerDischargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                                        }
+                                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                                    timePickerDialog.show();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alertBuild.create();
+                    alertBuild.show();
+
+                }else {
+
+                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            mContainerDischargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                        }
+                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                    timePickerDialog.show();
+
+                }
+
             }
         });
 
@@ -213,13 +279,45 @@ public class NewOrderActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        mDepartureHour.setText(String.format("%02d:%02d",hourOfDay,minute));
-                    }
-                },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
-                timePickerDialog.show();
+
+                if(!mDepartureHour.getText().toString().matches("")){
+
+                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
+                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
+                            .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                        @Override
+                                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                            mDepartureHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                                        }
+                                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                                    timePickerDialog.show();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alertBuild.create();
+                    alertBuild.show();
+
+                }else {
+
+                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            mDepartureHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                        }
+                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                    timePickerDialog.show();
+
+                }
+
             }
         });
 
@@ -227,13 +325,45 @@ public class NewOrderActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        mContainerChargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
-                    }
-                },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.show();
+
+                if(!mContainerChargeDay.getText().toString().matches("")){
+
+                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
+                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
+                            .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                                        @Override
+                                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                            mContainerChargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                                        }
+                                    },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
+                                    datePickerDialog.show();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alertBuild.create();
+                    alertBuild.show();
+
+                }else {
+
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            mContainerChargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                        }
+                    },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
+                    datePickerDialog.show();
+
+                }
+
             }
         });
 
@@ -241,13 +371,45 @@ public class NewOrderActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        mContainerDischargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
-                    }
-                },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.show();
+
+                if(!mContainerDischargeDay.getText().toString().matches("")){
+
+                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
+                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
+                            .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                                        @Override
+                                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                            mContainerDischargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                                        }
+                                    },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
+                                    datePickerDialog.show();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alertBuild.create();
+                    alertBuild.show();
+
+                }else {
+
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            mContainerDischargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                        }
+                    },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
+                    datePickerDialog.show();
+
+                }
+
             }
         });
 
@@ -256,13 +418,44 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
-                    }
-                },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
-                timePickerDialog.show();
+                if(!mContainerChargeHour.getText().toString().matches("")){
+
+                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
+                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
+                            .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                        @Override
+                                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                            mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                                        }
+                                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                                    timePickerDialog.show();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alertBuild.create();
+                    alertBuild.show();
+
+                }else {
+
+                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                        }
+                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                    timePickerDialog.show();
+
+                }
+
             }
         });
 
@@ -270,13 +463,45 @@ public class NewOrderActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        mContainerDischargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
-                    }
-                },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
-                timePickerDialog.show();
+
+                if(!mContainerDischargeHour.getText().toString().matches("")){
+
+                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
+                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
+                            .setCancelable(false)
+                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                        @Override
+                                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                            mContainerDischargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                                        }
+                                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                                    timePickerDialog.show();
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alertBuild.create();
+                    alertBuild.show();
+
+                }else {
+
+                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            mContainerDischargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                        }
+                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
+                    timePickerDialog.show();
+
+                }
+
             }
         });
     }
