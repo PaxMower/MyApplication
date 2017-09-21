@@ -3,6 +3,7 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp">
@@ -134,30 +135,33 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/simpleOrder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="@string/simple_order"
-                android:textColorLink="@color/colorSecondary" />
 
-            <RadioButton
-                android:id="@+id/transfers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/transfers"
-                android:textColorLink="@color/colorSecondary" />
+                <RadioButton
+                    android:id="@+id/simpleOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="@string/simple_order"
+                    android:textColorLink="@color/colorSecondary" />
 
-            <RadioButton
-                android:id="@+id/multiple_order"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/multiple_order"
-                android:textColorLink="@color/colorSecondary" />
+                <RadioButton
+                    android:id="@+id/transfers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/transfers"
+                    android:textColorLink="@color/colorSecondary" />
+
+                <RadioButton
+                    android:id="@+id/multiple_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/multiple_order"
+                    android:textColorLink="@color/colorSecondary" />
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -256,6 +260,29 @@
                 android:ems="10"
                 android:inputType="textPersonName" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textSize="18sp"
+                tools:text="@string/hour_aperture" />
+
+            <EditText
+                android:id="@+id/aperture_hour"
+                android:layout_width="233dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
@@ -456,7 +483,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/text_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

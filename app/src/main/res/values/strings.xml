@@ -4,6 +4,7 @@
     <string name="app_new_order">Nueva orden</string>
     <string name="app_watch_order">Ver viajes</string>
     <string name="app_settings">Ajustes</string>
+    <string name="app_petrol">Repostaje</string>
     <string name="app_maps">Mapa</string>
 
     <string name="new_order">Nuevo viaje</string>
@@ -30,6 +31,7 @@
     <string name="arrival_time">Hora llegada</string>
     <string name="departure_time">Hora salida</string>
     <string name="text_area">observaciones</string>
+    <string name="hour_aperture">Horario apertura</string>
 
 
     <string name="button_login">Acceder</string>
@@ -46,6 +48,13 @@
     <string name="multiple_order">Viaje múltiple</string>
     <string name="transfers">Translados</string>
     <string name="simple_order">Viaje simple</string>
+
+
+    <string name="petrol_date">Fecha repostaje</string>
+    <string name="petrol_hour">Hora repostaje</string>
+    <string name="petrol_km">Kilómetros</string>
+    <string name="petrol_liters">Litros</string>
+    <string name="petrol_send">Añadir repostaje</string>
 
 
 

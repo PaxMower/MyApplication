@@ -6,9 +6,18 @@
     android:layout_height="match_parent"
     tools:context="com.casa.myapplication.Model.MenuActivity">
 
-    <RelativeLayout
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+    </ScrollView>
+
+    <LinearLayout
         android:layout_width="368dp"
         android:layout_height="495dp"
+        android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
@@ -18,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="141dp"
+            android:layout_marginTop="20dp"
             android:text=" "
             android:textSize="22dp" />
 
@@ -26,12 +35,9 @@
             android:id="@+id/new_order"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_alignBaseline="@+id/watch_orders"
-            android:layout_alignBottom="@+id/watch_orders"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_below="@+id/userDataField"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
             android:background="@drawable/circle_button"
             android:padding="15dp"
             android:text="@string/new_order" />
@@ -40,16 +46,21 @@
             android:id="@+id/watch_orders"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="60dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
+            android:layout_alignLeft="@+id/new_order"
+            android:layout_alignStart="@+id/new_order"
+            android:layout_below="@+id/new_order"
+            android:layout_marginTop="16dp"
             android:background="@drawable/circle_button"
             android:padding="15dp"
             android:text="@string/watch_orders" />
 
-    </RelativeLayout>
+        <Button
+            android:id="@+id/petrol_send"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/circle_button"
+            android:text="@string/petrol_send" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

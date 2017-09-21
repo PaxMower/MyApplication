@@ -40,7 +40,7 @@ import java.util.HashMap;
 
 public class NewOrderActivity extends AppCompatActivity {
 
-    private EditText mDriver, mDate, mTruckID, mTruckNumber, mPlatformNumber, mAddress, mPhone;
+    private EditText mDriver, mDate, mTruckID, mTruckNumber, mPlatformNumber, mAddress, mPhone, mTextArea, mApertureHour;
     private EditText mContainerChargeDay, mContainerChargeHour, mClient, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour, mContainerDischargeHour, mContainerDischargeDay;
     private RadioButton mSimple, mMultimple, mTransfers;
     private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bArrivalHour, bDepartureHour, bDischargeDay, bDischargeHour, bPetrol;
@@ -73,6 +73,7 @@ public class NewOrderActivity extends AppCompatActivity {
         mContainerChargeDay = (EditText) findViewById(R.id.charging_order_day);
         mContainerChargeHour = (EditText) findViewById(R.id.charging_order_hour);
         mClient = (EditText) findViewById(R.id.client);
+        mApertureHour = (EditText) findViewById(R.id.aperture_hour);
         mCharger = (EditText) findViewById(R.id.charger);
         mDestiny = (EditText) findViewById(R.id.destiny);
         mContainerNumber = (EditText) findViewById(R.id.container_number);
@@ -86,6 +87,7 @@ public class NewOrderActivity extends AppCompatActivity {
         bMap = (Button) findViewById(R.id.view_map);
         bSend = (Button) findViewById(R.id.save_order);
         bPetrol = (Button) findViewById(R.id.petrol);
+        mTextArea = (EditText) findViewById(R.id.text_area);
         //bTime = (Button) findViewById(R.id.button_obtain_date);
         bChargeDay = (Button) findViewById(R.id.button_obtain_charge_day);
         bChargeHour = (Button) findViewById(R.id.button_obtain_charge_hour);
@@ -134,6 +136,13 @@ public class NewOrderActivity extends AppCompatActivity {
                 startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
             }});
 
+        bPetrol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NewOrderActivity.this, PetrolActivity.class));
+            }
+        });
+
         //Put the hour which the company charged you
         bChargeHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -143,7 +152,7 @@ public class NewOrderActivity extends AppCompatActivity {
                 if(!mContainerChargeHour.getText().toString().matches("")){
 
                     AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
-                    alertBuild.setMessage("Ya se ha anotado una fecha en este campo, ¿Desea cambiarla?")
+                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
                             .setCancelable(false)
                             .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 @Override
@@ -329,7 +338,7 @@ public class NewOrderActivity extends AppCompatActivity {
                 if(!mContainerChargeDay.getText().toString().matches("")){
 
                     AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
-                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
+                    alertBuild.setMessage("Ya se ha anotado una fecha en este campo, ¿Desea cambiarla?")
                             .setCancelable(false)
                             .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 @Override
@@ -375,7 +384,7 @@ public class NewOrderActivity extends AppCompatActivity {
                 if(!mContainerDischargeDay.getText().toString().matches("")){
 
                     AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
-                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
+                    alertBuild.setMessage("Ya se ha anotado una fecha en este campo, ¿Desea cambiarla?")
                             .setCancelable(false)
                             .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 @Override
