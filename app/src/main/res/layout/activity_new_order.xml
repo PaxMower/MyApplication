@@ -131,42 +131,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-
-                <RadioButton
-                    android:id="@+id/simpleOrder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="@string/simple_order"
-                    android:textColorLink="@color/colorSecondary" />
-
-                <RadioButton
-                    android:id="@+id/transfers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/transfers"
-                    android:textColorLink="@color/colorSecondary" />
-
-                <RadioButton
-                    android:id="@+id/multiple_order"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/multiple_order"
-                    android:textColorLink="@color/colorSecondary" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_marginTop="70dp"
             android:layout_weight="1"
             android:orientation="horizontal"></LinearLayout>

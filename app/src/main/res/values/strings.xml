@@ -31,7 +31,7 @@
     <string name="arrival_time">Hora llegada</string>
     <string name="departure_time">Hora salida</string>
     <string name="text_area">observaciones</string>
-    <string name="hour_aperture">Horario apertura</string>
+    <string name="hour_aperture">Horario</string>
 
 
     <string name="button_login">Acceder</string>
