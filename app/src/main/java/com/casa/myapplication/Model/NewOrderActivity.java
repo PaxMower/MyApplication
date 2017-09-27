@@ -24,6 +24,7 @@ import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.casa.myapplication.Logic.Order;
 import com.casa.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,7 +33,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 
 /**
  * Created by Gastby on 21/06/2017.
@@ -75,15 +75,15 @@ public class NewOrderActivity extends AppCompatActivity {
         mClient = (EditText) findViewById(R.id.client);
         mApertureHour = (EditText) findViewById(R.id.aperture_hour);
         mCharger = (EditText) findViewById(R.id.charger);
-        mDestiny = (EditText) findViewById(R.id.destiny);
+        //mDestiny = (EditText) findViewById(R.id.destiny);
         mContainerNumber = (EditText) findViewById(R.id.container_number);
         mArrivalHour = (EditText) findViewById(R.id.arrival_time);
         mDepartureHour = (EditText) findViewById(R.id.departure_time);
         mContainerDischargeHour = (EditText) findViewById(R.id.discharging_order_hour);
         mContainerDischargeDay = (EditText) findViewById(R.id.discharging_order_day);
-        mSimple = (RadioButton) findViewById(R.id.simpleOrder);
-        mMultimple = (RadioButton) findViewById(R.id.multiple_order);
-        mTransfers = (RadioButton) findViewById(R.id.transfers);
+        //mSimple = (RadioButton) findViewById(R.id.simpleOrder);
+        //mMultimple = (RadioButton) findViewById(R.id.multiple_order);
+        //mTransfers = (RadioButton) findViewById(R.id.transfers);
         bMap = (Button) findViewById(R.id.view_map);
         bSend = (Button) findViewById(R.id.save_order);
         bPetrol = (Button) findViewById(R.id.petrol);
@@ -136,6 +136,7 @@ public class NewOrderActivity extends AppCompatActivity {
                 startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
             }});
 
+        //add refuel option
         bPetrol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -237,7 +238,7 @@ public class NewOrderActivity extends AppCompatActivity {
             }
         });
 
-        //Put the hour which the compani charged you
+        //add the hour when you arrive to the company
         bArrivalHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -283,7 +284,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
             }
         });
-
+        //add the hour when you leave to the company
         bDepartureHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -330,6 +331,7 @@ public class NewOrderActivity extends AppCompatActivity {
             }
         });
 
+        //add the day when the container is charged
         bChargeDay.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -376,6 +378,7 @@ public class NewOrderActivity extends AppCompatActivity {
             }
         });
 
+        //add the day when the container is discharged
         bDischargeDay.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -422,6 +425,7 @@ public class NewOrderActivity extends AppCompatActivity {
             }
         });
 
+        ////add the hour when the container is charged
         bChargeHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -468,6 +472,7 @@ public class NewOrderActivity extends AppCompatActivity {
             }
         });
 
+        //add the day when the container is discharged
         bDischargeHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -527,12 +532,22 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                HashMap<String, String> dataMap = new HashMap<String, String>();
+                //HashMap<String, String> dataMap = new HashMap<String, String>();
 
-                dataMap.put("driver",mDriver.getText().toString());
+               // dataMap.put("driver",mDriver.getText().toString());
                 //dataMap.put("truck ID",mTruckID.getText().toString());
 
-                mDatabase.child("pepe@pepe").child("Orders").child(orderDate).push().setValue(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                Order newOrder = new Order();
+
+                newOrder.setDate(mDate.getText().toString());
+                newOrder.setDriver(mDriver.getText().toString());
+                newOrder.setTruckNumber(mTruckNumber.getText().toString());
+                newOrder.setTruckID(mTruckID.getText().toString());
+                newOrder.setPlatformNumber(mPlatformNumber.getText().toString());
+
+
+                //   mDatabase.child("Users1").child("Orders1").child(orderDate).push().setValue(newOrder)
+                mDatabase.child(orderDate).push().setValue(newOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
