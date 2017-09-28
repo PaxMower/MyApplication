@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -42,8 +41,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
     private EditText mDriver, mDate, mTruckID, mTruckNumber, mPlatformNumber, mAddress, mPhone, mTextArea, mApertureHour;
     private EditText mContainerChargeDay, mContainerChargeHour, mClient, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour, mContainerDischargeHour, mContainerDischargeDay;
-    private RadioButton mSimple, mMultimple, mTransfers;
-    private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bArrivalHour, bDepartureHour, bDischargeDay, bDischargeHour, bPetrol;
+    private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bDischargeDay, bDischargeHour, bPetrol;
     private String TAG = "";
     private Boolean bucket = false; // false = empty; true = data inside
     private Calendar mCalendarPicker = Calendar.getInstance();
@@ -70,20 +68,16 @@ public class NewOrderActivity extends AppCompatActivity {
         mTruckID = (EditText) findViewById(R.id.truck_num);
         mTruckNumber = (EditText) findViewById(R.id.truck_id);
         mPlatformNumber = (EditText) findViewById(R.id.platform_id);
-        mContainerChargeDay = (EditText) findViewById(R.id.charging_order_day);
+        //mContainerChargeDay = (EditText) findViewById(R.id.charging_order_day);
         mContainerChargeHour = (EditText) findViewById(R.id.charging_order_hour);
         mClient = (EditText) findViewById(R.id.client);
         mApertureHour = (EditText) findViewById(R.id.aperture_hour);
         mCharger = (EditText) findViewById(R.id.charger);
-        //mDestiny = (EditText) findViewById(R.id.destiny);
         mContainerNumber = (EditText) findViewById(R.id.container_number);
-        mArrivalHour = (EditText) findViewById(R.id.arrival_time);
-        mDepartureHour = (EditText) findViewById(R.id.departure_time);
+        //mArrivalHour = (EditText) findViewById(R.id.arrival_time);
+        //mDepartureHour = (EditText) findViewById(R.id.departure_time);
         mContainerDischargeHour = (EditText) findViewById(R.id.discharging_order_hour);
         mContainerDischargeDay = (EditText) findViewById(R.id.discharging_order_day);
-        //mSimple = (RadioButton) findViewById(R.id.simpleOrder);
-        //mMultimple = (RadioButton) findViewById(R.id.multiple_order);
-        //mTransfers = (RadioButton) findViewById(R.id.transfers);
         bMap = (Button) findViewById(R.id.view_map);
         bSend = (Button) findViewById(R.id.save_order);
         bPetrol = (Button) findViewById(R.id.petrol);
@@ -91,8 +85,8 @@ public class NewOrderActivity extends AppCompatActivity {
         //bTime = (Button) findViewById(R.id.button_obtain_date);
         bChargeDay = (Button) findViewById(R.id.button_obtain_charge_day);
         bChargeHour = (Button) findViewById(R.id.button_obtain_charge_hour);
-        bArrivalHour = (Button) findViewById(R.id.button_obtain_arrival_time);
-        bDepartureHour = (Button) findViewById(R.id.button_obtain_departure_time);
+        mArrivalHour = (EditText) findViewById(R.id.button_obtain_arrival_time);
+        mDepartureHour = (EditText) findViewById(R.id.button_obtain_departure_time);
         bDischargeDay = (Button) findViewById(R.id.button_obtain_discharge_day);
         bDischargeHour = (Button) findViewById(R.id.button_obtain_discharge_hour);
 
@@ -239,7 +233,7 @@ public class NewOrderActivity extends AppCompatActivity {
         });
 
         //add the hour when you arrive to the company
-        bArrivalHour.setOnClickListener(new View.OnClickListener() {
+        mArrivalHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
@@ -285,7 +279,7 @@ public class NewOrderActivity extends AppCompatActivity {
             }
         });
         //add the hour when you leave to the company
-        bDepartureHour.setOnClickListener(new View.OnClickListener() {
+        mDepartureHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
