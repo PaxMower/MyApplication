@@ -1,8 +1,10 @@
 package com.casa.myapplication.Model;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -88,10 +90,26 @@ public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppC
 
             case R.id.action_exit:
 
-                mFirebaseAuth.signOut();
-                finish();
-                startActivity(new Intent(this, LoginActivity.class));
-                return true;
+                AlertDialog.Builder alertBuild = new AlertDialog.Builder(MenuActivity.this);
+                alertBuild.setMessage("¿Está seguro de que desea salir?")
+                        .setCancelable(false)
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mFirebaseAuth.signOut();
+                                finish();
+                                startActivity(new Intent(MenuActivity.this, LoginActivity.class));
+                                //return true;
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                alertBuild.create();
+                alertBuild.show();
 
             default:
                 // If we got here, the user's action was not recognized.

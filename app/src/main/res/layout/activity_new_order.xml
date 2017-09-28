@@ -228,7 +228,9 @@
                 android:id="@+id/button_obtain_charge_day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/charging_order_day" />
+                android:focusable="false"
+                android:hint="@string/charging_order_day"
+                android:inputType="date" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -240,7 +242,9 @@
                 android:id="@+id/button_obtain_charge_hour"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/charging_order_hour" />
+                android:focusable="false"
+                android:hint="@string/charging_order_hour"
+                android:inputType="time" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -252,7 +256,9 @@
                 android:id="@+id/button_obtain_discharge_day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/discharging_order_day" />
+                android:focusable="false"
+                android:hint="@string/discharging_order_day"
+                android:inputType="date" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -264,7 +270,9 @@
                 android:id="@+id/button_obtain_discharge_hour"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/discharging_order_hour" />
+                android:focusable="false"
+                android:hint="@string/discharging_order_hour"
+                android:inputType="time" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -277,7 +285,8 @@
                 android:id="@+id/text_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/text_area" />
+                android:hint="@string/text_area"
+                android:inputType="text|textMultiLine" />
         </android.support.design.widget.TextInputLayout>
 
         <Button

@@ -68,27 +68,27 @@ public class NewOrderActivity extends AppCompatActivity {
         mTruckID = (EditText) findViewById(R.id.truck_num);
         mTruckNumber = (EditText) findViewById(R.id.truck_id);
         mPlatformNumber = (EditText) findViewById(R.id.platform_id);
-        //mContainerChargeDay = (EditText) findViewById(R.id.charging_order_day);
-        mContainerChargeHour = (EditText) findViewById(R.id.charging_order_hour);
+        mContainerChargeDay = (EditText) findViewById(R.id.button_obtain_charge_day);
+        mContainerChargeHour = (EditText) findViewById(R.id.button_obtain_charge_hour);
         mClient = (EditText) findViewById(R.id.client);
         mApertureHour = (EditText) findViewById(R.id.aperture_hour);
         mCharger = (EditText) findViewById(R.id.charger);
         mContainerNumber = (EditText) findViewById(R.id.container_number);
         //mArrivalHour = (EditText) findViewById(R.id.arrival_time);
         //mDepartureHour = (EditText) findViewById(R.id.departure_time);
-        mContainerDischargeHour = (EditText) findViewById(R.id.discharging_order_hour);
-        mContainerDischargeDay = (EditText) findViewById(R.id.discharging_order_day);
+        mContainerDischargeHour = (EditText) findViewById(R.id.button_obtain_discharge_hour);
+        mContainerDischargeDay = (EditText) findViewById(R.id.button_obtain_discharge_day);
         bMap = (Button) findViewById(R.id.view_map);
         bSend = (Button) findViewById(R.id.save_order);
         bPetrol = (Button) findViewById(R.id.petrol);
         mTextArea = (EditText) findViewById(R.id.text_area);
         //bTime = (Button) findViewById(R.id.button_obtain_date);
-        bChargeDay = (Button) findViewById(R.id.button_obtain_charge_day);
-        bChargeHour = (Button) findViewById(R.id.button_obtain_charge_hour);
+        //bChargeDay = (Button) findViewById(R.id.button_obtain_charge_day);
+        //bChargeHour = (Button) findViewById(R.id.button_obtain_charge_hour);
         mArrivalHour = (EditText) findViewById(R.id.button_obtain_arrival_time);
         mDepartureHour = (EditText) findViewById(R.id.button_obtain_departure_time);
-        bDischargeDay = (Button) findViewById(R.id.button_obtain_discharge_day);
-        bDischargeHour = (Button) findViewById(R.id.button_obtain_discharge_hour);
+        //bDischargeDay = (Button) findViewById(R.id.button_obtain_discharge_day);
+        //bDischargeHour = (Button) findViewById(R.id.button_obtain_discharge_hour);
 
 
 
@@ -139,7 +139,7 @@ public class NewOrderActivity extends AppCompatActivity {
         });
 
         //Put the hour which the company charged you
-        bChargeHour.setOnClickListener(new View.OnClickListener() {
+        mContainerChargeHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
@@ -186,7 +186,7 @@ public class NewOrderActivity extends AppCompatActivity {
         });
 
         //Put the hour which the company discharged you
-        bDischargeHour.setOnClickListener(new View.OnClickListener() {
+        mContainerDischargeHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
@@ -326,7 +326,7 @@ public class NewOrderActivity extends AppCompatActivity {
         });
 
         //add the day when the container is charged
-        bChargeDay.setOnClickListener(new View.OnClickListener() {
+        mContainerChargeDay.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
@@ -373,7 +373,7 @@ public class NewOrderActivity extends AppCompatActivity {
         });
 
         //add the day when the container is discharged
-        bDischargeDay.setOnClickListener(new View.OnClickListener() {
+        mContainerDischargeDay.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
@@ -420,7 +420,7 @@ public class NewOrderActivity extends AppCompatActivity {
         });
 
         ////add the hour when the container is charged
-        bChargeHour.setOnClickListener(new View.OnClickListener() {
+        mContainerChargeHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
@@ -467,7 +467,7 @@ public class NewOrderActivity extends AppCompatActivity {
         });
 
         //add the day when the container is discharged
-        bDischargeHour.setOnClickListener(new View.OnClickListener() {
+        mContainerDischargeHour.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
