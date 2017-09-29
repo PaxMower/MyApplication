@@ -1,5 +1,6 @@
 package com.casa.myapplication.Model;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText mMailField, mPassField;
     private Button mButtonLog;
+    private ProgressDialog mProgressLoad;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -40,9 +42,10 @@ public class LoginActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mProgressLoad  = new ProgressDialog(LoginActivity.this);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -63,6 +66,12 @@ public class LoginActivity extends AppCompatActivity {
         mButtonLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                mProgressLoad.setTitle("Cargando Datos");
+                mProgressLoad.setMessage("Accediendo a la cuenta, espere por favor");
+                mProgressLoad.setCanceledOnTouchOutside(false);
+                mProgressLoad.show();
+
                 startLogin();
             }
         });
@@ -74,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = mMailField.getText().toString().trim();
         String pass = mPassField.getText().toString().trim();
 
-        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)/*probar --> email.isEmpty() || pass.isEmpty()*/){
+        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)){
 
             Toast.makeText(LoginActivity.this, "Campos vacios", Toast.LENGTH_LONG).show();
 
@@ -84,7 +93,8 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(!task.isSuccessful()){
-                        System.out.println(task.getException().toString());
+
+                        mProgressLoad.hide();
                         Toast.makeText(LoginActivity.this, "Error usuario y/o contraseña", Toast.LENGTH_LONG).show();
                     }
                 }
