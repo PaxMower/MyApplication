@@ -1,6 +1,7 @@
 package com.casa.myapplication.Model;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,11 +28,12 @@ import com.casa.myapplication.Logic.Order;
 import com.casa.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 
 /**
  * Created by Gastby on 21/06/2017.
@@ -39,7 +41,7 @@ import java.text.SimpleDateFormat;
 
 public class NewOrderActivity extends AppCompatActivity {
 
-    private EditText mDriver, mDate, mTruckID, mTruckNumber, mPlatformNumber, mAddress, mPhone, mTextArea, mApertureHour;
+    private EditText mDriver, mDate, mTruckID, mTruckNumber, mPlatformID, mAddress, mPhone, mTextArea, mApertureHour;
     private EditText mContainerChargeDay, mContainerChargeHour, mClient, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour, mContainerDischargeHour, mContainerDischargeDay;
     private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bDischargeDay, bDischargeHour, bPetrol;
     private String TAG = "";
@@ -48,6 +50,7 @@ public class NewOrderActivity extends AppCompatActivity {
     //private Calendar mCalendarDischarge = Calendar.getInstance();
     private Calendar mTimePicker = Calendar.getInstance();
     //private Calendar mTimeDischarge = Calendar.getInstance();
+    private ProgressDialog mProgressLoad;
 
     private DatabaseReference mDatabase;// = FirebaseDatabase.getInstance().getReference();
 
@@ -67,7 +70,7 @@ public class NewOrderActivity extends AppCompatActivity {
         mDate = (EditText) findViewById(R.id.date);
         mTruckID = (EditText) findViewById(R.id.truck_num);
         mTruckNumber = (EditText) findViewById(R.id.truck_id);
-        mPlatformNumber = (EditText) findViewById(R.id.platform_id);
+        mPlatformID = (EditText) findViewById(R.id.platform_id);
         mContainerChargeDay = (EditText) findViewById(R.id.button_obtain_charge_day);
         mContainerChargeHour = (EditText) findViewById(R.id.button_obtain_charge_hour);
         mClient = (EditText) findViewById(R.id.client);
@@ -515,21 +518,24 @@ public class NewOrderActivity extends AppCompatActivity {
     }
 
 
-    //En este método irán las llamadas a las BBDD
+    //Método para guardar la orden en firebase
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void SendFirebaseData(){
 
-        final String orderDate = getDate();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mProgressLoad  = new ProgressDialog(NewOrderActivity.this);
+        mProgressLoad.setTitle("Guardando");
+        mProgressLoad.setMessage("Guardando datos, por favor espere");
+        mProgressLoad.setCanceledOnTouchOutside(false);
+
+
+        FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = current_user.getUid();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("Orders").child(getDate()).child(getHour());
 
         bSend.setOnClickListener(new View.OnClickListener() { //listener que se ejecuta cuando se pulsa el botón
             @Override
             public void onClick(View v) {
-
-                //HashMap<String, String> dataMap = new HashMap<String, String>();
-
-               // dataMap.put("driver",mDriver.getText().toString());
-                //dataMap.put("truck ID",mTruckID.getText().toString());
 
                 Order newOrder = new Order();
 
@@ -537,22 +543,50 @@ public class NewOrderActivity extends AppCompatActivity {
                 newOrder.setDriver(mDriver.getText().toString());
                 newOrder.setTruckNumber(mTruckNumber.getText().toString());
                 newOrder.setTruckID(mTruckID.getText().toString());
-                newOrder.setPlatformNumber(mPlatformNumber.getText().toString());
+                newOrder.setPlatformID(mPlatformID.getText().toString());
+
+                newOrder.setClient(mClient.getText().toString());
+                newOrder.setCharger(mCharger.getText().toString());
+                newOrder.setAddress(mAddress.getText().toString());
+                newOrder.setApertureHour(mApertureHour.getText().toString());
+                newOrder.setPhone(mPhone.getText().toString());
+                newOrder.setContainerNumber(mContainerNumber.getText().toString());
+                newOrder.setArrivalHour(mArrivalHour.getText().toString());
+                newOrder.setDepartureHour(mDepartureHour.getText().toString());
+
+                newOrder.setContainerChargeDay(mContainerChargeDay.getText().toString());
+                newOrder.setContainerChargeHour(mContainerChargeHour.getText().toString());
+                newOrder.setContainerDischargeDay(mContainerDischargeDay.getText().toString());
+                newOrder.setContainerDischargeHour(mContainerDischargeHour.getText().toString());
+
+                newOrder.setTextArea(mTextArea.getText().toString());
 
 
-                //   mDatabase.child("Users1").child("Orders1").child(orderDate).push().setValue(newOrder)
-                mDatabase.child(orderDate).push().setValue(newOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                mDatabase.setValue(newOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(NewOrderActivity.this, "Datos enviados",Toast.LENGTH_LONG ).show();
 
-                            bucket = false; //put false for indicate that there are no data on device memory
-                        }else{
-                            Toast.makeText(NewOrderActivity.this, "Error",Toast.LENGTH_LONG ).show();
+                        if(task.isSuccessful()){
+                            mProgressLoad.show();
+                            mProgressLoad.dismiss();
+
+                            Intent goToMainPage = new Intent(NewOrderActivity.this, MenuActivity.class);
+                            goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(goToMainPage);
+                            finish();
+
+                        } else {
+
+                            mProgressLoad.hide();
+                            Toast.makeText(NewOrderActivity.this, "Error al guardar los datos", Toast.LENGTH_LONG).show();
+
                         }
+
                     }
                 });
+
+
             }
         });
 
@@ -575,9 +609,11 @@ public class NewOrderActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String getDate(){
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String formattedDate = df.format(c.getTime());
-        return formattedDate;
+        DecimalFormat formatTime = new DecimalFormat("00");
+        String date = formatTime.format(c.get(Calendar.DAY_OF_MONTH))+"-"+formatTime.format(c.get(Calendar.MONTH)+1)+"-"+c.get(Calendar.YEAR);
+        //SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        //String formattedDate = df.format(c.getTime());
+        return date;//formattedDate.toString();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

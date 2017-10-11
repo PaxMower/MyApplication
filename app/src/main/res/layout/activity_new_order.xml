@@ -194,12 +194,12 @@
                 android:layout_weight="1">
 
                 <EditText
-                    android:id="@+id/button_obtain_departure_time"
+                    android:id="@+id/button_obtain_arrival_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/departure_time"
-                    android:inputType="time"
-                    android:focusable="false"/>
+                    android:focusable="false"
+                    android:hint="@string/arrival_time"
+                    android:inputType="time" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -208,10 +208,10 @@
                 android:layout_weight="1">
 
                 <EditText
-                    android:id="@+id/button_obtain_arrival_time"
+                    android:id="@+id/button_obtain_departure_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/arrival_time"
+                    android:hint="@string/departure_time"
                     android:inputType="time"
                     android:focusable="false"/>
             </android.support.design.widget.TextInputLayout>

@@ -15,7 +15,7 @@
     <string name="driver">Chofer</string>
     <string name="truck_id">Matrícula camión</string>
     <string name="truck_number">Número de camión</string>
-    <string name="platform_id">Número de plataforma</string>
+    <string name="platform_id">Matrícula de plataforma</string>
     <string name="order_id">Número de orden</string>
     <string name="date">Fecha</string>
     <string name="charging_order_day">Día carga contenedor</string>

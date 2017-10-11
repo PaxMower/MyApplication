@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //hide action bar
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.hide();
@@ -45,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //progress load bar
         mProgressLoad  = new ProgressDialog(LoginActivity.this);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -53,11 +55,15 @@ public class LoginActivity extends AppCompatActivity {
         mPassField = (EditText) findViewById(R.id.passField);
         mButtonLog = (Button) findViewById(R.id.buttonLog);
 
+        //auth users
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() != null){ //el usuario está logeado ya
-                    startActivity(new Intent(LoginActivity.this, MenuActivity.class));
+                    Intent mainIntent = new Intent(LoginActivity.this, MenuActivity.class);//load next activity
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Clear previous activity
+                    startActivity(mainIntent);
+
                 }
             }
         };
