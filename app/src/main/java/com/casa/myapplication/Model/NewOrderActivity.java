@@ -60,6 +60,11 @@ public class NewOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order);
 
+        mProgressLoad = new ProgressDialog(NewOrderActivity.this);
+        mProgressLoad.setTitle("Guardando");
+        mProgressLoad.setMessage("Guardando datos, por favor espere");
+        mProgressLoad.setCanceledOnTouchOutside(false);
+
         //Add back buttons on toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
@@ -124,7 +129,7 @@ public class NewOrderActivity extends AppCompatActivity {
     public void formData(){
 
         //put the current date on the form
-        mDate.setText(getDate());
+        mDate.setText(getDay()+"/"+getMonth()+"/"+getYear());
 
         //open map with the position
         bMap.setOnClickListener(new View.OnClickListener() {
@@ -522,22 +527,23 @@ public class NewOrderActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void SendFirebaseData(){
 
-        mProgressLoad  = new ProgressDialog(NewOrderActivity.this);
-        mProgressLoad.setTitle("Guardando");
-        mProgressLoad.setMessage("Guardando datos, por favor espere");
-        mProgressLoad.setCanceledOnTouchOutside(false);
-
 
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = current_user.getUid();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("Orders").child(getDate()).child(getHour());
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("Orders");
 
         bSend.setOnClickListener(new View.OnClickListener() { //listener que se ejecuta cuando se pulsa el botón
             @Override
             public void onClick(View v) {
 
                 Order newOrder = new Order();
+
+                newOrder.setDay(getDay());
+                newOrder.setMonth(getMonth());
+                newOrder.setYear(getYear());
+                newOrder.setHour(getHour());
+                newOrder.setMinutes(getMinutes());
 
                 newOrder.setDate(mDate.getText().toString());
                 newOrder.setDriver(mDriver.getText().toString());
@@ -561,19 +567,18 @@ public class NewOrderActivity extends AppCompatActivity {
 
                 newOrder.setTextArea(mTextArea.getText().toString());
 
+                mProgressLoad.show();
 
-
-                mDatabase.setValue(newOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
+                mDatabase.push().setValue(newOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
 
                         if(task.isSuccessful()){
-                            mProgressLoad.show();
-                            mProgressLoad.dismiss();
 
                             Intent goToMainPage = new Intent(NewOrderActivity.this, MenuActivity.class);
                             goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(goToMainPage);
+                            mProgressLoad.dismiss();
                             finish();
 
                         } else {
@@ -606,7 +611,7 @@ public class NewOrderActivity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+   /* @RequiresApi(api = Build.VERSION_CODES.N)
     public String getDate(){
         Calendar c = Calendar.getInstance();
         DecimalFormat formatTime = new DecimalFormat("00");
@@ -614,20 +619,43 @@ public class NewOrderActivity extends AppCompatActivity {
         //SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         //String formattedDate = df.format(c.getTime());
         return date;//formattedDate.toString();
+    }*/
+
+    public String getDay(){
+        Calendar c = Calendar.getInstance();
+        DecimalFormat formatTime = new DecimalFormat("00");
+        String date = formatTime.format(c.get(Calendar.DAY_OF_MONTH));
+        return date;
+    }
+
+    public String getMonth(){
+        Calendar c = Calendar.getInstance();
+        DecimalFormat formatTime = new DecimalFormat("00");
+        String date = formatTime.format(c.get(Calendar.MONTH)+1);
+        return date;
+    }
+
+    public String getYear(){
+        Calendar c = Calendar.getInstance();
+        DecimalFormat formatTime = new DecimalFormat("00");
+        String date = formatTime.format(c.get(Calendar.YEAR));
+        return date;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String getHour(){
-        //Calendar calendar = Calendar.getInstance();
         DecimalFormat formatTime = new DecimalFormat("00");
-        //DecimalFormat minuteFormat = new DecimalFormat("00");
-
         String hour = formatTime.format(mTimePicker.get(Calendar.HOUR_OF_DAY));
+
+        return hour;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public String getMinutes(){
+        DecimalFormat formatTime = new DecimalFormat("00");
         String minute = formatTime.format(mTimePicker.get(Calendar.MINUTE));
 
-        String date = hour+":"+minute;
-
-        return date;
+        return minute;
     }
 
     @Override
@@ -673,6 +701,5 @@ public class NewOrderActivity extends AppCompatActivity {
         super.onDestroy();
 
     }
-
 
 }

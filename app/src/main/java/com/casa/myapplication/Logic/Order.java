@@ -8,7 +8,8 @@ public class Order {
 
     private String driver, address, phone, date, truckID, truckNumber, platformID, containerChargeDay, containerChargeHour,
                     client, apertureHour, charger, containerNumber, arrivalHour, departureHour, containerDischargeHour,
-                    containerDischargeDay, textArea;
+                    containerDischargeDay, textArea, day, month, year, minutes, hour;
+
 
     public Order() {
         this.driver = driver;
@@ -29,6 +30,51 @@ public class Order {
         this.containerDischargeHour = containerDischargeHour;
         this.containerDischargeDay = containerDischargeDay;
         this.textArea = textArea;
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.hour = hour;
+        this.minutes = minutes;
+    }
+
+    public String getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(String minutes) {
+        this.minutes = minutes;
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public String getDriver() {
