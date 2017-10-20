@@ -591,7 +591,6 @@ public class NewOrderActivity extends AppCompatActivity {
                     }
                 });
 
-
             }
         });
 
