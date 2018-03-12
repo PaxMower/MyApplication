@@ -7,11 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ExpandableListView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.casa.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
+//import static android.support.v7.app.AlertController.RecycleListView;
 
 /**
  * Created by Gastby on 21/06/2017.
@@ -19,10 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class WatchOrdersActivity extends AppCompatActivity {
 
-    private ExpandableListView mOrderList;
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
+    private FirebaseDatabase mFirebaseData;
+    private ListView mListView;
 
 
     @Override
@@ -30,7 +32,8 @@ public class WatchOrdersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_orders);
 
-        mOrderList = (ExpandableListView) findViewById(R.id.expListView);
+        mListView = (ListView) findViewById(R.id.listView);
+        //mOrderList = (ExpandableListView) findViewById(R.id.expListView);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mostrará como un UP
@@ -39,6 +42,20 @@ public class WatchOrdersActivity extends AppCompatActivity {
 
 
 
+    public void retrieveListViewData (){
+
+        Firebase ref = new Firebase("https://<yourapp>.firebaseio.com");
+        ListAdapter adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, android.R.layout.two_line_list_item, mRef)
+        {
+            protected void populateView(View view, ChatMessage chatMessage)
+            {
+                ((TextView)view.findViewById(android.R.id.text1)).setText(chatMessage.getName());
+                ((TextView)view.findViewById(android.R.id.text2)).setText(chatMessage.getMessage());
+            }
+        };
+        listView.setListAdapter(adapter);
+
+    }
 
 
 

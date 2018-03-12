@@ -42,7 +42,9 @@
     <string name="button_satellite">Satelite</string>
     <string name="button_position">Posición actual</string>
     <string name="button_obtain_time">Obtener hora</string>
-    <string name="petrol">Repostar</string>
+    <string name="button_petrol">Repostar</string>
+    <string name="button_add_location">Añadir Destino</string>
+
 
 
     <string name="multiple_order">Viaje múltiple</string>

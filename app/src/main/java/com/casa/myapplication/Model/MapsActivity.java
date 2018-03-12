@@ -194,9 +194,4 @@ public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implemen
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-
-
-
-
-
 }

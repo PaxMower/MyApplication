@@ -140,7 +140,7 @@
             <Button
                 android:id="@+id/view_map"
                 android:layout_width="110dp"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:layout_weight="1"
                 android:background="@android:drawable/ic_menu_mylocation" />
         </LinearLayout>
@@ -297,8 +297,18 @@
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@color/colorSecondary"
-            android:text="@string/petrol"
+            android:text="@string/button_petrol"
             android:textColor="@color/cardview_light_background" />
+
+        <Button
+            android:id="@+id/save_current_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:background="@color/colorSecondary"
+            android:text="Button"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/save_order"
