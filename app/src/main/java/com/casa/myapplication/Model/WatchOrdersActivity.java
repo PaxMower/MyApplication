@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.casa.myapplication.R;
@@ -32,7 +31,7 @@ public class WatchOrdersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_orders);
 
-        mListView = (ListView) findViewById(R.id.listView);
+        //mListView = (ListView) findViewById(R.id.mListView);
         //mOrderList = (ExpandableListView) findViewById(R.id.expListView);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
@@ -41,7 +40,7 @@ public class WatchOrdersActivity extends AppCompatActivity {
     }
 
 
-
+/*
     public void retrieveListViewData (){
 
         Firebase ref = new Firebase("https://<yourapp>.firebaseio.com");
@@ -56,7 +55,7 @@ public class WatchOrdersActivity extends AppCompatActivity {
         listView.setListAdapter(adapter);
 
     }
-
+*/
 
 
 

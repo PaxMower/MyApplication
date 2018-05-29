@@ -22,6 +22,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Model.LoginActivity"
+            android:windowSoftInputMode="stateHidden"
             android:noHistory="true">
             >
             <intent-filter>
@@ -32,21 +33,27 @@
         </activity>
         <activity
             android:name=".Model.MenuActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/app_menu" />
         <activity
             android:name=".Model.NewOrderActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/app_new_order" />
         <activity
             android:name=".Model.WatchOrdersActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/app_watch_order" />
         <activity
             android:name=".Model.SettingsActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/app_settings" />
         <activity
             android:name=".Model.PetrolActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/app_petrol" />
         <activity
             android:name=".Model.MapsActivity"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/app_maps" />
 
         <meta-data
