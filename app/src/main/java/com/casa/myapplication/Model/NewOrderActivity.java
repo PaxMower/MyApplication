@@ -580,12 +580,9 @@ public class NewOrderActivity extends AppCompatActivity {
                             startActivity(goToMainPage);
                             mProgressLoad.dismiss();
                             finish();
-
                         } else {
-
                             mProgressLoad.hide();
                             Toast.makeText(NewOrderActivity.this, "Error al guardar los datos", Toast.LENGTH_LONG).show();
-
                         }
 
                     }
