@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -45,11 +44,9 @@ public class NewOrderActivity extends AppCompatActivity {
     private EditText mContainerChargeDay, mContainerChargeHour, mClient, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour, mContainerDischargeHour, mContainerDischargeDay;
     private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bDischargeDay, bDischargeHour, bPetrol;
     private String TAG = "";
-    private Boolean bucket = false; // false = empty; true = data inside
+    private boolean isDated = false;
     private Calendar mCalendarPicker = Calendar.getInstance();
-    //private Calendar mCalendarDischarge = Calendar.getInstance();
     private Calendar mTimePicker = Calendar.getInstance();
-    //private Calendar mTimeDischarge = Calendar.getInstance();
     private ProgressDialog mProgressLoad;
 
     private DatabaseReference mDatabase;// = FirebaseDatabase.getInstance().getReference();
@@ -82,25 +79,16 @@ public class NewOrderActivity extends AppCompatActivity {
         mApertureHour = (EditText) findViewById(R.id.aperture_hour);
         mCharger = (EditText) findViewById(R.id.charger);
         mContainerNumber = (EditText) findViewById(R.id.container_number);
-        //mArrivalHour = (EditText) findViewById(R.id.arrival_time);
-        //mDepartureHour = (EditText) findViewById(R.id.departure_time);
         mContainerDischargeHour = (EditText) findViewById(R.id.button_obtain_discharge_hour);
         mContainerDischargeDay = (EditText) findViewById(R.id.button_obtain_discharge_day);
         bMap = (Button) findViewById(R.id.view_map);
         bSend = (Button) findViewById(R.id.save_order);
         bPetrol = (Button) findViewById(R.id.petrol);
         mTextArea = (EditText) findViewById(R.id.text_area);
-        //bTime = (Button) findViewById(R.id.button_obtain_date);
-        //bChargeDay = (Button) findViewById(R.id.button_obtain_charge_day);
-        //bChargeHour = (Button) findViewById(R.id.button_obtain_charge_hour);
         mArrivalHour = (EditText) findViewById(R.id.button_obtain_arrival_time);
         mDepartureHour = (EditText) findViewById(R.id.button_obtain_departure_time);
-        //bDischargeDay = (Button) findViewById(R.id.button_obtain_discharge_day);
-        //bDischargeHour = (Button) findViewById(R.id.button_obtain_discharge_hour);
 
-
-
-        saveSharedPreferences();
+        loadSharedPreferences();
         formData();
         SendFirebaseData();
 
@@ -110,17 +98,17 @@ public class NewOrderActivity extends AppCompatActivity {
     public void saveSharedPreferences(){
         SharedPreferences sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-
+        editor.putString("mDate", mDate.getText().toString());
         editor.putString("mDriver", mDriver.getText().toString());
-        editor.apply();
-        bucket = true;
-
+        editor.commit();
     }
 
     //Method for load data on device memory
     public void loadSharedPreferences(){
         SharedPreferences sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
 
+        String date = sharedPref.getString("mDate", "");
+        mDate.setText(date);
         String driver = sharedPref.getString("mDriver", "");
         mDriver.setText(driver);
     }
@@ -129,7 +117,7 @@ public class NewOrderActivity extends AppCompatActivity {
     public void formData(){
 
         //put the current date on the form
-        mDate.setText(getDay()+"/"+getMonth()+"/"+getYear());
+        mDate.setText(getDay() + "/" + getMonth() + "/" + getYear());
 
         //open map with the position
         bMap.setOnClickListener(new View.OnClickListener() {
@@ -607,16 +595,6 @@ public class NewOrderActivity extends AppCompatActivity {
         }
     }
 
-   /* @RequiresApi(api = Build.VERSION_CODES.N)
-    public String getDate(){
-        Calendar c = Calendar.getInstance();
-        DecimalFormat formatTime = new DecimalFormat("00");
-        String date = formatTime.format(c.get(Calendar.DAY_OF_MONTH))+"-"+formatTime.format(c.get(Calendar.MONTH)+1)+"-"+c.get(Calendar.YEAR);
-        //SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        //String formattedDate = df.format(c.getTime());
-        return date;//formattedDate.toString();
-    }*/
-
     public String getDay(){
         Calendar c = Calendar.getInstance();
         DecimalFormat formatTime = new DecimalFormat("00");
@@ -655,47 +633,10 @@ public class NewOrderActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
-        Log.d(TAG, "onStart");
-        if (bucket){
-            loadSharedPreferences();
-        }
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onResume(){
-        Log.d(TAG, "onResume");
-        if (bucket){
-            loadSharedPreferences();
-        }
-        super.onResume();
-
-    }
-
-    @Override
     protected void onPause(){
-        Log.d(TAG, "onPause");
-        saveSharedPreferences();
         super.onPause();
-
-    }
-
-    @Override
-    protected void onStop(){
-        Log.d(TAG, "onStop");
+        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
         saveSharedPreferences();
-        super.onStop();
-
-    }
-
-    @Override
-    protected void onDestroy(){
-        Log.d(TAG, "onDestroy");
-        saveSharedPreferences();
-        super.onDestroy();
-
     }
 
 }

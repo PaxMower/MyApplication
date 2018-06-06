@@ -4,65 +4,128 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.casa.myapplication.Model.MenuActivity">
+    tools:context="com.casa.myapplication.Model.MenuActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
 
-    <RelativeLayout
-            android:layout_width="368dp"
-            android:layout_height="495dp"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp">
 
-            <TextView
-                android:id="@+id/userDataField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:text=" "
-                android:textAlignment="center"
-                android:textSize="22dp" />
+        <TextView
+            android:id="@+id/userDataField"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:text=" "
+            android:textAlignment="center"
+            android:textSize="22dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/new_order"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="79dp"
-                android:background="@drawable/circle_button"
-                android:padding="15dp"
-                android:text="@string/new_order"
-                android:layout_below="@+id/userDataField"
-                android:layout_toRightOf="@+id/watch_orders"
-                android:layout_toEndOf="@+id/watch_orders"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp" />
+        <TextView
+            android:id="@+id/watch_orders"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="0dp"
+            android:text="@string/watch_orders"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/watch_orders"
+            android:layout_marginLeft="50dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
-            <Button
-                android:id="@+id/watch_orders"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:background="@drawable/circle_button"
-                android:padding="15dp"
-                android:text="@string/watch_orders"
-                android:layout_marginLeft="23dp"
-                android:layout_marginStart="23dp"
-                android:layout_alignBaseline="@+id/new_order"
-                android:layout_alignBottom="@+id/new_order"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/new_order"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="0dp"
+            android:text="@string/new_order"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/new_order" />
+
+        <TextView
+            android:id="@+id/petrol_send"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="0dp"
+            android:text="@string/button_petrol"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/petrol_activity" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="0dp"
+            android:text="@string/button_add_location"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/components" />
+
+        <Button
+            android:id="@+id/new_order"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/clipboard"
+            android:padding="15dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userDataField" />
+
+        <Button
+            android:id="@+id/watch_orders"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/truck"
+            android:padding="15dp"
+            android:layout_marginLeft="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@+id/userDataField" />
 
         <Button
             android:id="@+id/petrol_activity"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_below="@+id/new_order"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="33dp"
-            android:background="@drawable/circle_button"
-            android:text="@string/petrol_send" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/refuel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/watch_orders" />
 
-        </RelativeLayout>
+        <Button
+            android:id="@+id/components"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/wheel"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/new_order" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
