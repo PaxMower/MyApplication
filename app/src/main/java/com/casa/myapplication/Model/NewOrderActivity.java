@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.net.ParseException;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,10 +35,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 
-/**
- * Created by Gastby on 21/06/2017.
- */
 
 public class NewOrderActivity extends AppCompatActivity {
 
@@ -148,9 +148,10 @@ public class NewOrderActivity extends AppCompatActivity {
                             .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                    final TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
                                         @Override
                                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
                                             mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
                                         }
                                     },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
@@ -327,45 +328,63 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!mContainerChargeDay.getText().toString().matches("")){
+                    if (!mContainerChargeDay.getText().toString().matches("")) {
 
-                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
-                    alertBuild.setMessage("Ya se ha anotado una fecha en este campo, ¿Desea cambiarla?")
-                            .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
-                                        @Override
-                                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                            mContainerChargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
-                                        }
-                                    },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
-                                    datePickerDialog.show();
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-                    alertBuild.create();
-                    alertBuild.show();
+                        AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
+                        alertBuild.setMessage("Ya se ha anotado una fecha en este campo, ¿Desea cambiarla?")
+                                .setCancelable(false)
+                                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                                            @Override
+                                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                                mContainerChargeDay.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                                            }
+                                        }, mCalendarPicker.get(Calendar.YEAR), mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
+                                        datePickerDialog.show();
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        alertBuild.create();
+                        alertBuild.show();
 
-                }else {
+                    } else {
 
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            mContainerChargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
-                        }
-                    },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
-                    datePickerDialog.show();
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                mContainerChargeDay.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                            }
+                        }, mCalendarPicker.get(Calendar.YEAR), mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
+                        datePickerDialog.show();
+                    }
 
+                    if(!mContainerDischargeDay.getText().toString().equals("") && !compareDates(mContainerChargeDay.getText().toString(), mContainerDischargeDay.getText().toString())){
+                        AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
+                        alertBuild.setMessage("Fecha de carga posterior a la fecha de descarga")
+                                .setCancelable(false)
+                                .setPositiveButton("Cambiar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                                            @Override
+                                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                                mContainerChargeDay.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                                            }
+                                        }, mCalendarPicker.get(Calendar.YEAR), mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
+                                        datePickerDialog.show();
+                                    }
+                                });
+                        alertBuild.create();
+                        alertBuild.show();
+                    }
                 }
-
-            }
         });
 
         //add the day when the container is discharged
@@ -374,24 +393,51 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!mContainerDischargeDay.getText().toString().matches("")){
 
+                if(!mContainerChargeDay.getText().toString().matches("")) {
+
+                    if (!mContainerDischargeDay.getText().toString().matches("")) {
+
+                        AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
+                        alertBuild.setMessage("Ya se ha anotado una fecha en este campo, ¿Desea cambiarla?")
+                                .setCancelable(false)
+                                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                                            @Override
+                                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                                mContainerDischargeDay.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                                            }
+                                        }, mCalendarPicker.get(Calendar.YEAR), mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
+                                        datePickerDialog.show();
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        alertBuild.create();
+                        alertBuild.show();
+
+                    } else {
+
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                mContainerDischargeDay.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                            }
+                        }, mCalendarPicker.get(Calendar.YEAR), mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
+                        datePickerDialog.show();
+
+                    }
+                }else if (mContainerChargeDay.getText().toString().matches("")){
                     AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
-                    alertBuild.setMessage("Ya se ha anotado una fecha en este campo, ¿Desea cambiarla?")
+                    alertBuild.setMessage("Primero debe indicar el día de carga")
                             .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
-                                        @Override
-                                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                            mContainerDischargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
-                                        }
-                                    },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
-                                    datePickerDialog.show();
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Aceptar", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();
@@ -399,115 +445,11 @@ public class NewOrderActivity extends AppCompatActivity {
                             });
                     alertBuild.create();
                     alertBuild.show();
-
-                }else {
-
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(NewOrderActivity.this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            mContainerDischargeDay.setText(dayOfMonth+"/"+(month+1)+"/"+year);
-                        }
-                    },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
-                    datePickerDialog.show();
-
                 }
 
             }
         });
 
-        ////add the hour when the container is charged
-        mContainerChargeHour.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v) {
-
-                if(!mContainerChargeHour.getText().toString().matches("")){
-
-                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
-                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
-                            .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                                        @Override
-                                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                            mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
-                                        }
-                                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
-                                    timePickerDialog.show();
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-                    alertBuild.create();
-                    alertBuild.show();
-
-                }else {
-
-                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                            mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
-                        }
-                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
-                    timePickerDialog.show();
-
-                }
-
-            }
-        });
-
-        //add the day when the container is discharged
-        mContainerDischargeHour.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v) {
-
-                if(!mContainerDischargeHour.getText().toString().matches("")){
-
-                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
-                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
-                            .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                                        @Override
-                                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                            mContainerDischargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
-                                        }
-                                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
-                                    timePickerDialog.show();
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-                    alertBuild.create();
-                    alertBuild.show();
-
-                }else {
-
-                    TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                            mContainerDischargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
-                        }
-                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
-                    timePickerDialog.show();
-
-                }
-
-            }
-        });
     }
 
 
@@ -630,6 +572,29 @@ public class NewOrderActivity extends AppCompatActivity {
         String minute = formatTime.format(mTimePicker.get(Calendar.MINUTE));
 
         return minute;
+    }
+
+    public boolean compareDates(String after, String before){
+
+        SimpleDateFormat formatAfter = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatBefore = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date dateAfter = formatAfter.parse(after);
+            Date dateBefore = formatBefore.parse(before);
+            System.out.println(dateAfter+"//////////////"+dateBefore);
+            if(dateAfter.after(dateBefore) || dateAfter.equals(dateBefore)){
+                System.out.println("Es bien");
+                return true;
+            }else {
+                System.out.println("No mal");
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
