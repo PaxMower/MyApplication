@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.casa.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 
 public class SettingsActivity extends AppCompatActivity{
@@ -19,6 +20,9 @@ public class SettingsActivity extends AppCompatActivity{
     private TextView mTextView;
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+    private DatabaseReference mDatabase;
+    FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+    String uid = current_user.getUid();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
