@@ -70,8 +70,8 @@ public class NewOrderActivity extends AppCompatActivity {
         mAddress = (EditText) findViewById(R.id.address);
         mPhone = (EditText) findViewById(R.id.phone);
         mDate = (EditText) findViewById(R.id.date);
-        mTruckID = (EditText) findViewById(R.id.truck_num);
-        mTruckNumber = (EditText) findViewById(R.id.truck_id);
+        mTruckID = (EditText) findViewById(R.id.truck_num_settings);
+        mTruckNumber = (EditText) findViewById(R.id.truck_id_settings);
         mPlatformID = (EditText) findViewById(R.id.platform_id);
         mContainerChargeDay = (EditText) findViewById(R.id.button_obtain_charge_day);
         mContainerChargeHour = (EditText) findViewById(R.id.button_obtain_charge_hour);
