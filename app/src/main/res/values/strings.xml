@@ -6,6 +6,7 @@
     <string name="app_settings">Ajustes</string>
     <string name="app_petrol">Repostaje</string>
     <string name="app_maps">Mapa</string>
+    <string name="app_change_settings">Cambiar Ajustes</string>
 
     <string name="new_order">Nuevo viaje</string>
     <string name="watch_orders">Ver viajes</string>
@@ -14,8 +15,8 @@
 
     <string name="driver">Chofer</string>
     <string name="truck_id">Matrícula camión</string>
-    <string name="truck_number">Número de camión</string>
-    <string name="platform_id">Matrícula de plataforma</string>
+    <string name="truck_number">Número camión</string>
+    <string name="platform_id">Matrícula plataforma</string>
     <string name="order_id">Número de orden</string>
     <string name="date">Fecha</string>
     <string name="charging_order_day">Día carga contenedor</string>
@@ -43,9 +44,9 @@
     <string name="button_position">Posición actual</string>
     <string name="button_obtain_time">Obtener hora</string>
     <string name="button_petrol">Repostar</string>
-    <string name="button_spare_parts">Recambios</string>
+    <string name="button_spare_parts">Taller</string>
     <string name="button_add_location">Añadir Destino</string>
-
+    <string name="button_change_settings">Cambiar ajustes</string>
 
 
     <string name="multiple_order">Viaje múltiple</string>
@@ -58,10 +59,8 @@
     <string name="petrol_km">Kilómetros</string>
     <string name="petrol_liters">Litros</string>
     <string name="petrol_send">Repostaje</string>
-
-
-
-
+    <string name="title_activity_change_settings">ChangeSettings</string>
 
 
 </resources>
+
