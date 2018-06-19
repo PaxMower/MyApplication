@@ -49,6 +49,10 @@ public class NewOrderActivity extends AppCompatActivity {
     private Calendar mTimePicker = Calendar.getInstance();
     private ProgressDialog mProgressLoad;
 
+    SharedPreferences sharedPref;
+
+    //private User user = new User();
+
     private DatabaseReference mDatabase;// = FirebaseDatabase.getInstance().getReference();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -56,11 +60,6 @@ public class NewOrderActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order);
-
-        mProgressLoad = new ProgressDialog(NewOrderActivity.this);
-        mProgressLoad.setTitle("Guardando");
-        mProgressLoad.setMessage("Guardando datos, por favor espere");
-        mProgressLoad.setCanceledOnTouchOutside(false);
 
         //Add back buttons on toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
@@ -96,21 +95,48 @@ public class NewOrderActivity extends AppCompatActivity {
 
     //Method for save data on device memory
     public void saveSharedPreferences(){
-        SharedPreferences sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+
+        sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
+
         editor.putString("mDate", mDate.getText().toString());
         editor.putString("mDriver", mDriver.getText().toString());
+        editor.putString("mClient", mClient.getText().toString());
+        editor.putString("mCharger", mCharger.getText().toString());
+        editor.putString("mAddress", mAddress.getText().toString());
+        editor.putString("mApertureHour", mApertureHour.getText().toString());
+        editor.putString("mContainerNumber", mContainerNumber.getText().toString());
+        editor.putString("mArrivalHour", mArrivalHour.getText().toString());
+        editor.putString("mDepartureHour", mDepartureHour.getText().toString());
+        editor.putString("mContainerChargeDay", mContainerChargeDay.getText().toString());
+        editor.putString("mContainerChargeHour", mContainerChargeHour.getText().toString());
+        editor.putString("mContainerDischargeHour", mContainerDischargeHour.getText().toString());
+        editor.putString("mContainerDischargeDay", mContainerDischargeDay.getText().toString());
+        editor.putString("mTextArea", mTextArea.getText().toString());
+
         editor.commit();
+
     }
 
     //Method for load data on device memory
     public void loadSharedPreferences(){
-        SharedPreferences sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
 
-        String date = sharedPref.getString("mDate", "");
-        mDate.setText(date);
-        String driver = sharedPref.getString("mDriver", "");
-        mDriver.setText(driver);
+        mDate.setText(sharedPref.getString("mDate", ""));
+        mDriver.setText(sharedPref.getString("mDriver", ""));
+        mClient.setText(sharedPref.getString("mClient", ""));
+        mCharger.setText(sharedPref.getString("mCharger", ""));
+        mAddress.setText(sharedPref.getString("mAddress", ""));
+        mApertureHour.setText(sharedPref.getString("mApertureHour", ""));
+        mContainerNumber.setText(sharedPref.getString("mContainerNumber", ""));
+        mArrivalHour.setText(sharedPref.getString("mArrivalHour", ""));
+        mDepartureHour.setText(sharedPref.getString("mDepartureHour", ""));
+        mContainerChargeDay.setText(sharedPref.getString("mContainerChargeDay", ""));
+        mContainerChargeHour.setText(sharedPref.getString("mContainerChargeHour", ""));
+        mContainerDischargeHour.setText(sharedPref.getString("mContainerDischargeHour", ""));
+        mContainerDischargeDay.setText(sharedPref.getString("mContainerDischargeDay", ""));
+        mTextArea.setText(sharedPref.getString("mTextArea", ""));
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -119,20 +145,10 @@ public class NewOrderActivity extends AppCompatActivity {
         //put the current date on the form
         mDate.setText(getDay() + "/" + getMonth() + "/" + getYear());
 
-        //open map with the position
-        bMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
-            }});
-
-        //add refuel option
-        bPetrol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(NewOrderActivity.this, PetrolActivity.class));
-            }
-        });
+        //mDriver.setText(user.getEmployeeNameSettings().toString());
+        //mTruckNumber.setText(user.getTruckNumSettings().toString());
+        //mTruckID.setText(user.getTruckIdSettings().toString());
+        //mPlatformID.setText(user.getPlatformIdSettings().toString());
 
         //Put the hour which the company charged you
         mContainerChargeHour.setOnClickListener(new View.OnClickListener() {
@@ -450,6 +466,21 @@ public class NewOrderActivity extends AppCompatActivity {
             }
         });
 
+        //open map with the position
+        bMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
+            }});
+
+        //add refuel option
+        bPetrol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NewOrderActivity.this, PetrolActivity.class));
+            }
+        });
+
     }
 
 
@@ -457,11 +488,15 @@ public class NewOrderActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void SendFirebaseData(){
 
+        mProgressLoad = new ProgressDialog(NewOrderActivity.this);
+        mProgressLoad.setTitle("Guardando");
+        mProgressLoad.setMessage("Guardando datos, por favor espere");
+        mProgressLoad.setCanceledOnTouchOutside(false);
 
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = current_user.getUid();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("Orders");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("Orders").child(getYear()).child(getMonth());
 
         bSend.setOnClickListener(new View.OnClickListener() { //listener que se ejecuta cuando se pulsa el botón
             @Override
@@ -505,6 +540,10 @@ public class NewOrderActivity extends AppCompatActivity {
 
                         if(task.isSuccessful()){
 
+                            clearSharedPreferences();
+                            //clearData();
+
+                            //Load main page when the order is sent
                             Intent goToMainPage = new Intent(NewOrderActivity.this, MenuActivity.class);
                             goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(goToMainPage);
@@ -523,6 +562,20 @@ public class NewOrderActivity extends AppCompatActivity {
 
     }
 
+    private void clearData() {
+        mDriver.setText("");
+
+    }
+
+    //Clear data from the previous form
+    private void clearSharedPreferences() {
+
+        sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        //sharedPref.edit().remove("mDriver").apply();
+        editor.clear();
+        editor.apply();
+    }
 
     //Close actual activity when back button is selected
     @Override
@@ -600,7 +653,7 @@ public class NewOrderActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Orden guardada", Toast.LENGTH_SHORT).show();
         saveSharedPreferences();
     }
 
