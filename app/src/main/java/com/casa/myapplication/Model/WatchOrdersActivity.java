@@ -1,101 +1,153 @@
 package com.casa.myapplication.Model;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 
+import com.casa.myapplication.Adapter.CustomExpandableListView;
+import com.casa.myapplication.Logic.Order;
 import com.casa.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-//import static android.support.v7.app.AlertController.RecycleListView;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-/**
- * Created by Gastby on 21/06/2017.
- */
 
 public class WatchOrdersActivity extends AppCompatActivity {
 
-    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseDatabase mFirebaseData;
-    private ListView mListView;
+    ExpandableListView expandableListView;
+    List<String> listDataHeader;
+    HashMap<String, List<Order>> listDataChild;
+    CustomExpandableListView customExpandableListView;
 
+    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private String userID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_orders);
 
-        //mListView = (ListView) findViewById(R.id.mListView);
-        //mOrderList = (ExpandableListView) findViewById(R.id.expListView);
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        //mDatabase = mFirebaseDatabase.getReference();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
 
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mostrará como un UP
 
+        addControl();
+        customExpandableListView = new CustomExpandableListView(WatchOrdersActivity.this, listDataHeader, listDataChild);
+        expandableListView.setAdapter(customExpandableListView);
     }
 
+    private void addControl() {
 
-/*
-    public void retrieveListViewData (){
+        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<String, List<Order>>();
 
-        Firebase ref = new Firebase("https://<yourapp>.firebaseio.com");
-        ListAdapter adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class, android.R.layout.two_line_list_item, mRef)
-        {
-            protected void populateView(View view, ChatMessage chatMessage)
-            {
-                ((TextView)view.findViewById(android.R.id.text1)).setText(chatMessage.getName());
-                ((TextView)view.findViewById(android.R.id.text2)).setText(chatMessage.getMessage());
+
+        DatabaseReference mData = mFirebaseDatabase.getReference().child("Users").child(userID).child("Orders");
+        mData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                int x = 0;
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    listDataHeader.add(ds.getKey());
+                    List<Order> uno = new ArrayList<Order>();
+
+                    for(DataSnapshot ds2 : ds.getChildren()){
+                        //List<Order> uno = new ArrayList<Order>();
+
+                        Order order = ds2.getValue(Order.class);
+                        Log.v("FIREBASE_DATA", order.toString());
+
+                        uno.add(order);
+
+                        for(DataSnapshot ds3 : ds2.getChildren()){
+                            //String min = ds3.child("minutes").getValue(String.class);
+
+                            //User user = dataSnapshot.getValue(User.class);
+                            //Order order = ds3.getValue(Order.class);
+                            //SaveUsers(order);
+
+                            //String min = ds3.toString();
+                            //Log.v("FIREBASE_DATA", ds3.getValue().toString());
+                            //System.out.println(user);
+                            //uno.add(order);
+                        }
+                        listDataChild.put(listDataHeader.get(x), uno);
+
+                    }
+                    x++;
+                }
+
+
+
+
+
             }
-        };
-        listView.setListAdapter(adapter);
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+        //listDataHeader.add("Header uno");
+        //listDataHeader.add("Header dos");
+
+        //List<String> uno = new ArrayList<String>();
+        //List<String> dos = new ArrayList<String>();
+
+/*        uno.add("asdfasd");
+        uno.add("13223e");
+        dos.add("0909099")*/;
+
+        /*for(int x = 0; x< listDataHeader.size(); x++){
+            listDataChild.put(listDataHeader.get(x), uno);
+        }*/
+
+        //listDataChild.put(listDataHeader.get(0), uno);
+        //listDataChild.put(listDataHeader.get(1), dos);
 
     }
-*/
 
-
-
-
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu the_menu) {
-
-        MenuInflater menuInflater = getMenuInflater(); // para crear el menu de 3 puntos en la ActionBar
-        menuInflater.inflate(R.menu.menu, the_menu);
-
-        return true;
-        //return super.onCreateOptionsMenu(menu);
+    private void SaveUsers(Order order) {
+        //Order order = ds3.getValue(Order.class);
+        Log.v("USUARIOS!!!!!", order.toString());
     }
 
+
+    //Close actual activity when back button is selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                startActivity(new Intent(WatchOrdersActivity.this, SettingsActivity.class));
-                return true;
-
-            case R.id.action_exit:
-                mFirebaseAuth.signOut();
-                finish();
-                startActivity(new Intent(this, LoginActivity.class));
-                return true;
-
+        switch (item.getItemId()){
             case android.R.id.home:
                 this.finish();
                 return true;
-
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 }
+
