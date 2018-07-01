@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="1dp">
+    android:paddingTop="5dp">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1.5">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -45,7 +45,6 @@
                     android:id="@+id/dateRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -53,8 +52,8 @@
                     app:layout_constraintStart_toEndOf="@+id/text1"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
             </android.support.constraint.ConstraintLayout>
+
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -85,7 +84,6 @@
                     android:id="@+id/truckIdRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -124,7 +122,6 @@
                     android:id="@+id/truckNumRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -163,7 +160,6 @@
                     android:id="@+id/platformIdRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -202,7 +198,6 @@
                     android:id="@+id/containerIdRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -241,7 +236,6 @@
                     android:id="@+id/chargerRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -280,7 +274,6 @@
                     android:id="@+id/clientRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -321,14 +314,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" /><![CDATA[
+                    app:layout_constraintVertical_bias="0.0" />
 
-                @+id/text8"
-                "
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            ]]>
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
@@ -359,7 +346,6 @@
                     android:id="@+id/apertureHourRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -398,7 +384,6 @@
                     android:id="@+id/phoneRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -436,7 +421,6 @@
                     android:id="@+id/arrivalHourRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -474,7 +458,6 @@
                     android:id="@+id/departureHourRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -512,7 +495,6 @@
                     android:id="@+id/containerChargeDayRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -550,7 +532,6 @@
                     android:id="@+id/containerChargeHourRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -588,7 +569,6 @@
                     android:id="@+id/containerDischargeDayRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -626,7 +606,6 @@
                     android:id="@+id/containerDischargeHourRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -664,7 +643,6 @@
                     android:id="@+id/observationsRetrieve"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1.5"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -673,6 +651,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
+
 
         </LinearLayout>
     </ScrollView>
