@@ -224,21 +224,21 @@
             android:id="@+id/client_lon_1"
             android:layout_width="80dp"
             android:layout_height="45dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:focusable="false"
-            android:focusableInTouchMode="false"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
             android:text="@string/client_pos_lon"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/client_lon"
             app:layout_constraintStart_toEndOf="@+id/client_lat"
             app:layout_constraintTop_toBottomOf="@+id/client_time_schedule_1" />
 
         <EditText
             android:id="@+id/client_lon"
-            android:layout_width="110dp"
+            android:layout_width="100dp"
             android:layout_height="45dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
@@ -253,18 +253,18 @@
         <Button
             android:id="@+id/add_client_send"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_alignParentTop="true"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
             android:layout_weight="0.38"
             android:background="@color/colorSecondary"
             android:focusable="false"
-            android:focusableInTouchMode="false"
             android:text="@string/button_add_location"
             android:textColor="@color/cardview_light_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_lat1" />
 
 
     </android.support.constraint.ConstraintLayout>
