@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/client_name_1"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:gravity="left|fill_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/client_name"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/client_name"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/client_name_1"
+            tools:layout_editor_absoluteY="0dp" />
+
+
+        <TextView
+            android:id="@+id/client_Address1"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:gravity="left|fill_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/client_address"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_name_1" />
+
+        <EditText
+            android:id="@+id/client_address"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/client_Address1"
+            app:layout_constraintTop_toBottomOf="@+id/client_name" />
+
+
+        <TextView
+            android:id="@+id/client_phone1"
+            android:layout_width="120dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:gravity="left|fill_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/client_phone"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_state_1" />
+
+        <EditText
+            android:id="@+id/client_phone"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/client_phone1"
+            app:layout_constraintTop_toBottomOf="@+id/client_state" />
+
+
+        <TextView
+            android:id="@+id/client_time_schedule_1"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:gravity="left|fill_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/client_time_schedule"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_phone1" />
+
+        <EditText
+            android:id="@+id/client_time_schedule"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text|numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/client_time_schedule_1"
+            app:layout_constraintTop_toBottomOf="@+id/client_phone" />
+
+        <TextView
+            android:id="@+id/client_city_1"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:gravity="left|fill_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/client_city"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_Address1" />
+
+        <EditText
+            android:id="@+id/client_city"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text|numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/client_city_1"
+            app:layout_constraintTop_toBottomOf="@+id/client_address" />
+
+        <TextView
+            android:id="@+id/client_state_1"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:gravity="left|fill_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/client_state"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_PC_1" />
+
+        <EditText
+            android:id="@+id/client_state"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text|numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/client_city_1"
+            app:layout_constraintTop_toBottomOf="@+id/client_PC" />
+
+        <TextView
+            android:id="@+id/client_PC_1"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:gravity="left|fill_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/client_PC"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_city_1" />
+
+        <EditText
+            android:id="@+id/client_PC"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text|numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/client_city_1"
+            app:layout_constraintTop_toBottomOf="@+id/client_city" />
+
+
+        <TextView
+            android:id="@+id/client_lat1"
+            android:layout_width="80dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:gravity="left|fill_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/client_pos_lat"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule_1" />
+
+        <EditText
+            android:id="@+id/client_lat"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/client_lat1"
+            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule_1" />
+
+
+        <TextView
+            android:id="@+id/client_lon_1"
+            android:layout_width="80dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="left|fill_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/client_pos_lon"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/client_lon"
+            app:layout_constraintStart_toEndOf="@+id/client_lat"
+            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule_1" />
+
+        <EditText
+            android:id="@+id/client_lon"
+            android:layout_width="110dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/client_lon_1"
+            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule_1" />
+
+
+        <Button
+            android:id="@+id/add_client_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="0.38"
+            android:background="@color/colorSecondary"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:text="@string/button_add_location"
+            android:textColor="@color/cardview_light_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
+
