@@ -6,9 +6,11 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -32,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
  * Created by Gastby on 21/09/2017.
  */
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class PetrolActivity extends AppCompatActivity{
 
     private EditText mPetrolDate, mPetrolHour, mPetrolKm, mPetrolLiters;
@@ -70,6 +73,7 @@ public class PetrolActivity extends AppCompatActivity{
     public void formData(){
 
         mPetrolHour.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 if(!mPetrolHour.getText().toString().matches("")){
@@ -121,6 +125,7 @@ public class PetrolActivity extends AppCompatActivity{
                     alertBuild.setMessage("Ya se ha anotado una fecha en este campo, ¿Desea cambiarla?")
                             .setCancelable(false)
                             .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                @RequiresApi(api = Build.VERSION_CODES.N)
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     DatePickerDialog datePickerDialog = new DatePickerDialog(PetrolActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -150,7 +155,6 @@ public class PetrolActivity extends AppCompatActivity{
                         }
                     },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
                     datePickerDialog.show();
-
                 }
             }
         });
@@ -171,30 +175,40 @@ public class PetrolActivity extends AppCompatActivity{
                 newPetrol.setKm(mPetrolKm.getText().toString());
                 newPetrol.setLiters(mPetrolLiters.getText().toString());
 
-                mProgressLoad.show();
 
-                mDatabase.push().setValue(newPetrol).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                if(mPetrolDate.getText().toString().equals("") || mPetrolHour.getText().toString().equals("") || mPetrolKm.getText().toString().equals("") || mPetrolLiters.getText().toString().equals("")){
 
-                        if(task.isSuccessful()){
+                    new AlertDialog.Builder(PetrolActivity.this)
+                            .setTitle("Campos en blanco")
+                            .setMessage("No pueden haber campos en blanco para poder añadir nuevos clientes")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            }).show();
 
-                            Intent goToMainPage = new Intent(PetrolActivity.this, MenuActivity.class);
-                            goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(goToMainPage);
-                            mProgressLoad.dismiss();
-                            finish();
+                }else{
+                    mProgressLoad.show();
 
-                        } else {
+                    mDatabase.push().setValue(newPetrol).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
 
-                            mProgressLoad.hide();
-                            Toast.makeText(PetrolActivity.this, "Error al guardar los datos", Toast.LENGTH_LONG).show();
+                            if(task.isSuccessful()){
 
+                                Intent goToMainPage = new Intent(PetrolActivity.this, MenuActivity.class);
+                                goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(goToMainPage);
+                                mProgressLoad.dismiss();
+                                finish();
+
+                            } else {
+                                mProgressLoad.hide();
+                                Toast.makeText(PetrolActivity.this, "Error al guardar los datos", Toast.LENGTH_LONG).show();
+                            }
                         }
-
-                    }
-                });
-
+                    });
+                }
             }
         });
     }
