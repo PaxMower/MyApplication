@@ -17,7 +17,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,6 +30,7 @@ import android.widget.Toast;
 
 import com.casa.myapplication.Logic.Client;
 import com.casa.myapplication.Logic.Order;
+import com.casa.myapplication.Logic.Prices;
 import com.casa.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -55,13 +55,13 @@ public class NewOrderActivity extends AppCompatActivity {
     private EditText mContainerChargeDay, mContainerChargeHour, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour, mContainerDischargeHour, mContainerDischargeDay;
     private AutoCompleteTextView mClient;
     private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bDischargeDay, bDischargeHour, bPetrol, bAddClient;
-    private String TAG = "";
-    private boolean isDated = false;
+    private int dst;
     private Calendar mCalendarPicker = Calendar.getInstance();
     private Calendar mTimePicker = Calendar.getInstance();
     private ProgressDialog mProgressLoad;
 
     Client newClient;
+    Prices newPrice;
 
     List<String> cl = new ArrayList<String>();//load client names
     List<Client> uno = new ArrayList<Client>();//load clients with all their values
@@ -116,8 +116,7 @@ public class NewOrderActivity extends AppCompatActivity {
     }
 
     private void loadClients() {
-        FirebaseDatabase mFirebaseDatabase;
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mData = mFirebaseDatabase.getReference().child("Clients");
 
         mData.addValueEventListener(new ValueEventListener() {
@@ -172,8 +171,8 @@ public class NewOrderActivity extends AppCompatActivity {
                         mState.setText(cli.getState().toString());
                         mApertureHour.setText(cli.getTimeSchedule().toString());
                         mPhone.setText(cli.getPhone().toString());
+                        mPrice.setText(loadDistances(mCity.getText().toString()).toString());
                     }
-
                 }
             }
         });
@@ -557,16 +556,23 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Double lat = Double.parseDouble(newClient.getLatitude().toString());
-                Double lon = Double.parseDouble(newClient.getLongitude().toString());
-                Log.v("----------------------",lat+" , "+lon);
-                Bundle bundle = new Bundle();
-                Intent i = new Intent(NewOrderActivity.this, MapsActivity.class);
-                bundle.putDouble("lat", lat);
-                bundle.putDouble("lon", lon);
-                i.putExtras(bundle);
-                startActivity(i);
-                //startActivity(new Intent(NewOrderActivity.this, MapsActivity.class));
+                if(mClient.getText().toString().equals("")){
+                    new AlertDialog.Builder(NewOrderActivity.this)
+                            .setTitle("Seleccione un cliente")
+                            .setMessage("Para ver el mapa debe seleccionar un cliente")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            }).show();
+                }else {
+                    Bundle bundle = new Bundle();
+                    Intent i = new Intent(NewOrderActivity.this, MapsActivity.class);
+                    bundle.putDouble("lat", Double.parseDouble(newClient.getLatitude().toString()));
+                    bundle.putDouble("lon", Double.parseDouble(newClient.getLongitude().toString()));
+                    i.putExtras(bundle);
+                    startActivity(i);
+                }
             }});
 
         //add refuel option
@@ -767,6 +773,48 @@ public class NewOrderActivity extends AppCompatActivity {
         return false;
     }
 
+    public Double loadDistances(final String city){
+        Double price;
+
+
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mData = mFirebaseDatabase.getReference().child("Distances");
+        mData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    if(city.equals(ds.getKey().toString())){
+                        dst = Integer.parseInt(ds.getValue().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        if(dst <=50){
+            return 12.0;
+        }else if(dst >50 && dst <=75){
+            return 14.0;
+        }else if(dst >75 && dst <=100){
+            return 16.0;
+        }else if(dst >100 && dst <=145){
+            return 18.0;
+        }else if(dst >145 && dst <=170){
+            return 23.0;
+        }else if(dst >171 && dst <=200){
+            return 25.0;
+        }else if(dst >200){
+            return (dst *0.08)*2;
+        }
+
+        return 0.0;
+    }
+        
     @Override
     protected void onPause(){
         super.onPause();
