@@ -55,13 +55,13 @@ public class NewOrderActivity extends AppCompatActivity {
     private EditText mContainerChargeDay, mContainerChargeHour, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour, mContainerDischargeHour, mContainerDischargeDay;
     private AutoCompleteTextView mClient;
     private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bDischargeDay, bDischargeHour, bPetrol, bAddClient;
-    private int dst;
     private Calendar mCalendarPicker = Calendar.getInstance();
     private Calendar mTimePicker = Calendar.getInstance();
     private ProgressDialog mProgressLoad;
 
     Client newClient;
     Prices newPrice;
+    private int dst;
 
     List<String> cl = new ArrayList<String>();//load client names
     List<Client> uno = new ArrayList<Client>();//load clients with all their values
@@ -109,11 +109,31 @@ public class NewOrderActivity extends AppCompatActivity {
         mState = (EditText) findViewById(R.id.state_new_order);
         mPrice = (EditText) findViewById(R.id.new_order_price);
 
+        askSettings();
         loadClients();
         //loadSharedPreferences();
         formData();
         SendFirebaseData();
     }
+
+    private void askSettings() {
+        new AlertDialog.Builder(NewOrderActivity.this)
+                .setTitle("Comprobación de datos")
+                .setMessage("¿Ha cambiado de plataforma o de camión desde el último viaje?")
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent goToMainPage = new Intent(NewOrderActivity.this, ChangeSettingsActivity.class);
+                        goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(goToMainPage);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+    }
+
 
     private void loadClients() {
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -171,7 +191,10 @@ public class NewOrderActivity extends AppCompatActivity {
                         mState.setText(cli.getState().toString());
                         mApertureHour.setText(cli.getTimeSchedule().toString());
                         mPhone.setText(cli.getPhone().toString());
-                        mPrice.setText(loadDistances(mCity.getText().toString()).toString());
+
+                        loadDistances(cli.getCity().toString());
+
+                        mPrice.setText((int) calcDstPrices(dst));
                     }
                 }
             }
@@ -645,7 +668,8 @@ public class NewOrderActivity extends AppCompatActivity {
                         mPlatformID.getText().toString().equals("") || mClient.getText().toString().equals("") || mCharger.getText().toString().equals("") || mAddress.getText().toString().equals("") ||
                         mApertureHour.getText().toString().equals("") || mPhone.getText().toString().equals("") || mContainerNumber.getText().toString().equals("") ||
                         mArrivalHour.getText().toString().equals("") || mDepartureHour.getText().toString().equals("") || mContainerChargeDay.getText().toString().equals("") || mContainerChargeHour.getText().toString().equals("") ||
-                        mContainerDischargeDay.getText().toString().equals("") || mContainerDischargeHour.getText().toString().equals("")){
+                        mContainerDischargeDay.getText().toString().equals("") || mContainerDischargeHour.getText().toString().equals("") || mState.getText().toString().equals("")
+                        || mCity.getText().toString().equals("") || mPrice.getText().toString().equals("")){
 
                     new AlertDialog.Builder(NewOrderActivity.this)
                             .setTitle("Campos en blanco")
@@ -773,9 +797,7 @@ public class NewOrderActivity extends AppCompatActivity {
         return false;
     }
 
-    public Double loadDistances(final String city){
-        Double price;
-
+    public void loadDistances(final String city) {
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mData = mFirebaseDatabase.getReference().child("Distances");
@@ -783,8 +805,8 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    if(city.equals(ds.getKey().toString())){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (city.equals(ds.getKey().toString())) {
                         dst = Integer.parseInt(ds.getValue().toString());
                     }
                 }
@@ -795,7 +817,9 @@ public class NewOrderActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    public double calcDstPrices(int dist){
         if(dst <=50){
             return 12.0;
         }else if(dst >50 && dst <=75){
@@ -810,11 +834,10 @@ public class NewOrderActivity extends AppCompatActivity {
             return 25.0;
         }else if(dst >200){
             return (dst *0.08)*2;
-        }
+        }else{return 0.0;}
 
-        return 0.0;
     }
-        
+
     @Override
     protected void onPause(){
         super.onPause();
