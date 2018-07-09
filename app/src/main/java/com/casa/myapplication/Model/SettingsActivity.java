@@ -1,10 +1,9 @@
 package com.casa.myapplication.Model;
 
-import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,11 +11,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.casa.myapplication.Logic.User;
 import com.casa.myapplication.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -24,29 +29,36 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SettingsActivity extends AppCompatActivity{
 
     private CircleImageView mImage;
-    private TextView mTruckId, mTruckNum, mPlatformId;
-    private Button mChangeTruckId, mChangeTruckNum, mChangePlatformId;
-
+    private TextView mTruckId, mTruckNum, mPlatformId, mEmployeeName;
+    private Button mChangeSettings;
 
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-    private DatabaseReference mDatabase;
-    private FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-    private String uid = current_user.getUid();
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private String userID;
 
-    @SuppressLint("WrongViewCast")
+    private ProgressDialog mProgressLoad;
+
+    private User user;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        //mDatabase = mFirebaseDatabase.getReference();
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+
+
         mImage = (CircleImageView) findViewById(R.id.profile_image);
         mTruckId = (TextView) findViewById(R.id.truck_id_settings);
         mTruckNum = (TextView) findViewById(R.id.truck_num_settings);
         mPlatformId = (TextView) findViewById(R.id.platform_id_settings);
-        mChangeTruckId = (Button) findViewById(R.id.edit_truck_num);
-        mChangeTruckNum = (Button) findViewById(R.id.edit_truck_id);
-        mChangePlatformId = (Button) findViewById(R.id.edit_platform_id);
+        mEmployeeName = (TextView) findViewById(R.id.driver_name);
+        mChangeSettings = (Button) findViewById(R.id.button_change_settings);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
@@ -55,22 +67,51 @@ public class SettingsActivity extends AppCompatActivity{
         ChangeSettings();
     }
 
-    private void LoadProfile() {
+    public void LoadProfile() {
 
-    }
+        mProgressLoad = new ProgressDialog(SettingsActivity.this);
+        mProgressLoad.setTitle("Cargando");
+        mProgressLoad.setMessage("Cargando datos, por favor espere");
+        mProgressLoad.setCanceledOnTouchOutside(false);
+        mProgressLoad.show();
 
-    private void ChangeSettings() {
-        mChangeTruckId.setOnClickListener(new View.OnClickListener() {
+        DatabaseReference mSettings = mFirebaseDatabase.getReference().child("Users").child(userID).child("Settings");
+        mSettings.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                AlertDialog.Builder alertBuild = new AlertDialog.Builder(SettingsActivity.this);
-                alertBuild.setMessage("Inserte nuevo número de camión")
-                    .setCancelable(false)
-                    .set
+
+                user = dataSnapshot.getValue(User.class);
+
+                mEmployeeName.setText(user.getEmployeeNameSettings().toString());
+                mTruckId.setText(user.getTruckIdSettings().toString());
+                mTruckNum.setText(user.getTruckNumSettings().toString());
+                mPlatformId.setText(user.getPlatformIdSettings().toString());
+
+
+                if (mProgressLoad != null && mProgressLoad.isShowing()) {
+                    mProgressLoad.dismiss();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(SettingsActivity.this, "Error al cargar los datos", Toast.LENGTH_LONG).show();
             }
         });
     }
+
+
+    private void ChangeSettings() {
+        mChangeSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this, ChangeSettingsActivity.class));
+            }
+        });
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu the_menu) {
@@ -107,6 +148,8 @@ public class SettingsActivity extends AppCompatActivity{
 
         }
     }
+
+
 
 
 
