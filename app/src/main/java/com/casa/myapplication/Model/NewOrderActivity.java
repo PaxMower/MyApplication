@@ -17,6 +17,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 import com.casa.myapplication.Logic.Client;
 import com.casa.myapplication.Logic.Order;
 import com.casa.myapplication.Logic.Prices;
+import com.casa.myapplication.Logic.User;
 import com.casa.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -59,19 +61,26 @@ public class NewOrderActivity extends AppCompatActivity {
     private Calendar mTimePicker = Calendar.getInstance();
     private ProgressDialog mProgressLoad;
 
+    private DatabaseReference mDatabase, mSettings, mDistances;
+    //private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser userAuth = mAuth.getCurrentUser();
+    private String userID = userAuth.getUid();
+
     Client newClient;
+    User user;
+    Prices prices;
+    SettingsActivity settings;
     Prices newPrice;
-    private int dst;
 
     List<String> cl = new ArrayList<String>();//load client names
-    List<Client> uno = new ArrayList<Client>();//load clients with all their values
+    List<Client> clientsList = new ArrayList<Client>();//load clients with all their values
+    List<Prices> distancesList = new ArrayList<Prices>();//load cities with all their distances from valencia port
 
     SharedPreferences sharedPref;
 
 
-    //private User user = new User();
-
-    private DatabaseReference mDatabase;// = FirebaseDatabase.getInstance().getReference();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -110,6 +119,8 @@ public class NewOrderActivity extends AppCompatActivity {
         mPrice = (EditText) findViewById(R.id.new_order_price);
 
         askSettings();
+        loadUserSettings();
+        loadDistances();
         loadClients();
         //loadSharedPreferences();
         formData();
@@ -134,6 +145,57 @@ public class NewOrderActivity extends AppCompatActivity {
                 }).show();
     }
 
+    private void loadUserSettings() {
+
+        mSettings = mFirebaseDatabase.getReference().child("Users").child(userID).child("Settings");
+        mSettings.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                user = dataSnapshot.getValue(User.class);
+
+                mDriver.setText(user.getEmployeeNameSettings().toString());
+                mTruckID.setText(user.getTruckIdSettings().toString());
+                mTruckNumber.setText(user.getTruckNumSettings().toString());
+                mPlatformID.setText(user.getPlatformIdSettings().toString());
+
+
+                if (mProgressLoad != null && mProgressLoad.isShowing()) {
+                    mProgressLoad.dismiss();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(NewOrderActivity.this, "Error al cargar los datos personales", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+    }
+
+    private void loadDistances() {
+
+        mDistances = mFirebaseDatabase.getReference().child("Distances");
+        mDistances.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    prices = dataSnapshot.getValue(Prices.class);
+                    //distancesList.add(prices);
+                //}
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(NewOrderActivity.this, "Error al cargar localidades", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     private void loadClients() {
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -147,7 +209,7 @@ public class NewOrderActivity extends AppCompatActivity {
                     //Obtain client object
                     Client client = ds.getValue(Client.class);
                     cl.add(client.getName().toString());
-                    uno.add(client);
+                    clientsList.add(client);
                 }
 
                 //load method for autocomplete text and load data
@@ -171,7 +233,7 @@ public class NewOrderActivity extends AppCompatActivity {
         mClient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                for(Client cli : uno){
+                for(Client cli : clientsList){
 
                     if(mClient.getText().toString().equals(cli.getName().toString())){
 
@@ -192,9 +254,7 @@ public class NewOrderActivity extends AppCompatActivity {
                         mApertureHour.setText(cli.getTimeSchedule().toString());
                         mPhone.setText(cli.getPhone().toString());
 
-                        loadDistances(cli.getCity().toString());
-
-                        mPrice.setText((int) calcDstPrices(dst));
+                        mPrice.setText(calcDstPrices(mCity.getText().toString()));
                     }
                 }
             }
@@ -797,45 +857,46 @@ public class NewOrderActivity extends AppCompatActivity {
         return false;
     }
 
-    public void loadDistances(final String city) {
 
-        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference mData = mFirebaseDatabase.getReference().child("Distances");
-        mData.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+    public String calcDstPrices(String city){
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    if (city.equals(ds.getKey().toString())) {
-                        dst = Integer.parseInt(ds.getValue().toString());
-                    }
+        String solution = "---";
+        double aux = 0.0;
+
+//        for(int x = 0; x<distancesList.size(); x++){
+//            Log.v("----------LISTA", distancesList.get(x).toString());
+//
+//        }
+
+        for(Prices pr : distancesList){
+            Log.v("----------LISTA1", pr.getCityName().toString());
+            Log.v("----------LISTA2", pr.getCityDistance().toString());
+
+            if(pr.getCityName().toString().equals(city.toString())){ //cambiar el for. Da problemas
+
+                String distance = pr.getCityDistance();
+                int dst = Integer.parseInt(pr.getCityDistance());
+
+                if(dst <=50){
+                    aux = 12.0;
+                }else if(dst >50 && dst <=75){
+                    aux =  14.0;
+                }else if(dst >75 && dst <=100){
+                    aux =  16.0;
+                }else if(dst >100 && dst <=145){
+                    aux =  18.0;
+                }else if(dst >145 && dst <=170){
+                    aux =  23.0;
+                }else if(dst >171 && dst <=200){
+                    aux =  25.0;
+                }else if(dst >200){
+                    aux =  (dst *0.08)*2;
                 }
+
+                solution = String.valueOf(aux);
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    public double calcDstPrices(int dist){
-        if(dst <=50){
-            return 12.0;
-        }else if(dst >50 && dst <=75){
-            return 14.0;
-        }else if(dst >75 && dst <=100){
-            return 16.0;
-        }else if(dst >100 && dst <=145){
-            return 18.0;
-        }else if(dst >145 && dst <=170){
-            return 23.0;
-        }else if(dst >171 && dst <=200){
-            return 25.0;
-        }else if(dst >200){
-            return (dst *0.08)*2;
-        }else{return 0.0;}
-
+        }
+        return solution;
     }
 
     @Override
