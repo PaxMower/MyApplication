@@ -17,7 +17,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -70,7 +69,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
     Client newClient;
     User user;
-    Prices prices;
+    Prices newPrices;
     SettingsActivity settings;
     Prices newPrice;
 
@@ -178,15 +177,20 @@ public class NewOrderActivity extends AppCompatActivity {
 
     private void loadDistances() {
 
-        mDistances = mFirebaseDatabase.getReference().child("Distances");
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mDistances = mFirebaseDatabase.getReference().child("Distances");
+
+        //mDistances = mFirebaseDatabase.getReference().child("Distances");
         mDistances.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                //for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    prices = dataSnapshot.getValue(Prices.class);
-                    //distancesList.add(prices);
-                //}
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    Prices prices = ds.getValue(Prices.class);
+                    distancesList.add(prices);
+                }
+
+//                    Log.v("11111111111111", distancesList.toString());
             }
 
             @Override
@@ -863,16 +867,9 @@ public class NewOrderActivity extends AppCompatActivity {
         String solution = "---";
         double aux = 0.0;
 
-//        for(int x = 0; x<distancesList.size(); x++){
-//            Log.v("----------LISTA", distancesList.get(x).toString());
-//
-//        }
-
         for(Prices pr : distancesList){
-            Log.v("----------LISTA1", pr.getCityName().toString());
-            Log.v("----------LISTA2", pr.getCityDistance().toString());
 
-            if(pr.getCityName().toString().equals(city.toString())){ //cambiar el for. Da problemas
+            if(pr.getCityName().equals(city)){ //cambiar el for. Da problemas
 
                 String distance = pr.getCityDistance();
                 int dst = Integer.parseInt(pr.getCityDistance());
