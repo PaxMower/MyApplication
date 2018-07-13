@@ -67,40 +67,20 @@ public class WatchOrdersActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 int x = 0;
+                double amount = 0.0;
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    listDataHeader.add(ds.getKey());
+                    listDataHeader.add(ds.getKey()+"     "+String.valueOf(amount));
                     List<Order> uno = new ArrayList<Order>();
 
                     for(DataSnapshot ds2 : ds.getChildren()){
-                        //List<Order> uno = new ArrayList<Order>();
-
                         Order order = ds2.getValue(Order.class);
-                        Log.v("FIREBASE_DATA", order.toString());
-
                         uno.add(order);
-
-                        for(DataSnapshot ds3 : ds2.getChildren()){
-                            //String min = ds3.child("minutes").getValue(String.class);
-
-                            //User user = dataSnapshot.getValue(User.class);
-                            //Order order = ds3.getValue(Order.class);
-                            //SaveUsers(order);
-
-                            //String min = ds3.toString();
-                            //Log.v("FIREBASE_DATA", ds3.getValue().toString());
-                            //System.out.println(user);
-                            //uno.add(order);
-                        }
                         listDataChild.put(listDataHeader.get(x), uno);
-
+                        amount += Double.parseDouble(order.getPrice());
                     }
                     x++;
                 }
-
-
-
-
-
+                Log.v("AMOUNT_PRICE", String.valueOf(amount));
             }
 
             @Override
@@ -130,12 +110,6 @@ public class WatchOrdersActivity extends AppCompatActivity {
         //listDataChild.put(listDataHeader.get(1), dos);
 
     }
-
-    private void SaveUsers(Order order) {
-        //Order order = ds3.getValue(Order.class);
-        Log.v("USUARIOS!!!!!", order.toString());
-    }
-
 
     //Close actual activity when back button is selected
     @Override
