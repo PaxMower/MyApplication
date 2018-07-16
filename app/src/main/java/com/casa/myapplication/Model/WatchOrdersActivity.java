@@ -3,7 +3,6 @@ package com.casa.myapplication.Model;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 
@@ -34,6 +33,7 @@ public class WatchOrdersActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private String userID;
+    private Double amount = 0.0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,20 +67,26 @@ public class WatchOrdersActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 int x = 0;
-                double amount = 0.0;
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    listDataHeader.add(ds.getKey()+"     "+String.valueOf(amount));
+                    amount = 0.0;
+
+                    for(DataSnapshot ds2 : ds.getChildren()){
+                        Order order = ds2.getValue(Order.class);
+                        amount += Double.parseDouble(order.getPrice());
+                    }
+
+                    listDataHeader.add(ds.getKey()+"                         "+amount);
                     List<Order> uno = new ArrayList<Order>();
 
                     for(DataSnapshot ds2 : ds.getChildren()){
                         Order order = ds2.getValue(Order.class);
                         uno.add(order);
                         listDataChild.put(listDataHeader.get(x), uno);
-                        amount += Double.parseDouble(order.getPrice());
+                        //amount += Double.parseDouble(order.getPrice());
                     }
                     x++;
                 }
-                Log.v("AMOUNT_PRICE", String.valueOf(amount));
+
             }
 
             @Override
@@ -88,26 +94,6 @@ public class WatchOrdersActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-        //listDataHeader.add("Header uno");
-        //listDataHeader.add("Header dos");
-
-        //List<String> uno = new ArrayList<String>();
-        //List<String> dos = new ArrayList<String>();
-
-/*        uno.add("asdfasd");
-        uno.add("13223e");
-        dos.add("0909099")*/;
-
-        /*for(int x = 0; x< listDataHeader.size(); x++){
-            listDataChild.put(listDataHeader.get(x), uno);
-        }*/
-
-        //listDataChild.put(listDataHeader.get(0), uno);
-        //listDataChild.put(listDataHeader.get(1), dos);
 
     }
 
