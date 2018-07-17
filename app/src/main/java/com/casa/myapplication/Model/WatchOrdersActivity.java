@@ -1,8 +1,10 @@
 package com.casa.myapplication.Model;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 
@@ -35,10 +37,14 @@ public class WatchOrdersActivity extends AppCompatActivity {
     private String userID;
     private Double amount = 0.0;
 
+    private ProgressDialog mProgressLoad;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_orders);
+
+        Log.v("CARGANDOOOOOOOOOOOO", "cvarga");
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -49,9 +55,31 @@ public class WatchOrdersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mostrará como un UP
 
-        addControl();
-        customExpandableListView = new CustomExpandableListView(WatchOrdersActivity.this, listDataHeader, listDataChild);
-        expandableListView.setAdapter(customExpandableListView);
+
+
+        new Thread(){
+            @Override
+            public void run(){
+                try{
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mProgressLoad = new ProgressDialog(WatchOrdersActivity.this);
+                            mProgressLoad.setTitle("Cargando");
+                            mProgressLoad.setMessage("Cargando datos, por favor espere");
+                            mProgressLoad.setCanceledOnTouchOutside(false);
+                            mProgressLoad.show();
+                            addControl();
+                        }
+                    });
+                }catch (final Exception ex){
+                    Log.i("THREAD EXCEPTION", ex.toString());
+                }
+            }
+        }.start();
+
+
+
     }
 
     private void addControl() {
@@ -61,7 +89,8 @@ public class WatchOrdersActivity extends AppCompatActivity {
         listDataChild = new HashMap<String, List<Order>>();
 
 
-        DatabaseReference mData = mFirebaseDatabase.getReference().child("Users").child(userID).child("Orders");
+//        DatabaseReference mData = mFirebaseDatabase.getReference().child("Users").child(userID).child("Orders");
+        DatabaseReference mData = FirebaseDatabase.getInstance().getReference("Users").child(userID).child("Orders");
         mData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -85,6 +114,13 @@ public class WatchOrdersActivity extends AppCompatActivity {
                         //amount += Double.parseDouble(order.getPrice());
                     }
                     x++;
+                }
+
+                customExpandableListView = new CustomExpandableListView(WatchOrdersActivity.this, listDataHeader, listDataChild);
+                expandableListView.setAdapter(customExpandableListView);
+
+                if (mProgressLoad != null && mProgressLoad.isShowing()) {
+                    mProgressLoad.dismiss();
                 }
 
             }
