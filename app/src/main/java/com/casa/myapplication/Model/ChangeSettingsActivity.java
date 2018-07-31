@@ -71,7 +71,7 @@ public class ChangeSettingsActivity extends AppCompatActivity {
                     mProgressLoad.dismiss();
                 }
 
-                Intent goToMainPage = new Intent(ChangeSettingsActivity.this, SettingsActivity.class);
+                Intent goToMainPage = new Intent(ChangeSettingsActivity.this, MenuActivity.class);
                 goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(goToMainPage);
 

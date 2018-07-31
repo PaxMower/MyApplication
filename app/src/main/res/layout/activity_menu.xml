@@ -38,9 +38,8 @@
         <TextView
             android:id="@+id/watch_orders_text"
             android:layout_width="100dp"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginStart="50dp"
             android:text="@string/watch_orders"
             android:textAlignment="center"
             android:textSize="18sp"
@@ -50,8 +49,7 @@
         <TextView
             android:id="@+id/new_order_text"
             android:layout_width="100dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="50dp"
+            android:layout_height="25dp"
             android:layout_marginRight="50dp"
             android:text="@string/new_order"
             android:textAlignment="center"
@@ -62,9 +60,8 @@
         <TextView
             android:id="@+id/petrol_send_text"
             android:layout_width="100dp"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginStart="50dp"
             android:text="@string/button_petrol"
             android:textAlignment="center"
             android:textSize="18sp"
@@ -74,14 +71,13 @@
         <TextView
             android:id="@+id/spare_parts_text"
             android:layout_width="100dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="50dp"
+            android:layout_height="50dp"
             android:layout_marginRight="50dp"
-            android:text="@string/button_spare_parts"
+            android:text="@string/clients"
             android:textAlignment="center"
             android:textSize="18sp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/components" />
+            app:layout_constraintTop_toBottomOf="@+id/add_location" />
 
         <Button
             android:id="@+id/new_order"
@@ -119,7 +115,7 @@
             app:layout_constraintTop_toBottomOf="@+id/watch_orders" />
 
         <Button
-            android:id="@+id/components"
+            android:id="@+id/add_location"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginEnd="50dp"

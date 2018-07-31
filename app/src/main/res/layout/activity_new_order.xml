@@ -95,7 +95,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/client"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -144,6 +144,45 @@
                 android:layout_weight="1"
                 android:background="@android:drawable/ic_menu_mylocation" />
         </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/city_new_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/city"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/state_new_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/state"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/new_order_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/price"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -301,13 +340,13 @@
             android:textColor="@color/cardview_light_background" />
 
         <Button
-            android:id="@+id/save_current_location"
+            android:id="@+id/save_new_client"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:background="@color/colorSecondary"
-            android:text="Button"
+            android:text="@string/clients"
             android:textColor="@android:color/white" />
 
         <Button

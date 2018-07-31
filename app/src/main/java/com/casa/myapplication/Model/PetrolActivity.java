@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,13 +21,19 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.casa.myapplication.Logic.Petrol;
+import com.casa.myapplication.Logic.User;
 import com.casa.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
 
 /**
  * Created by Gastby on 21/09/2017.
@@ -45,11 +50,25 @@ public class PetrolActivity extends AppCompatActivity{
     private DatabaseReference mDatabase;
     private String TAG = "";
 
+    private User user = new User();
+
+    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private String userID;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_petrol);
 
+        //prepare firebase variables
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+
+        //load progres dialog
         mProgressLoad = new ProgressDialog(PetrolActivity.this);
         mProgressLoad.setTitle("Guardando");
         mProgressLoad.setMessage("Guardando datos, por favor espere");
@@ -65,10 +84,26 @@ public class PetrolActivity extends AppCompatActivity{
         mPetrolLiters = (EditText) findViewById(R.id.petrol_liters);
         bSendPetrol = (Button) findViewById(R.id.petrol_send);
 
+        loadSettings();
         formData();
         SendFirebaseData();
 
     }
+
+    private void loadSettings() {
+        DatabaseReference mSettings = mFirebaseDatabase.getReference().child("Users").child(userID).child("Settings");
+        mSettings.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                user = dataSnapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
 
     public void formData(){
 
@@ -174,6 +209,8 @@ public class PetrolActivity extends AppCompatActivity{
                 newPetrol.setHour(mPetrolHour.getText().toString());
                 newPetrol.setKm(mPetrolKm.getText().toString());
                 newPetrol.setLiters(mPetrolLiters.getText().toString());
+                newPetrol.setTruckId(user.getTruckIdSettings());
+                newPetrol.setTruckNumber(user.getTruckNumSettings());
 
 
                 if(mPetrolDate.getText().toString().equals("") || mPetrolHour.getText().toString().equals("") || mPetrolKm.getText().toString().equals("") || mPetrolLiters.getText().toString().equals("")){

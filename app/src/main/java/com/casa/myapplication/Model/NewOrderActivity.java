@@ -1,5 +1,6 @@
 package com.casa.myapplication.Model;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
@@ -7,8 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
 import android.net.ParseException;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,9 +43,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+//import android.icu.text.SimpleDateFormat;
 
 
 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -81,6 +84,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("WrongViewCast")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,8 +99,8 @@ public class NewOrderActivity extends AppCompatActivity {
         mAddress = (EditText) findViewById(R.id.address);
         mPhone = (EditText) findViewById(R.id.phone);
         mDate = (EditText) findViewById(R.id.date);
-        mTruckID = (EditText) findViewById(R.id.truck_num_settings);
-        mTruckNumber = (EditText) findViewById(R.id.truck_id_settings);
+        mTruckID = (EditText) findViewById(R.id.truck_id);
+        mTruckNumber = (EditText) findViewById(R.id.truck_num);
         mPlatformID = (EditText) findViewById(R.id.platform_id);
         mContainerChargeDay = (EditText) findViewById(R.id.button_obtain_charge_day);
         mContainerChargeHour = (EditText) findViewById(R.id.button_obtain_charge_hour);
@@ -116,6 +120,7 @@ public class NewOrderActivity extends AppCompatActivity {
         mCity = (EditText) findViewById(R.id.city_new_order);
         mState = (EditText) findViewById(R.id.state_new_order);
         mPrice = (EditText) findViewById(R.id.new_order_price);
+
 
         askSettings();
         loadUserSettings();
@@ -151,18 +156,12 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
                 user = dataSnapshot.getValue(User.class);
 
-                mDriver.setText(user.getEmployeeNameSettings().toString());
-                mTruckID.setText(user.getTruckIdSettings().toString());
-                mTruckNumber.setText(user.getTruckNumSettings().toString());
-                mPlatformID.setText(user.getPlatformIdSettings().toString());
-
-
-                if (mProgressLoad != null && mProgressLoad.isShowing()) {
-                    mProgressLoad.dismiss();
-                }
+                mDriver.setText(user.getEmployeeNameSettings());
+                mTruckID.setText(user.getTruckIdSettings());
+                mTruckNumber.setText(user.getTruckNumSettings());
+                mPlatformID.setText(user.getPlatformIdSettings());
 
             }
 
@@ -180,7 +179,6 @@ public class NewOrderActivity extends AppCompatActivity {
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mDistances = mFirebaseDatabase.getReference().child("Distances");
 
-        //mDistances = mFirebaseDatabase.getReference().child("Distances");
         mDistances.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -190,7 +188,6 @@ public class NewOrderActivity extends AppCompatActivity {
                     distancesList.add(prices);
                 }
 
-//                    Log.v("11111111111111", distancesList.toString());
             }
 
             @Override
@@ -711,13 +708,16 @@ public class NewOrderActivity extends AppCompatActivity {
                 newOrder.setTruckNumber(mTruckNumber.getText().toString());
                 newOrder.setTruckID(mTruckID.getText().toString());
                 newOrder.setPlatformID(mPlatformID.getText().toString());
+                newOrder.setContainerNumber(mContainerNumber.getText().toString());
 
-                newOrder.setClient(mClient.getText().toString());
                 newOrder.setCharger(mCharger.getText().toString());
+                newOrder.setClient(mClient.getText().toString());
                 newOrder.setAddress(mAddress.getText().toString());
+                newOrder.setCity(mCity.getText().toString());
+                newOrder.setState(mState.getText().toString());
                 newOrder.setApertureHour(mApertureHour.getText().toString());
                 newOrder.setPhone(mPhone.getText().toString());
-                newOrder.setContainerNumber(mContainerNumber.getText().toString());
+                newOrder.setPrice(mPrice.getText().toString());
                 newOrder.setArrivalHour(mArrivalHour.getText().toString());
                 newOrder.setDepartureHour(mDepartureHour.getText().toString());
 
@@ -869,7 +869,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
         for(Prices pr : distancesList){
 
-            if(pr.getCityName().equals(city)){ //cambiar el for. Da problemas
+            if(pr.getCityName().equals(city)){
 
                 String distance = pr.getCityDistance();
                 int dst = Integer.parseInt(pr.getCityDistance());
@@ -899,8 +899,9 @@ public class NewOrderActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        Toast.makeText(this, "Orden guardada", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Orden guardada", Toast.LENGTH_SHORT).show();
         //saveSharedPreferences();
     }
 
 }
+

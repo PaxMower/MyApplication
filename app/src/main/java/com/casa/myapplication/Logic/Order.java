@@ -1,14 +1,11 @@
 package com.casa.myapplication.Logic;
 
-/**
- * Created by Gastby on 29/06/2017.
- */
-
 public class Order {
 
-    private String driver, address, phone, date, truckID, truckNumber, platformID, containerChargeDay, containerChargeHour,
-                    client, apertureHour, charger, containerNumber, arrivalHour, departureHour, containerDischargeHour,
-                    containerDischargeDay, textArea, day, month, year, minutes, hour;
+    private String driver, address, phone, date, truckID, truckNumber, platformID,
+            containerChargeDay, containerChargeHour, client, apertureHour,
+            charger, containerNumber, arrivalHour, departureHour, containerDischargeHour,
+            containerDischargeDay, textArea, day, month, year, minutes, hour, price, city, state ;
 
 
     public Order() {
@@ -35,6 +32,25 @@ public class Order {
         this.year = year;
         this.hour = hour;
         this.minutes = minutes;
+        this.price = price;
+        this.city = city;
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getMinutes() {
@@ -219,5 +235,13 @@ public class Order {
 
     public void setTextArea(String textArea) {
         this.textArea = textArea;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

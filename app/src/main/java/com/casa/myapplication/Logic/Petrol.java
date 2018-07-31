@@ -6,13 +6,15 @@ package com.casa.myapplication.Logic;
 
 public class Petrol {
 
-    private String date, hour, km, liters;
+    private String date, hour, km, liters, truckId, truckNumber;
 
     public Petrol() {
         this.date = date;
         this.hour = hour;
         this.km = km;
         this.liters = liters;
+        this.truckId = truckId;
+        this.truckNumber = truckNumber;
     }
 
     public String getDate() {
@@ -45,5 +47,21 @@ public class Petrol {
 
     public void setLiters(String liters) {
         this.liters = liters;
+    }
+
+    public String getTruckId() {
+        return truckId;
+    }
+
+    public void setTruckId(String truckId) {
+        this.truckId = truckId;
+    }
+
+    public String getTruckNumber() {
+        return truckNumber;
+    }
+
+    public void setTruckNumber(String truckNumber) {
+        this.truckNumber = truckNumber;
     }
 }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.casa.myapplication.Logic.Client;
 import com.casa.myapplication.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,20 +30,21 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import static com.google.android.gms.common.api.GoogleApiClient.*;
+import static com.google.android.gms.common.api.GoogleApiClient.Builder;
+import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import static com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 
 public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implements OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
 
     private GoogleMap mMap;
     private Marker marker;
-    private double lat, log;
+    private Double lat, lon;
     private Button mTerrain, mSatellite;
     private GoogleApiClient client;
     private LocationRequest locationRequest;
     private Location lastLocation;
     public static final int REQUEST_LOCATION_CODE = 99;
-
-
+    Client newClient = new Client();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,10 @@ public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implemen
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        Bundle bundle = getIntent().getExtras();
+        lat = bundle.getDouble("lat");
+        lon = bundle.getDouble("lon");
 
     }
 
@@ -120,9 +126,11 @@ public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implemen
 
 
     public void onMarkersRetrieved(){
-        LatLng cementval = new LatLng(39.646326, -0.227188);
-        mMap.addMarker(new MarkerOptions().position(cementval).title("Cementval"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(cementval));
+        LatLng companie = new LatLng(lat,lon);
+        mMap.addMarker(new MarkerOptions().position(companie));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(companie));
+        mMap.setMinZoomPreference(1.0f);
+        //mMap.setMaxZoomPreference(5.0f);
 
     }
 

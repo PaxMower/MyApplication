@@ -7,11 +7,13 @@
     <string name="app_petrol">Repostaje</string>
     <string name="app_maps">Mapa</string>
     <string name="app_change_settings">Cambiar Ajustes</string>
+    <string name="app_add_client">Añadir cliente</string>
 
     <string name="new_order">Nuevo viaje</string>
     <string name="watch_orders">Ver viajes</string>
     <string name="exit">Salir</string>
     <string name="settings">Ajustes</string>
+    <string name="clients">Añadir clientes</string>
 
     <string name="driver">Chofer</string>
     <string name="truck_id">Matrícula camión</string>
@@ -33,6 +35,12 @@
     <string name="departure_time">Hora salida</string>
     <string name="text_area">observaciones</string>
     <string name="hour_aperture">Horario</string>
+    <string name="city">Ciudad</string>
+    <string name="state">Provincia</string>
+    <string name="PC">Código postal</string>
+    <string name="lat">Latitud</string>
+    <string name="lon">Longitud</string>
+    <string name="price">Precio</string>
 
 
     <string name="button_login">Acceder</string>

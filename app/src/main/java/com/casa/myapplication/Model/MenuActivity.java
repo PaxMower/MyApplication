@@ -23,7 +23,7 @@ public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppC
     private boolean isUserClickedBackButton = false;
 
     private TextView mUserData;
-    private Button bNewOrder, bWatchOrders, bPetrol;
+    private Button bNewOrder, bWatchOrders, bPetrol, bAddClient;
 
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -43,10 +43,12 @@ public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppC
 
     }
 
+
     public void onClickButtons(){
         bNewOrder = (Button) findViewById(R.id.new_order);
         bWatchOrders = (Button) findViewById(R.id.watch_orders);
         bPetrol = (Button) findViewById(R.id.petrol_activity);
+        bAddClient = (Button) findViewById(R.id.add_location);
 
                 bNewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +60,11 @@ public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppC
         bWatchOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MenuActivity.this, WatchOrdersActivity.class));
+                Intent i = new Intent(MenuActivity.this, WatchOrdersActivity.class);
+                startActivityForResult(i,1);
+                //finish();
+
+                //startActivity(new Intent(MenuActivity.this, WatchOrdersActivity.class));
             }
         });
 
@@ -66,6 +72,12 @@ public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppC
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MenuActivity.this, PetrolActivity.class));
+            }
+        });
+        bAddClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuActivity.this, AddClientActivity.class));
             }
         });
     }

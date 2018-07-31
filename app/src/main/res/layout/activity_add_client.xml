@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/client_name"
+            android:text="@string/client"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/client_address"
+            android:text="@string/address"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/client_name_1" />
@@ -71,7 +71,7 @@
             android:layout_weight="1"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/client_phone"
+            android:text="@string/phone_number"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/client_state_1" />
@@ -98,7 +98,7 @@
             android:layout_weight="1"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/client_time_schedule"
+            android:text="@string/hour_aperture"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/client_phone1" />
@@ -123,7 +123,7 @@
             android:layout_weight="1"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/client_city"
+            android:text="@string/city"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/client_Address1" />
@@ -148,7 +148,7 @@
             android:layout_weight="1"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/client_state"
+            android:text="@string/state"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/client_PC_1" />
@@ -174,7 +174,7 @@
             android:layout_weight="1"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/client_PC"
+            android:text="@string/PC"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/client_city_1" />
@@ -201,7 +201,7 @@
             android:layout_weight="1"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/client_pos_lat"
+            android:text="@string/lat"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/client_time_schedule_1" />
@@ -231,7 +231,7 @@
             android:focusable="false"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/client_pos_lon"
+            android:text="@string/lon"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/client_lat"
             app:layout_constraintTop_toBottomOf="@+id/client_time_schedule_1" />
