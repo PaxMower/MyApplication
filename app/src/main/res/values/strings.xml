@@ -16,7 +16,7 @@
     <string name="watch_orders">Ver viajes</string>
     <string name="exit">Salir</string>
     <string name="settings">Ajustes</string>
-    <string name="clients">Añadir clientes</string>
+    <string name="clients">Añadir cliente</string>
 
     <string name="driver">Chofer</string>
     <string name="truck_id">Matrícula camión</string>
@@ -56,7 +56,7 @@
     <string name="button_obtain_time">Obtener hora</string>
     <string name="button_petrol">Repostar</string>
     <!--<string name="button_spare_parts">Taller</string>-->
-    <string name="button_add_location">Añadir Destino</string>
+    <string name="button_add_client">Añadir cliente</string>
     <string name="button_change_settings">Cambiar ajustes</string>
     <string name="button_maintenance">Mantenimiento</string>
     <string name="button_watch_petrol">Ver repostajes</string>
