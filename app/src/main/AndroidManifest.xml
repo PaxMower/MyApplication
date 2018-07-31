@@ -5,13 +5,13 @@
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
+         location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
         android:allowBackup="true"
@@ -22,8 +22,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Model.LoginActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:windowSoftInputMode="stateHidden">
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,40 +33,53 @@
         </activity>
         <activity
             android:name=".Model.MenuActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/app_menu" />
+            android:label="@string/app_menu"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Model.NewOrderActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/app_new_order" />
+            android:label="@string/app_new_order"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Model.WatchOrdersActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/app_watch_order" />
+            android:label="@string/app_watch_order"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Model.SettingsActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/app_settings" />
+            android:label="@string/app_settings"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Model.ChangeSettingsActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/app_change_settings" />
+            android:label="@string/app_change_settings"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Model.PetrolActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/app_petrol" />
+            android:label="@string/app_petrol"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Model.MapsActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/app_maps" />
+            android:label="@string/app_maps"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Model.AddClientActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/app_add_client" />
+            android:label="@string/app_add_client"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Model.WatchPetrolActivity"
+            android:label="@string/app_watch_petrol"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Model.MaintenanceActivity"
+            android:label="@string/app_maintenance"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Model.WatchMaintenanceActivity"
+            android:label="@string/app_watch_maintenance"
+            android:windowSoftInputMode="stateHidden" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
     </application>
 
 </manifest>

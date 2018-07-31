@@ -2,13 +2,11 @@ package com.casa.myapplication.Model;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.casa.myapplication.Logic.Petrol;
+import com.casa.myapplication.Logic.Maintenance;
 import com.casa.myapplication.Logic.User;
 import com.casa.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,32 +32,32 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
-/**
- * Created by Gastby on 21/09/2017.
- */
+public class MaintenanceActivity extends AppCompatActivity {
 
-@RequiresApi(api = Build.VERSION_CODES.N)
-public class PetrolActivity extends AppCompatActivity{
-
-    private EditText mPetrolDate, mPetrolHour, mPetrolKm, mPetrolLiters, mTruckId, mTruckNum;
-    private Button bSendPetrol;
+    private EditText mMaintenanceDate, mMaintenanceTruckId, mMaintenanceTruckNum, mMaintenanceKm, mMaintenanceType, mMaintenanceComment;
+    private Button bSendMaintenance;
     private Calendar mCalendarPicker = Calendar.getInstance();
     private Calendar mTimePicker = Calendar.getInstance();
     private ProgressDialog mProgressLoad;
-    private DatabaseReference mDatabase;
-    private String TAG = "";
 
     private User user = new User();
 
+    private DatabaseReference mDatabase;
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private String userID;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_petrol);
+        setContentView(R.layout.activity_maintenance);
+
+        mProgressLoad = new ProgressDialog(MaintenanceActivity.this);
+        mProgressLoad.setTitle("Cargando");
+        mProgressLoad.setMessage("Cargando datos, por favor espere");
+        mProgressLoad.setCanceledOnTouchOutside(false);
+        mProgressLoad.show();
 
         //prepare firebase variables
         mAuth = FirebaseAuth.getInstance();
@@ -68,27 +65,21 @@ public class PetrolActivity extends AppCompatActivity{
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
 
-        //load progres dialog
-        mProgressLoad = new ProgressDialog(PetrolActivity.this);
-        mProgressLoad.setTitle("Guardando");
-        mProgressLoad.setMessage("Guardando datos, por favor espere");
-        mProgressLoad.setCanceledOnTouchOutside(false);
-
         //Add back buttons on toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
 
-        mPetrolDate = (EditText) findViewById(R.id.petrol_date);
-        mPetrolHour = (EditText) findViewById(R.id.petrol_hour);
-        mTruckId = (EditText) findViewById(R.id.petrol_truck_id);
-        mTruckNum = (EditText) findViewById(R.id.petrol_truck_num);
-        mPetrolKm = (EditText) findViewById(R.id.petrol_km);
-        mPetrolLiters = (EditText) findViewById(R.id.petrol_liters);
-        bSendPetrol = (Button) findViewById(R.id.petrol_send);
+        mMaintenanceDate = (EditText) findViewById(R.id.maintenande_date);
+        mMaintenanceTruckId = (EditText) findViewById(R.id.maintenande_truckId);
+        mMaintenanceTruckNum = (EditText) findViewById(R.id.maintenande_truckNum);
+        mMaintenanceKm = (EditText) findViewById(R.id.maintenande_km);
+        mMaintenanceType = (EditText) findViewById(R.id.maintenande_type);
+        mMaintenanceComment = (EditText) findViewById(R.id.maintenande_comment);
+        bSendMaintenance = (Button) findViewById(R.id.maintenance_send);
 
         loadSettings();
-        formData();
-        SendFirebaseData();
+        formatDate();
+        sendFirebase();
 
     }
 
@@ -99,8 +90,12 @@ public class PetrolActivity extends AppCompatActivity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
 
-                mTruckNum.setText(user.getTruckNumSettings());
-                mTruckId.setText(user.getTruckIdSettings());
+                mMaintenanceTruckNum.setText(user.getTruckNumSettings());
+                mMaintenanceTruckId.setText(user.getTruckIdSettings());
+
+                if (mProgressLoad != null && mProgressLoad.isShowing()) {
+                    mProgressLoad.dismiss();
+                }
             }
 
             @Override
@@ -109,69 +104,24 @@ public class PetrolActivity extends AppCompatActivity{
         });
     }
 
+    private void formatDate(){
 
-    public void formData(){
-
-        mPetrolHour.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
+        mMaintenanceDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mPetrolHour.getText().toString().matches("")){
+                if(!mMaintenanceDate.getText().toString().matches("")){
 
-                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(PetrolActivity.this);
-                    alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
-                            .setCancelable(false)
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    TimePickerDialog timePickerDialog  = new TimePickerDialog(PetrolActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                                        @Override
-                                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                            mPetrolHour.setText(String.format("%02d:%02d",hourOfDay,minute));
-                                        }
-                                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
-                                    timePickerDialog.show();
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-                    alertBuild.create();
-                    alertBuild.show();
-
-                }else {
-
-                    TimePickerDialog timePickerDialog  = new TimePickerDialog(PetrolActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                            mPetrolHour.setText(String.format("%02d:%02d",hourOfDay,minute));
-                        }
-                    },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
-                    timePickerDialog.show();
-
-                }
-            }
-        });
-
-        mPetrolDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!mPetrolDate.getText().toString().matches("")){
-
-                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(PetrolActivity.this);
+                    AlertDialog.Builder alertBuild = new AlertDialog.Builder(MaintenanceActivity.this);
                     alertBuild.setMessage("Ya se ha anotado una fecha en este campo, ¿Desea cambiarla?")
                             .setCancelable(false)
                             .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 @RequiresApi(api = Build.VERSION_CODES.N)
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    DatePickerDialog datePickerDialog = new DatePickerDialog(PetrolActivity.this, new DatePickerDialog.OnDateSetListener() {
+                                    DatePickerDialog datePickerDialog = new DatePickerDialog(MaintenanceActivity.this, new DatePickerDialog.OnDateSetListener() {
                                         @Override
                                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                            mPetrolDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                                            mMaintenanceDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                                         }
                                     },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
                                     datePickerDialog.show();
@@ -188,10 +138,10 @@ public class PetrolActivity extends AppCompatActivity{
 
                 }else {
 
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(PetrolActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(MaintenanceActivity.this, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            mPetrolDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                            mMaintenanceDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                         }
                     },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
                     datePickerDialog.show();
@@ -200,27 +150,26 @@ public class PetrolActivity extends AppCompatActivity{
         });
     }
 
-    private void SendFirebaseData() {
+    private void sendFirebase() {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = current_user.getUid();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("Petrol");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("Maintenance");
 
-        bSendPetrol.setOnClickListener(new View.OnClickListener() {
+        bSendMaintenance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Petrol newPetrol = new Petrol();
+                Maintenance newMaintenance = new Maintenance();
 
-                newPetrol.setDate(mPetrolDate.getText().toString());
-                newPetrol.setHour(mPetrolHour.getText().toString());
-                newPetrol.setKm(mPetrolKm.getText().toString());
-                newPetrol.setLiters(mPetrolLiters.getText().toString());
-                newPetrol.setTruckId(mTruckId.getText().toString());
-                newPetrol.setTruckNumber(mTruckNum.getText().toString());
+                newMaintenance.setDate(mMaintenanceDate.getText().toString());
+                newMaintenance.setTruckId(mMaintenanceTruckId.getText().toString());
+                newMaintenance.setTruckNum(mMaintenanceTruckNum.getText().toString());
+                newMaintenance.setKm(mMaintenanceKm.getText().toString());
+                newMaintenance.setType(mMaintenanceType.getText().toString());
+                newMaintenance.setComments(mMaintenanceComment.getText().toString());
 
+                if(mMaintenanceDate.getText().toString().equals("") || mMaintenanceTruckId.getText().toString().equals("") || mMaintenanceTruckNum.getText().toString().equals("") || mMaintenanceKm.getText().toString().equals("") || mMaintenanceType.getText().toString().equals("") || mMaintenanceComment.getText().toString().equals("")){
 
-                if(mPetrolDate.getText().toString().equals("") || mTruckNum.getText().toString().equals("") || mTruckId.getText().toString().equals("") || mPetrolHour.getText().toString().equals("") || mPetrolKm.getText().toString().equals("") || mPetrolLiters.getText().toString().equals("")){
-
-                    new AlertDialog.Builder(PetrolActivity.this)
+                    new AlertDialog.Builder(MaintenanceActivity.this)
                             .setTitle("Campos en blanco")
                             .setMessage("No pueden haber campos en blanco para poder añadir nuevos clientes")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -230,15 +179,20 @@ public class PetrolActivity extends AppCompatActivity{
                             }).show();
 
                 }else{
+                    //load progres dialog
+                    mProgressLoad = new ProgressDialog(MaintenanceActivity.this);
+                    mProgressLoad.setTitle("Guardando");
+                    mProgressLoad.setMessage("Guardando datos, por favor espere");
+                    mProgressLoad.setCanceledOnTouchOutside(false);
                     mProgressLoad.show();
 
-                    mDatabase.push().setValue(newPetrol).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mDatabase.push().setValue(newMaintenance).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
                             if(task.isSuccessful()){
 
-                                Intent goToMainPage = new Intent(PetrolActivity.this, MenuActivity.class);
+                                Intent goToMainPage = new Intent(MaintenanceActivity.this, MenuActivity.class);
                                 goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(goToMainPage);
                                 mProgressLoad.dismiss();
@@ -246,13 +200,16 @@ public class PetrolActivity extends AppCompatActivity{
 
                             } else {
                                 mProgressLoad.hide();
-                                Toast.makeText(PetrolActivity.this, "Error al guardar los datos", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MaintenanceActivity.this, "Error al guardar los datos", Toast.LENGTH_LONG).show();
                             }
                         }
                     });
                 }
+
+
             }
         });
+
     }
 
     @Override

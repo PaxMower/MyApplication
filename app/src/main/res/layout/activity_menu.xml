@@ -10,36 +10,35 @@
 
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="368dp"
         android:layout_height="495dp"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/userDataField"
-            android:layout_width="0dp"
-            android:layout_height="43dp"
-            android:text=" "
+            android:id="@+id/add_cl_txt"
+            android:layout_width="120dp"
+            android:layout_height="25dp"
+            android:text="@string/clients"
             android:textAlignment="center"
-            android:textSize="22dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="454dp" />
 
         <TextView
             android:id="@+id/watch_orders_text"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="58dp"
             android:text="@string/watch_orders"
             android:textAlignment="center"
             android:textSize="18sp"
@@ -48,9 +47,9 @@
 
         <TextView
             android:id="@+id/new_order_text"
-            android:layout_width="100dp"
-            android:layout_height="25dp"
-            android:layout_marginRight="50dp"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="34dp"
             android:text="@string/new_order"
             android:textAlignment="center"
             android:textSize="18sp"
@@ -59,71 +58,126 @@
 
         <TextView
             android:id="@+id/petrol_send_text"
-            android:layout_width="100dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="50dp"
+            android:layout_width="80dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="59dp"
+            android:layout_marginRight="59dp"
             android:text="@string/button_petrol"
             android:textAlignment="center"
             android:textSize="18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/petrol_activity" />
 
         <TextView
-            android:id="@+id/spare_parts_text"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="50dp"
-            android:text="@string/clients"
+            android:id="@+id/whatch_petrol_menu"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="34dp"
+            android:layout_marginStart="34dp"
+            android:text="@string/button_watch_petrol"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/watch_petrol" />
+
+        <TextView
+            android:id="@+id/spare_parts_text2"
+            android:layout_width="180dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/button_add_maintenance"
             android:textAlignment="center"
             android:textSize="18sp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_location" />
+            app:layout_constraintTop_toBottomOf="@+id/add_maintenance" />
+
+        <TextView
+            android:id="@+id/spare_parts_text"
+            android:layout_width="160dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/button_watch_maintenance"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/watch_maintenance" />
+
+        <Button
+            android:id="@+id/add_client"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="8dp"
+            android:background="@mipmap/ic_launcher"
+            app:layout_constraintBottom_toTopOf="@+id/add_cl_txt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/new_order"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="58dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/clipboard"
             android:padding="15dp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userDataField" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/watch_orders"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="58dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/truck"
             android:padding="15dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userDataField" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/watch_petrol"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="58dp"
+            android:layout_marginStart="58dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/refuel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/watch_orders_text" />
 
         <Button
             android:id="@+id/petrol_activity"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="58dp"
+            android:layout_marginRight="58dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/refuel"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/watch_orders" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/new_order_text" />
 
         <Button
-            android:id="@+id/add_location"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="40dp"
+            android:id="@+id/watch_maintenance"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="58dp"
+            android:layout_marginStart="58dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/wheel"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_order" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/whatch_petrol_menu" />
+
+        <Button
+            android:id="@+id/add_maintenance"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="58dp"
+            android:layout_marginRight="58dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/wheel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/petrol_send_text" />
 
     </android.support.constraint.ConstraintLayout>
 

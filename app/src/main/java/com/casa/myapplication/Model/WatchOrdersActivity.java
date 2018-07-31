@@ -44,8 +44,6 @@ public class WatchOrdersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_orders);
 
-        Log.v("CARGANDOOOOOOOOOOOO", "cvarga");
-
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         //mDatabase = mFirebaseDatabase.getReference();

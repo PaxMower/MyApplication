@@ -23,7 +23,7 @@ public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppC
     private boolean isUserClickedBackButton = false;
 
     private TextView mUserData;
-    private Button bNewOrder, bWatchOrders, bPetrol, bAddClient;
+    private Button bNewOrder, bWatchOrders, bPetrol, bWatchPetrol,bMaintenance, bWatchMaintenance,bAddClient;
 
     private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -36,8 +36,8 @@ public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppC
         //mFirebaseAuth = FirebaseAuth.getInstance();
         //mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-        mUserData = (TextView) findViewById(R.id.userDataField);
-        mUserData.setText("Bienvenido "+ mFirebaseUser.getEmail());
+        //mUserData = (TextView) findViewById(R.id.userDataField);
+        //mUserData.setText("Bienvenido "+ mFirebaseUser.getEmail());
 
         onClickButtons();
 
@@ -48,7 +48,11 @@ public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppC
         bNewOrder = (Button) findViewById(R.id.new_order);
         bWatchOrders = (Button) findViewById(R.id.watch_orders);
         bPetrol = (Button) findViewById(R.id.petrol_activity);
-        bAddClient = (Button) findViewById(R.id.add_location);
+        bWatchPetrol = (Button) findViewById(R.id.watch_petrol);
+        bMaintenance = (Button) findViewById(R.id.add_maintenance);
+        bWatchMaintenance = (Button) findViewById(R.id.watch_maintenance);
+        bAddClient = (Button) findViewById(R.id.add_client);
+
 
                 bNewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +66,6 @@ public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppC
             public void onClick(View v) {
                 Intent i = new Intent(MenuActivity.this, WatchOrdersActivity.class);
                 startActivityForResult(i,1);
-                //finish();
-
-                //startActivity(new Intent(MenuActivity.this, WatchOrdersActivity.class));
             }
         });
 
@@ -74,12 +75,31 @@ public class MenuActivity extends AppCompatActivity {//ActionBarActivity {//AppC
                 startActivity(new Intent(MenuActivity.this, PetrolActivity.class));
             }
         });
+        bWatchPetrol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuActivity.this, WatchPetrolActivity.class));
+            }
+        });
+        bMaintenance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuActivity.this, MaintenanceActivity.class));
+            }
+        });
+        bWatchMaintenance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuActivity.this, WatchMaintenanceActivity.class));
+            }
+        });
         bAddClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MenuActivity.this, AddClientActivity.class));
             }
         });
+
     }
 
     @Override

@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +16,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/petrol_date1"
+                android:id="@+id/maintenande_date_tt"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -24,15 +25,14 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/petrol_date"
+                android:id="@+id/maintenande_date"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="date" />
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,32 +40,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/petrol_hour1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:paddingLeft="10dp"
-                android:text="@string/petrol_hour"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/petrol_hour"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/petrol_truck_idtt"
+                android:id="@+id/maintenande_truckId_tt"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -74,16 +49,14 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/petrol_truck_id"
-                android:layout_width="210dp"
+                android:id="@+id/maintenande_truckId"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="numberDecimal"
-                android:focusable="false"/>
+                android:inputType="date" />
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,7 +64,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/petrol_truck_numtt"
+                android:id="@+id/maintenande_truckNum_tt"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -100,13 +73,12 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/petrol_truck_num"
-                android:layout_width="210dp"
+                android:id="@+id/maintenande_truckNum"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="numberDecimal"
-                android:focusable="false"/>
+                android:inputType="date" />
 
         </LinearLayout>
 
@@ -117,7 +89,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/petrol_km1"
+                android:id="@+id/maintenande_km_tt"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -126,14 +98,12 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/petrol_km"
-                android:layout_width="210dp"
+                android:id="@+id/maintenande_km"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="numberDecimal"
-                android:selectAllOnFocus="false"
-                android:singleLine="false" />
+                android:inputType="date" />
 
         </LinearLayout>
 
@@ -144,34 +114,60 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/petrol_liters1"
+                android:id="@+id/maintenande_type_tt"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:paddingLeft="10dp"
-                android:text="@string/petrol_liters"
+                android:text="@string/maintenance_type"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/petrol_liters"
-                android:layout_width="180dp"
+                android:id="@+id/maintenande_type"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="date" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/maintenande_comment_tt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="@string/text_area"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/maintenande_comment"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="date" />
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/petrol_send"
+            android:id="@+id/maintenance_send"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_weight="0.38"
             android:background="@color/colorSecondary"
-            android:text="@string/petrol_send"
+            android:text="@string/maintenance_send"
             android:textColor="@color/cardview_light_background" />
 
     </LinearLayout>
 
 </ScrollView>
+
