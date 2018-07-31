@@ -103,9 +103,6 @@ public class CustomExpandableListView extends BaseExpandableListAdapter {
         TextView cdh = (TextView) convertView.findViewById(R.id.containerDischargeHourRetrieve);
         TextView observations = (TextView) convertView.findViewById(R.id.observationsRetrieve);
 
-        //*************************************/
-        //COMPLETAR
-        //*************************************/
         date.setText(item.getDate());
         truckId.setText(item.getTruckID());
         truckNum.setText(item.getTruckNumber());
