@@ -31,7 +31,7 @@ public class WatchOrdersActivity extends AppCompatActivity {
     HashMap<String, List<Order>> listDataChild;
     CustomExpandableListView customExpandableListView;
 
-    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    //private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private String userID;
