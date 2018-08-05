@@ -76,8 +76,6 @@ public class WatchOrdersActivity extends AppCompatActivity {
             }
         }.start();
 
-
-
     }
 
     private void addControl() {

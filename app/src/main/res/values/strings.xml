@@ -36,7 +36,7 @@
     <string name="container_id">Número de contenedor</string>
     <string name="arrival_time">Hora llegada</string>
     <string name="departure_time">Hora salida</string>
-    <string name="text_area">observaciones</string>
+    <string name="text_area">Observaciones</string>
     <string name="hour_aperture">Horario</string>
     <string name="city">Ciudad</string>
     <string name="state">Provincia</string>
