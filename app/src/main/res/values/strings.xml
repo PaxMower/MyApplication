@@ -11,7 +11,9 @@
     <string name="app_watch_petrol">Ver repostajes</string>
     <string name="app_maintenance">Mantenimiento</string>
     <string name="app_watch_maintenance">Ver mantenimientos</string>
-    <string name="app_Edit_maintenance">Editar mantenimiento</string>
+    <string name="app_edit_maintenance">Editar mantenimiento</string>
+    <string name="app_edit_petrol">Editar repostaje</string>
+    <string name="app_edit_order">Editar Orden</string>
 
 
     <string name="new_order">Nuevo viaje</string>

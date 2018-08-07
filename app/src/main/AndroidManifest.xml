@@ -77,11 +77,15 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Model.EditMaintenanceActivity"
-            android:label="@string/app_Edit_maintenance"
+            android:label="@string/app_edit_maintenance"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Model.EditPetrolActivity"
-            android:label="@string/app_Edit_maintenance"
+            android:label="@string/app_edit_petrol"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Model.EditOrderActivity"
+            android:label="@string/app_edit_maintenance"
             android:windowSoftInputMode="stateHidden" />
 
         <meta-data
