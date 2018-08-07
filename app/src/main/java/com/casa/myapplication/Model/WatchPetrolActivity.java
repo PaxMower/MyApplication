@@ -1,6 +1,7 @@
 package com.casa.myapplication.Model;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.casa.myapplication.Adapter.PetrolAdapter;
 import com.casa.myapplication.Listener.RecyclerTouchListener;
@@ -31,6 +31,8 @@ public class WatchPetrolActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private String userID;
+
+    private List<String> identifier = new ArrayList<>();
 
     private ProgressDialog mProgressLoad;
 
@@ -82,6 +84,7 @@ public class WatchPetrolActivity extends AppCompatActivity {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     Petrol m = ds.getValue(Petrol.class);
                     petrolList.add(m);
+                    identifier.add(ds.getKey());
                 }
 
                 adapter.notifyDataSetChanged();
@@ -105,7 +108,21 @@ public class WatchPetrolActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 Petrol petrol = petrolList.get(position);
-                Toast.makeText(getApplicationContext(), petrol.getHour() + " is selected!", Toast.LENGTH_SHORT).show();
+                String ident = identifier.get(position);
+                Bundle bundle = new Bundle();
+                Intent i = new Intent(WatchPetrolActivity.this, EditPetrolActivity.class);
+
+                bundle.putString("date", petrol.getDate());
+                bundle.putString("km", petrol.getKm());
+                bundle.putString("truckId", petrol.getTruckId());
+                bundle.putString("truckNum", petrol.getTruckNum());
+                bundle.putString("liters", petrol.getLiters());
+                bundle.putString("hour", petrol.getHour());
+                bundle.putString("id", ident);
+
+                i.putExtras(bundle);
+                startActivity(i);
+
             }
 
             @Override

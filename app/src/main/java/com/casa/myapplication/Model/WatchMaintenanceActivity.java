@@ -1,6 +1,7 @@
 package com.casa.myapplication.Model;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.casa.myapplication.Adapter.MaintenanceAdapter;
 import com.casa.myapplication.Listener.RecyclerTouchListener;
@@ -29,7 +29,8 @@ import java.util.List;
 public class WatchMaintenanceActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private List<Maintenance> maintenanceList = new ArrayList<>();;
+    private List<Maintenance> maintenanceList = new ArrayList<>();
+    private List<String> identifier = new ArrayList<>();
     private MaintenanceAdapter adapter;
 
     private FirebaseDatabase mFirebaseDatabase;
@@ -76,12 +77,14 @@ public class WatchMaintenanceActivity extends AppCompatActivity {
     private void loadDataFirebase() {
 
         DatabaseReference mData = mFirebaseDatabase.getReference("Users").child(userID).child("Maintenance");
+
         mData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     Maintenance m = ds.getValue(Maintenance.class);
                     maintenanceList.add(m);
+                    identifier.add(ds.getKey());
                 }
 
                 adapter.notifyDataSetChanged();
@@ -105,7 +108,20 @@ public class WatchMaintenanceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 Maintenance maint = maintenanceList.get(position);
-                Toast.makeText(getApplicationContext(), maint.getType() + " is selected!", Toast.LENGTH_SHORT).show();
+                String ident = identifier.get(position);
+                Bundle bundle = new Bundle();
+                Intent i = new Intent(WatchMaintenanceActivity.this, EditMaintenanceActivity.class);
+
+                bundle.putString("comments", maint.getComments());
+                bundle.putString("date", maint.getDate());
+                bundle.putString("km", maint.getKm());
+                bundle.putString("truckId", maint.getTruckId());
+                bundle.putString("truckNum", maint.getTruckNum());
+                bundle.putString("type", maint.getType());
+                bundle.putString("id", ident);
+
+                i.putExtras(bundle);
+                startActivity(i);
             }
 
             @Override
@@ -127,3 +143,4 @@ public class WatchMaintenanceActivity extends AppCompatActivity {
         }
     }
 }
+

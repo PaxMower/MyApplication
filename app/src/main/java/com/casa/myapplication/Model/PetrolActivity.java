@@ -79,6 +79,7 @@ public class PetrolActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
 
         mPetrolDate = (EditText) findViewById(R.id.petrol_date);
+        mPetrolDate.setShowSoftInputOnFocus(false); //avoid keyboard on this field
         mPetrolHour = (EditText) findViewById(R.id.petrol_hour);
         mTruckId = (EditText) findViewById(R.id.petrol_truck_id);
         mTruckNum = (EditText) findViewById(R.id.petrol_truck_num);
@@ -215,7 +216,7 @@ public class PetrolActivity extends AppCompatActivity{
                 newPetrol.setKm(mPetrolKm.getText().toString());
                 newPetrol.setLiters(mPetrolLiters.getText().toString());
                 newPetrol.setTruckId(mTruckId.getText().toString());
-                newPetrol.setTruckNumber(mTruckNum.getText().toString());
+                newPetrol.setTruckNum(mTruckNum.getText().toString());
 
 
                 if(mPetrolDate.getText().toString().equals("") || mTruckNum.getText().toString().equals("") || mTruckId.getText().toString().equals("") || mPetrolHour.getText().toString().equals("") || mPetrolKm.getText().toString().equals("") || mPetrolLiters.getText().toString().equals("")){

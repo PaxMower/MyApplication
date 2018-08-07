@@ -30,7 +30,7 @@ public class PetrolAdapter extends RecyclerView.Adapter<PetrolAdapter.PetrolView
         holder.mDate.setText(petrol.getDate());
         holder.mHour.setText(petrol.getHour());
         holder.mTruckId.setText(petrol.getTruckId());
-        holder.mTruckNum.setText(petrol.getTruckNumber());
+        holder.mTruckNum.setText(petrol.getTruckNum());
         holder.mKm.setText(petrol.getKm());
         holder.mLiters.setText(petrol.getLiters());
     }

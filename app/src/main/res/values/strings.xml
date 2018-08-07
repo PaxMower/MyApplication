@@ -11,6 +11,8 @@
     <string name="app_watch_petrol">Ver repostajes</string>
     <string name="app_maintenance">Mantenimiento</string>
     <string name="app_watch_maintenance">Ver mantenimientos</string>
+    <string name="app_Edit_maintenance">Editar mantenimiento</string>
+
 
     <string name="new_order">Nuevo viaje</string>
     <string name="watch_orders">Ver viajes</string>
@@ -62,6 +64,7 @@
     <string name="button_watch_petrol">Ver repostajes</string>
     <string name="button_add_maintenance">Añadir mantenimiento</string>
     <string name="button_watch_maintenance">Ver mantenimientos</string>
+    <string name="button_edit_maintenance">Guardar cambios</string>
 
     <string name="petrol_date">Fecha repostaje</string>
     <string name="petrol_hour">Hora repostaje</string>

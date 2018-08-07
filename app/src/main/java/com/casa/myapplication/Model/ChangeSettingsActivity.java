@@ -49,12 +49,6 @@ public class ChangeSettingsActivity extends AppCompatActivity {
         mSaveNewData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*
-
-                newUser.setTruckIdSettings(mNewTruckId.getText().toString());
-                newUser.setTruckNumSettings(mNewTruckNum.getText().toString());
-                newUser.setPlatformIdSettings(mNewPlatformId.getText().toString());
-*/
 
                 mProgressLoad = new ProgressDialog(ChangeSettingsActivity.this);
                 mProgressLoad.setTitle("Guardando");
