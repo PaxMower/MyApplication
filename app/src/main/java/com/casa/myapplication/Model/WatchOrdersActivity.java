@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 
@@ -44,6 +43,10 @@ public class WatchOrdersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_orders);
 
+        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<String, List<Order>>();
+
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         //mDatabase = mFirebaseDatabase.getReference();
@@ -53,36 +56,57 @@ public class WatchOrdersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mostrará como un UP
 
+        mProgressLoad = new ProgressDialog(WatchOrdersActivity.this);
+        mProgressLoad.setTitle("Cargando");
+        mProgressLoad.setMessage("Cargando datos, por favor espere");
+        mProgressLoad.setCanceledOnTouchOutside(false);
+        mProgressLoad.show();
 
+        addControl();
 
-        new Thread(){
-            @Override
-            public void run(){
-                try{
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mProgressLoad = new ProgressDialog(WatchOrdersActivity.this);
-                            mProgressLoad.setTitle("Cargando");
-                            mProgressLoad.setMessage("Cargando datos, por favor espere");
-                            mProgressLoad.setCanceledOnTouchOutside(false);
-                            mProgressLoad.show();
-                            addControl();
-                        }
-                    });
-                }catch (final Exception ex){
-                    Log.i("THREAD EXCEPTION", ex.toString());
-                }
-            }
-        }.start();
+//        new Thread(){
+//            @Override
+//            public void run(){
+//                try{
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            mProgressLoad = new ProgressDialog(WatchOrdersActivity.this);
+//                            mProgressLoad.setTitle("Cargando");
+//                            mProgressLoad.setMessage("Cargando datos, por favor espere");
+//                            mProgressLoad.setCanceledOnTouchOutside(false);
+//                            mProgressLoad.show();
+//                            addControl();
+//                        }
+//                    });
+//                }catch (final Exception ex){
+//                    Log.i("THREAD EXCEPTION", ex.toString());
+//                }
+//            }
+//        }.start();
+
+//        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//            @Override
+//            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+//                Toast.makeText(
+//                        getApplicationContext(),
+//                        listDataHeader.get(groupPosition)
+//                                + " : "
+//                                + listDataChild.get(
+//                                listDataHeader.get(groupPosition)).get(
+//                                childPosition), Toast.LENGTH_SHORT)
+//                        .show();
+//                return false;
+//            }
+//        });
 
     }
 
     private void addControl() {
 
-        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        listDataHeader = new ArrayList<>();
-        listDataChild = new HashMap<String, List<Order>>();
+//        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+//        listDataHeader = new ArrayList<>();
+//        listDataChild = new HashMap<String, List<Order>>();
 
 
 //        DatabaseReference mData = mFirebaseDatabase.getReference().child("Users").child(userID).child("Orders");

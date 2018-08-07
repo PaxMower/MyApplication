@@ -6,8 +6,9 @@
 
     <color name="colorSecondary">#f48a00</color>
     <color name="colorSecondaryDark">#ba4c00</color>
-    <color name="colorSecondaryLight">#22ffac42</color>
+    <color name="colorSecondaryLight">#ffac42</color>
 
     <color name="colorAccent">#FF4081</color>
+    <color name="lightOrangeBackground">#1effac42</color>
 </resources>
 
