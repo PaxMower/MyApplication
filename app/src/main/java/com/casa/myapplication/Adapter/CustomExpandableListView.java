@@ -82,19 +82,19 @@ public class CustomExpandableListView extends BaseExpandableListAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.item_child, null);
 
-        TextView date = (TextView) convertView.findViewById(R.id.dateRetrieve);
         TextView truckId = (TextView) convertView.findViewById(R.id.truckIdRetrieve);
         TextView truckNum = (TextView) convertView.findViewById(R.id.truckNumRetrieve);
         TextView platformId = (TextView) convertView.findViewById(R.id.platformIdRetrieve);
+        TextView date = (TextView) convertView.findViewById(R.id.dateRetrieve);
         TextView containerId = (TextView) convertView.findViewById(R.id.containerIdRetrieve);
-        TextView charger = (TextView) convertView.findViewById(R.id.chargerRetrieve);
+//        TextView charger = (TextView) convertView.findViewById(R.id.chargerRetrieve);
         TextView client = (TextView) convertView.findViewById(R.id.clientRetrieve);
         TextView address = (TextView) convertView.findViewById(R.id.addressRetrieve);
         TextView city = (TextView) convertView.findViewById(R.id.cityRetrieve);
-        TextView state = (TextView) convertView.findViewById(R.id.stateRetrieve);
+//        TextView state = (TextView) convertView.findViewById(R.id.stateRetrieve);
         TextView price = (TextView) convertView.findViewById(R.id.priceRetrieve);
-        TextView apertureHour = (TextView) convertView.findViewById(R.id.apertureHourRetrieve);
-        TextView phone = (TextView) convertView.findViewById(R.id.phoneRetrieve);
+//        TextView apertureHour = (TextView) convertView.findViewById(R.id.apertureHourRetrieve);
+//        TextView phone = (TextView) convertView.findViewById(R.id.phoneRetrieve);
         TextView arrivalHour = (TextView) convertView.findViewById(R.id.arrivalHourRetrieve);
         TextView departureHour = (TextView) convertView.findViewById(R.id.departureHourRetrieve);
         TextView ccd= (TextView) convertView.findViewById(R.id.containerChargeDayRetrieve);
@@ -108,11 +108,11 @@ public class CustomExpandableListView extends BaseExpandableListAdapter {
         truckNum.setText(item.getTruckNumber());
         platformId.setText(item.getPlatformID());
         containerId.setText(item.getContainerNumber());
-        charger.setText(item.getCharger());
+//        charger.setText(item.getCharger());
         client.setText(item.getClient());
         address.setText(item.getAddress());
-        apertureHour.setText(item.getApertureHour());
-        phone.setText(item.getPhone());
+//        apertureHour.setText(item.getApertureHour());
+//        phone.setText(item.getPhone());
         arrivalHour.setText(item.getArrivalHour());
         departureHour.setText(item.getDepartureHour());
         ccd.setText(item.getContainerChargeDay());
@@ -121,7 +121,7 @@ public class CustomExpandableListView extends BaseExpandableListAdapter {
         cdh.setText(item.getContainerDischargeHour());
         observations.setText(item.getTextArea());
         city.setText(item.getCity());
-        state.setText(item.getState());
+//        state.setText(item.getState());
         price.setText(item.getPrice());
 
 

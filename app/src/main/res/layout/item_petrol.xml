@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorSecondaryLight">
 
 
     <TextView
@@ -13,6 +14,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/truck_id"
+        android:textColor="@color/colorSecondaryDark"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,6 +27,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/truck_number"
+        android:textColor="@color/colorSecondaryDark"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/watch_petrol_truckId"
@@ -38,6 +41,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/petrol_km"
+        android:textColor="@color/colorSecondaryDark"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_text" />
@@ -50,6 +54,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/date"
+        android:textColor="@color/colorSecondaryDark"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/watch_petrol_km"
         app:layout_constraintTop_toBottomOf="@+id/date_text2" />
@@ -62,6 +67,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/petrol_liters"
+        android:textColor="@color/colorSecondaryDark"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -74,6 +80,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/petrol_hour"
+        android:textColor="@color/colorSecondaryDark"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/watch_petrol_liters"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -143,5 +150,14 @@
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/watch_petrol_date" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:background="@color/cardview_light_background"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"></LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
