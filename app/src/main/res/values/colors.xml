@@ -9,6 +9,7 @@
     <color name="colorSecondaryLight">#ffac42</color>
 
     <color name="colorAccent">#FF4081</color>
-    <color name="lightOrangeBackground">#1effac42</color>
+    <color name="lightOrangeBackground">#79ffac42</color>
+    <color name="textBackground">#89ffffff</color>
 </resources>
 

@@ -78,6 +78,16 @@
     <string name="maintenance_send">Guardar mantenimiento</string>
     <string name="maintenance_type">Tipo de mantenimiento</string>
 
+    <string name="personal_info">Información personal</string>
+    <string name="client_info">Información del cliente</string>
+    <string name="travel_info">Información del viaje</string>
+    <string name="edit_order_truckId">Camión</string>
+    <string name="edit_order_truckNum">Número</string>
+    <string name="edit_order_plataforma">Plataforma</string>
+    <string name="edit_order_container">Nº Contenedor</string>
+    <string name="edit_order_address">Dirección</string>
+    <string name="edit_order_phone">Teléfono</string>
+
 </resources>
 
 

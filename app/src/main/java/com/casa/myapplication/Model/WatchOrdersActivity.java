@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import com.casa.myapplication.Adapter.CustomExpandableListView;
 import com.casa.myapplication.Logic.Order;
@@ -65,45 +65,68 @@ public class WatchOrdersActivity extends AppCompatActivity {
         mProgressLoad.setCanceledOnTouchOutside(false);
         mProgressLoad.show();
 
-        addControl();
+//        addControl();
 
-//        new Thread(){
-//            @Override
-//            public void run(){
-//                try{
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
+        new Thread(){
+            @Override
+            public void run(){
+                try{
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 //                            mProgressLoad = new ProgressDialog(WatchOrdersActivity.this);
 //                            mProgressLoad.setTitle("Cargando");
 //                            mProgressLoad.setMessage("Cargando datos, por favor espere");
 //                            mProgressLoad.setCanceledOnTouchOutside(false);
 //                            mProgressLoad.show();
-//                            addControl();
-//                        }
-//                    });
-//                }catch (final Exception ex){
-//                    Log.i("THREAD EXCEPTION", ex.toString());
-//                }
-//            }
-//        }.start();
+                            addControl();
+                        }
+                    });
+                }catch (final Exception ex){
+                    Log.i("THREAD EXCEPTION", ex.toString());
+                }
+            }
+        }.start();
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
-                Intent goToMainPage = new Intent(WatchOrdersActivity.this, EditOrderActivity.class);
-                goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(goToMainPage);
+                Log.v("LOG_TESTING-->", String.valueOf(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getAddress()));
 
-                Toast.makeText(
-                        getApplicationContext(),
-                        listDataHeader.get(groupPosition)
-                                + " : "
-                                + listDataChild.get(
-                                listDataHeader.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT)
-                        .show();
+                Bundle bundle = new Bundle();
+                Intent i = new Intent(WatchOrdersActivity.this, EditOrderActivity.class);
+
+                bundle.putString("date", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getDate());
+                bundle.putString("driver", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getDriver());
+                bundle.putString("truckNum", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getTruckNumber());
+                bundle.putString("truckId", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getTruckID());
+                bundle.putString("platformId", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getPlatformID());
+                bundle.putString("client", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getClient());
+                bundle.putString("charger", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getCharger());
+                bundle.putString("address", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getAddress());
+                bundle.putString("city", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getCity());
+                bundle.putString("state", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getState());
+                bundle.putString("price", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getPrice());
+                bundle.putString("timeSchedule", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getApertureHour());
+                bundle.putString("phone", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getPhone());
+                bundle.putString("containerNum", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getContainerNumber());
+                bundle.putString("arrivalHour", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getArrivalHour());
+                bundle.putString("departureHour", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getDepartureHour());
+                bundle.putString("chargingDay", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getContainerChargeDay());
+                bundle.putString("chargingHour", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getContainerChargeHour());
+                bundle.putString("dischargingDay", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getContainerDischargeDay());
+                bundle.putString("dischargingHour", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getContainerDischargeHour());
+                bundle.putString("textArea", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getTextArea());
+
+                i.putExtras(bundle);
+                startActivity(i);
+
+
+//                Intent goToMainPage = new Intent(WatchOrdersActivity.this, EditOrderActivity.class);
+//                goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(goToMainPage);
+
                 return false;
             }
         });
@@ -132,7 +155,7 @@ public class WatchOrdersActivity extends AppCompatActivity {
                         amount += Double.parseDouble(order.getPrice());
                     }
 
-                    listDataHeader.add(ds.getKey()+"                         "+amount);
+                    listDataHeader.add(ds.getKey()+"                         "+amount+" €");
                     List<Order> uno = new ArrayList<Order>();
 
                     for(DataSnapshot ds2 : ds.getChildren()){
