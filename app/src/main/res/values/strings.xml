@@ -22,7 +22,7 @@
     <string name="settings">Ajustes</string>
     <string name="clients">Añadir cliente</string>
 
-    <string name="driver">Chofer</string>
+    <string name="driver">Nombre</string>
     <string name="truck_id">Matrícula camión</string>
     <string name="truck_number">Número camión</string>
     <string name="platform_id">Matrícula plataforma</string>

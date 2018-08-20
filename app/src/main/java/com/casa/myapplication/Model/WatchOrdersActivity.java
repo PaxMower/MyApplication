@@ -30,7 +30,9 @@ public class WatchOrdersActivity extends AppCompatActivity {
 
     ExpandableListView expandableListView;
     List<String> listDataHeader;
+    List<String> identifiersHeader;
     HashMap<String, List<Order>> listDataChild;
+    HashMap<String, List<String>> identifiersChild;
     CustomExpandableListView customExpandableListView;
 
     //private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
@@ -48,7 +50,9 @@ public class WatchOrdersActivity extends AppCompatActivity {
 
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
         listDataHeader = new ArrayList<>();
+        identifiersHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<Order>>();
+        identifiersChild = new HashMap<String, List<String>>();
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -92,8 +96,6 @@ public class WatchOrdersActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
-                Log.v("LOG_TESTING-->", String.valueOf(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getAddress()));
-
                 Bundle bundle = new Bundle();
                 Intent i = new Intent(WatchOrdersActivity.this, EditOrderActivity.class);
 
@@ -118,14 +120,13 @@ public class WatchOrdersActivity extends AppCompatActivity {
                 bundle.putString("dischargingDay", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getContainerDischargeDay());
                 bundle.putString("dischargingHour", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getContainerDischargeHour());
                 bundle.putString("textArea", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getTextArea());
+                bundle.putString("month", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getMonth());
+                bundle.putString("year", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getYear());
+//                bundle.putString("id", );
+
 
                 i.putExtras(bundle);
                 startActivity(i);
-
-
-//                Intent goToMainPage = new Intent(WatchOrdersActivity.this, EditOrderActivity.class);
-//                goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(goToMainPage);
 
                 return false;
             }
@@ -147,10 +148,10 @@ public class WatchOrdersActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 int x = 0;
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                for(DataSnapshot ds : dataSnapshot.getChildren()){//key = date
                     amount = 0.0;
 
-                    for(DataSnapshot ds2 : ds.getChildren()){
+                    for(DataSnapshot ds2 : ds.getChildren()){ //key = identifier
                         Order order = ds2.getValue(Order.class);
                         amount += Double.parseDouble(order.getPrice());
                     }
@@ -158,13 +159,22 @@ public class WatchOrdersActivity extends AppCompatActivity {
                     listDataHeader.add(ds.getKey()+"                         "+amount+" €");
                     List<Order> uno = new ArrayList<Order>();
 
+                    identifiersHeader.add(ds.getKey());
+
                     for(DataSnapshot ds2 : ds.getChildren()){
                         Order order = ds2.getValue(Order.class);
+
+                        String ident = ds2.getKey();
+                        identifiersHeader.add(ident);
+                        identifiersChild.put(identifiersHeader.get(x), ident);
+
                         uno.add(order);
                         listDataChild.put(listDataHeader.get(x), uno);
                         //amount += Double.parseDouble(order.getPrice());
                     }
+
                     x++;
+
                 }
 
                 customExpandableListView = new CustomExpandableListView(WatchOrdersActivity.this, listDataHeader, listDataChild);

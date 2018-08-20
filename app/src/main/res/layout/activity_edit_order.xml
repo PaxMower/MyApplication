@@ -19,7 +19,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
         <EditText
-            android:id="@+id/editText6"
+            android:id="@+id/edit_expandable_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/edit_expandable_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -75,11 +75,11 @@
             android:layout_marginTop="4dp"
             android:text="@string/date"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/editText4"
+            app:layout_constraintStart_toEndOf="@+id/edit_expandable_platform"
             app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/edit_expandable_platform"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -106,7 +106,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/edit_expandable_truckNum"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -118,7 +118,7 @@
             android:text="16"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/textView34"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_driver" />
 
         <TextView
             android:id="@+id/textView34"
@@ -129,11 +129,11 @@
             android:layout_marginTop="4dp"
             android:text="@string/edit_order_truckNum"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/editText2"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintStart_toEndOf="@+id/edit_expandable_truckId"
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_driver" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/edit_expandable_truckId"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -161,7 +161,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/edit_expandable_driver"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -249,7 +249,7 @@
             app:srcCompat="@android:drawable/btn_star" />
 
         <TextView
-            android:id="@+id/textView42"
+            android:id="@+id/edit_expandable_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -274,7 +274,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <EditText
-            android:id="@+id/editText7"
+            android:id="@+id/edit_expandable_charger"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -340,7 +340,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
         <EditText
-            android:id="@+id/editText8"
+            android:id="@+id/edit_expandable_client"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -355,10 +355,10 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView45"
-            app:layout_constraintTop_toBottomOf="@+id/editText7" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_charger" />
 
         <EditText
-            android:id="@+id/editText9"
+            android:id="@+id/edit_expandable_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -373,7 +373,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/imageView3"
             app:layout_constraintStart_toEndOf="@+id/textView46"
-            app:layout_constraintTop_toBottomOf="@+id/editText8" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_client" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -387,11 +387,11 @@
             android:clickable="false"
             android:cropToPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText8"
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_client"
             app:srcCompat="@android:drawable/ic_dialog_map" />
 
         <EditText
-            android:id="@+id/editText10"
+            android:id="@+id/edit_expandable_city"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -403,7 +403,7 @@
             android:text="ARzobispòs de los reyes"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/textView47"
-            app:layout_constraintTop_toBottomOf="@+id/editText9" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_address" />
 
         <TextView
             android:id="@+id/textView49"
@@ -414,11 +414,11 @@
             android:layout_marginTop="4dp"
             android:text="@string/state"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/editText10"
-            app:layout_constraintTop_toBottomOf="@+id/editText9" />
+            app:layout_constraintStart_toEndOf="@+id/edit_expandable_city"
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_address" />
 
         <EditText
-            android:id="@+id/editText11"
+            android:id="@+id/edit_expandable_state"
             android:layout_width="105dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -430,10 +430,10 @@
             android:text="asdasdasdas"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/textView49"
-            app:layout_constraintTop_toBottomOf="@+id/editText9" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_address" />
 
         <EditText
-            android:id="@+id/editText12"
+            android:id="@+id/edit_expandable_phone"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -445,7 +445,7 @@
             android:text="12365447800213"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/textView48"
-            app:layout_constraintTop_toBottomOf="@+id/editText10" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_city" />
 
         <TextView
             android:id="@+id/textView50"
@@ -456,11 +456,11 @@
             android:layout_marginTop="4dp"
             android:text="@string/hour_aperture"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/editText12"
+            app:layout_constraintStart_toEndOf="@+id/edit_expandable_phone"
             app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
         <EditText
-            android:id="@+id/editText13"
+            android:id="@+id/edit_expandable_schedule"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -475,7 +475,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView50"
-            app:layout_constraintTop_toBottomOf="@+id/editText11" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_state" />
 
         <TextView
             android:id="@+id/textView51"
@@ -577,7 +577,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView56" />
 
         <EditText
-            android:id="@+id/editText14"
+            android:id="@+id/edit_expandable_arrivalTime"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -600,11 +600,11 @@
             android:layout_marginTop="4dp"
             android:text="@string/departure_time"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/editText14"
+            app:layout_constraintStart_toEndOf="@+id/edit_expandable_arrivalTime"
             app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
         <EditText
-            android:id="@+id/editText15"
+            android:id="@+id/edit_expandable_departureTime"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -619,7 +619,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
         <EditText
-            android:id="@+id/editText16"
+            android:id="@+id/edit_expandable_chargerDay"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -634,7 +634,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView58" />
 
         <EditText
-            android:id="@+id/editText17"
+            android:id="@+id/edit_expandable_chargerHour"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -645,11 +645,11 @@
             android:inputType="textPersonName"
             android:text="19:05"
             android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/editText16"
-            app:layout_constraintTop_toBottomOf="@+id/editText14" />
+            app:layout_constraintStart_toEndOf="@+id/edit_expandable_chargerDay"
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_arrivalTime" />
 
         <EditText
-            android:id="@+id/editText18"
+            android:id="@+id/edit_expandable_dischargerDay"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -661,10 +661,10 @@
             android:text="10/15/2015"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/textView55"
-            app:layout_constraintTop_toBottomOf="@+id/editText16" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_chargerDay" />
 
         <EditText
-            android:id="@+id/editText19"
+            android:id="@+id/edit_expandable_dischargerHour"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -675,11 +675,11 @@
             android:inputType="textPersonName"
             android:text="11:94"
             android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/editText18"
-            app:layout_constraintTop_toBottomOf="@+id/editText17" />
+            app:layout_constraintStart_toEndOf="@+id/edit_expandable_dischargerDay"
+            app:layout_constraintTop_toBottomOf="@+id/edit_expandable_chargerHour" />
 
         <EditText
-            android:id="@+id/editText20"
+            android:id="@+id/edit_expandable_textArea"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -699,7 +699,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <Button
-        android:id="@+id/button_order_edit"
+        android:id="@+id/edit_expandable_button"
         android:layout_width="324dp"
         android:layout_height="38dp"
         android:layout_marginBottom="8dp"
