@@ -24,21 +24,29 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class WatchOrdersActivity extends AppCompatActivity {
 
-    ExpandableListView expandableListView;
-    List<String> listDataHeader;
-    List<String> identifiersHeader;
-    HashMap<String, List<Order>> listDataChild;
-    HashMap<String, List<String>> identifiersChild;
-    CustomExpandableListView customExpandableListView;
+    private ExpandableListView expandableListView;
+    private CustomExpandableListView customExpandableListView;
+    private List<String> listDataHeader;
+    private HashMap<String, List<Order>> listDataChild;
+
+
+    ////////////////////////////////////////////////////////
+    private List<String> identifiersChild;
+    private HashMap<String, List<String>> identifiersHeader;
+    private Map<String, List<String>> sortedMap;//order map select the correct child id
+    ////////////////////////////////////////////////////////
+
 
     //private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
-    private String userID;
+    private String userID, identifier;
     private Double amount = 0.0;
 
     private ProgressDialog mProgressLoad;
@@ -50,9 +58,7 @@ public class WatchOrdersActivity extends AppCompatActivity {
 
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
         listDataHeader = new ArrayList<>();
-        identifiersHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<Order>>();
-        identifiersChild = new HashMap<String, List<String>>();
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -92,9 +98,79 @@ public class WatchOrdersActivity extends AppCompatActivity {
             }
         }.start();
 
+        buttonClick();
+
+    }
+
+
+    private void addControl() {
+
+        DatabaseReference mData = FirebaseDatabase.getInstance().getReference("Users").child(userID).child("Orders");
+        mData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                identifiersHeader = new HashMap<String, List<String>>();//hashMap for take identities
+                int x = 0;
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    amount = 0.0;
+                    identifiersChild = new ArrayList<String>();//list for save identities
+
+                    for(DataSnapshot ds2 : ds.getChildren()){ //obtain total amount for every month
+                        Order order = ds2.getValue(Order.class);
+                        amount += Double.parseDouble(order.getPrice());
+                    }
+
+                    listDataHeader.add(ds.getKey()+"                         "+amount+" €");
+                    List<Order> uno = new ArrayList<Order>();
+
+                    for(DataSnapshot ds2 : ds.getChildren()){
+                        Order order = ds2.getValue(Order.class);
+
+                        uno.add(order);
+                        listDataChild.put(listDataHeader.get(x), uno);
+
+                        identifiersChild.add(ds2.getKey());
+                    }
+
+                    identifiersHeader.put(ds.getKey(), identifiersChild);
+
+                    x++;
+
+
+                }
+                sortedMap = new TreeMap<String, List<String>>(identifiersHeader);
+
+                customExpandableListView = new CustomExpandableListView(WatchOrdersActivity.this, listDataHeader, listDataChild);
+                expandableListView.setAdapter(customExpandableListView);
+
+                if (mProgressLoad != null && mProgressLoad.isShowing()) {
+                    mProgressLoad.dismiss();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void loadIdentifier(int groupPosition, int childPosition){
+        String y = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getYear();
+        String m =listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getMonth();
+
+        identifier = identifiersHeader.get(y + "-" + m).get(childPosition);
+    }
+
+    private void buttonClick() {
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                loadIdentifier(groupPosition, childPosition);
 
                 Bundle bundle = new Bundle();
                 Intent i = new Intent(WatchOrdersActivity.this, EditOrderActivity.class);
@@ -102,7 +178,7 @@ public class WatchOrdersActivity extends AppCompatActivity {
                 bundle.putString("date", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getDate());
                 bundle.putString("driver", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getDriver());
                 bundle.putString("truckNum", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getTruckNumber());
-                bundle.putString("truckId", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getTruckID());
+                bundle.putString("truckId", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getTruckId());
                 bundle.putString("platformId", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getPlatformID());
                 bundle.putString("client", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getClient());
                 bundle.putString("charger", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getCharger());
@@ -122,7 +198,7 @@ public class WatchOrdersActivity extends AppCompatActivity {
                 bundle.putString("textArea", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getTextArea());
                 bundle.putString("month", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getMonth());
                 bundle.putString("year", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getYear());
-//                bundle.putString("id", );
+                bundle.putString("id", identifier);
 
 
                 i.putExtras(bundle);
@@ -131,68 +207,8 @@ public class WatchOrdersActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
-    private void addControl() {
-
-//        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-//        listDataHeader = new ArrayList<>();
-//        listDataChild = new HashMap<String, List<Order>>();
-
-
-//        DatabaseReference mData = mFirebaseDatabase.getReference().child("Users").child(userID).child("Orders");
-        DatabaseReference mData = FirebaseDatabase.getInstance().getReference("Users").child(userID).child("Orders");
-        mData.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                int x = 0;
-                for(DataSnapshot ds : dataSnapshot.getChildren()){//key = date
-                    amount = 0.0;
-
-                    for(DataSnapshot ds2 : ds.getChildren()){ //key = identifier
-                        Order order = ds2.getValue(Order.class);
-                        amount += Double.parseDouble(order.getPrice());
-                    }
-
-                    listDataHeader.add(ds.getKey()+"                         "+amount+" €");
-                    List<Order> uno = new ArrayList<Order>();
-
-                    identifiersHeader.add(ds.getKey());
-
-                    for(DataSnapshot ds2 : ds.getChildren()){
-                        Order order = ds2.getValue(Order.class);
-
-                        String ident = ds2.getKey();
-                        identifiersHeader.add(ident);
-                        identifiersChild.put(identifiersHeader.get(x), ident);
-
-                        uno.add(order);
-                        listDataChild.put(listDataHeader.get(x), uno);
-                        //amount += Double.parseDouble(order.getPrice());
-                    }
-
-                    x++;
-
-                }
-
-                customExpandableListView = new CustomExpandableListView(WatchOrdersActivity.this, listDataHeader, listDataChild);
-                expandableListView.setAdapter(customExpandableListView);
-
-                if (mProgressLoad != null && mProgressLoad.isShowing()) {
-                    mProgressLoad.dismiss();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
     //Close actual activity when back button is selected
     @Override

@@ -706,7 +706,7 @@ public class NewOrderActivity extends AppCompatActivity {
                 newOrder.setDate(mDate.getText().toString());
                 newOrder.setDriver(mDriver.getText().toString());
                 newOrder.setTruckNumber(mTruckNumber.getText().toString());
-                newOrder.setTruckID(mTruckID.getText().toString());
+                newOrder.setTruckId(mTruckID.getText().toString());
                 newOrder.setPlatformID(mPlatformID.getText().toString());
                 newOrder.setContainerNumber(mContainerNumber.getText().toString());
 

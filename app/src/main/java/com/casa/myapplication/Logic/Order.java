@@ -2,7 +2,7 @@ package com.casa.myapplication.Logic;
 
 public class Order {
 
-    private String driver, address, phone, date, truckID, truckNumber, platformID,
+    private String driver, address, phone, date, truckId, truckNumber, platformID,
             containerChargeDay, containerChargeHour, client, apertureHour,
             charger, containerNumber, arrivalHour, departureHour, containerDischargeHour,
             containerDischargeDay, textArea, day, month, year, minutes, hour, price, city, state ;
@@ -13,7 +13,7 @@ public class Order {
         this.address = address;
         this.phone = phone;
         this.date = date;
-        this.truckID = truckID;
+        this.truckId = truckId;
         this.truckNumber = truckNumber;
         this.platformID = platformID;
         this.containerChargeDay = containerChargeDay;
@@ -125,12 +125,12 @@ public class Order {
         this.date = date;
     }
 
-    public String getTruckID() {
-        return truckID;
+    public String getTruckId() {
+        return truckId;
     }
 
-    public void setTruckID(String truckID) {
-        this.truckID = truckID;
+    public void setTruckId(String truckId) {
+        this.truckId = truckId;
     }
 
     public String getTruckNumber() {

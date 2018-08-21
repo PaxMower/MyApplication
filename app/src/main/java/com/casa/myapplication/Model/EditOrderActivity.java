@@ -1,9 +1,13 @@
 package com.casa.myapplication.Model;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,13 +20,15 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class EditOrderActivity extends AppCompatActivity {
 
-    private String driver, truckId, truckNum, platform, date, container, charger, client, address, price, month, year;
+    private String driver, truckId, truckNum, platform, date, container, charger, client, address, price, id, month, year;
     private String city, state, phone, schedule, arrivalHour, departureHour, chargeDay, chargeHour, dischargeHour, dischargeDay, comments;
 
     private EditText mDriver, mTruckId, mTruckNum, mPlatform, mDate, mContainer, mCharger, mClient, mAddress;
     private EditText mCity, mState, mPhone, mSchedule, mArrivalHour, mDepartureHour, mChargeDay, mChargeHour, mDischargeHour, mDischargeDay, mComments;
     private Button mSend;
     private TextView mPrice;
+
+    NewOrderActivity noa;
 
     private ProgressDialog mProgressLoad;
 
@@ -94,6 +100,7 @@ public class EditOrderActivity extends AppCompatActivity {
         dischargeHour = bundle.getString("dischargingHour");
         dischargeDay = bundle.getString("dischargingDay");
         comments = bundle.getString("textArea");
+        id = bundle.getString("id");
         month = bundle.getString("month");
         year = bundle.getString("year");
 
@@ -122,9 +129,66 @@ public class EditOrderActivity extends AppCompatActivity {
 
     private void sendData() {
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("Petrol");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("Orders").child(year+"-"+month);
+
+        mSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mDate.getText().toString().equals("") || mDriver.getText().toString().equals("") || mTruckNum.getText().toString().equals("") || mTruckId.getText().toString().equals("") ||
+                        mPlatform.getText().toString().equals("") || mClient.getText().toString().equals("") || mCharger.getText().toString().equals("") || mAddress.getText().toString().equals("") ||
+                        mSchedule.getText().toString().equals("") || mPhone.getText().toString().equals("") || mContainer.getText().toString().equals("") ||
+                        mArrivalHour.getText().toString().equals("") || mDepartureHour.getText().toString().equals("") || mChargeDay.getText().toString().equals("") || mChargeHour.getText().toString().equals("") ||
+                        mDischargeDay.getText().toString().equals("") || mDischargeHour.getText().toString().equals("") || mState.getText().toString().equals("")
+                        || mCity.getText().toString().equals("") || mPrice.getText().toString().equals("")){
+                    new AlertDialog.Builder(EditOrderActivity.this)
+                            .setTitle("Campos en blanco")
+                            .setMessage("Solo el campo Observaciones puede quedar vacío")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            }).show();
+                } else {
+                    mProgressLoad = new ProgressDialog(EditOrderActivity.this);
+                    mProgressLoad.setTitle("Guardando");
+                    mProgressLoad.setMessage("Guardando datos, por favor espere");
+                    mProgressLoad.setCanceledOnTouchOutside(false);
+                    mProgressLoad.show();
+
+                    mDatabase.child(id).child("driver").setValue(mDriver.getText().toString());
+                    mDatabase.child(id).child("truckID").setValue(mTruckId.getText().toString());
+                    mDatabase.child(id).child("truckNumber").setValue(mTruckNum.getText().toString());
+                    mDatabase.child(id).child("platformID").setValue(mPlatform.getText().toString());
+                    mDatabase.child(id).child("date").setValue(mDate.getText().toString());
+                    mDatabase.child(id).child("containerNumber").setValue(mContainer.getText().toString());
+                    mDatabase.child(id).child("price").setValue(noa.calcDstPrices(mCity.getText().toString()));
+                    mDatabase.child(id).child("charger").setValue(mCharger.getText().toString());
+                    mDatabase.child(id).child("client").setValue(mClient.getText().toString());
+                    mDatabase.child(id).child("address").setValue(mAddress.getText().toString());
+                    mDatabase.child(id).child("city").setValue(mCity.getText().toString());
+                    mDatabase.child(id).child("state").setValue(mState.getText().toString());
+                    mDatabase.child(id).child("phone").setValue(mPhone.getText().toString());
+                    mDatabase.child(id).child("apertureHour").setValue(mSchedule.getText().toString());
+                    mDatabase.child(id).child("arrivalHour").setValue(mArrivalHour.getText().toString());
+                    mDatabase.child(id).child("departureHour").setValue(mDepartureHour.getText().toString());
+                    mDatabase.child(id).child("containerChargeDay").setValue(mChargeDay.getText().toString());
+                    mDatabase.child(id).child("containerChargeHour").setValue(mChargeHour.getText().toString());
+                    mDatabase.child(id).child("containerDischargeDay").setValue(mDischargeDay.getText().toString());
+                    mDatabase.child(id).child("containerDischargeHour").setValue(mDischargeHour.getText().toString());
+                    mDatabase.child(id).child("textArea").setValue(mComments.getText().toString());
 
 
+                    if (mProgressLoad != null && mProgressLoad.isShowing()) {
+                        mProgressLoad.dismiss();
+                    }
+
+                    Intent goToMainPage = new Intent(EditOrderActivity.this, WatchOrdersActivity.class);
+                    goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(goToMainPage);
+                }
+            }
+        });
     }
 
 
