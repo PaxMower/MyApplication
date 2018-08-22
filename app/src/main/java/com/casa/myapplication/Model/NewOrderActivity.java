@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -55,7 +56,7 @@ import java.util.List;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class NewOrderActivity extends AppCompatActivity {
 
-    private EditText mDriver, mDate, mTruckID, mTruckNumber, mPlatformID, mAddress, mPhone, mTextArea, mApertureHour, mCity, mState, mPrice;
+    private EditText mDriver, mDate, mTruckId, mTruckNumber, mPlatformId, mAddress, mPhone, mTextArea, mApertureHour, mCity, mState, mPrice;
     private EditText mContainerChargeDay, mContainerChargeHour, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour, mContainerDischargeHour, mContainerDischargeDay;
     private AutoCompleteTextView mClient;
     private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bDischargeDay, bDischargeHour, bPetrol, bAddClient;
@@ -99,9 +100,9 @@ public class NewOrderActivity extends AppCompatActivity {
         mAddress = (EditText) findViewById(R.id.address);
         mPhone = (EditText) findViewById(R.id.phone);
         mDate = (EditText) findViewById(R.id.date);
-        mTruckID = (EditText) findViewById(R.id.truck_id);
+        mTruckId = (EditText) findViewById(R.id.truck_id);
         mTruckNumber = (EditText) findViewById(R.id.truck_num);
-        mPlatformID = (EditText) findViewById(R.id.platform_id);
+        mPlatformId = (EditText) findViewById(R.id.platform_id);
         mContainerChargeDay = (EditText) findViewById(R.id.button_obtain_charge_day);
         mContainerChargeHour = (EditText) findViewById(R.id.button_obtain_charge_hour);
         mClient = (AutoCompleteTextView) findViewById(R.id.client);
@@ -126,6 +127,7 @@ public class NewOrderActivity extends AppCompatActivity {
         loadUserSettings();
         loadDistances();
         loadClients();
+
         //loadSharedPreferences();
         formData();
         SendFirebaseData();
@@ -159,9 +161,9 @@ public class NewOrderActivity extends AppCompatActivity {
                 user = dataSnapshot.getValue(User.class);
 
                 mDriver.setText(user.getEmployeeNameSettings());
-                mTruckID.setText(user.getTruckIdSettings());
+                mTruckId.setText(user.getTruckIdSettings());
                 mTruckNumber.setText(user.getTruckNumSettings());
-                mPlatformID.setText(user.getPlatformIdSettings());
+                mPlatformId.setText(user.getPlatformIdSettings());
 
             }
 
@@ -174,7 +176,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
     }
 
-    private void loadDistances() {
+    public void loadDistances() {
 
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mDistances = mFirebaseDatabase.getReference().child("Distances");
@@ -706,8 +708,8 @@ public class NewOrderActivity extends AppCompatActivity {
                 newOrder.setDate(mDate.getText().toString());
                 newOrder.setDriver(mDriver.getText().toString());
                 newOrder.setTruckNumber(mTruckNumber.getText().toString());
-                newOrder.setTruckId(mTruckID.getText().toString());
-                newOrder.setPlatformID(mPlatformID.getText().toString());
+                newOrder.setTruckId(mTruckId.getText().toString());
+                newOrder.setPlatformId(mPlatformId.getText().toString());
                 newOrder.setContainerNumber(mContainerNumber.getText().toString());
 
                 newOrder.setCharger(mCharger.getText().toString());
@@ -728,8 +730,8 @@ public class NewOrderActivity extends AppCompatActivity {
 
                 newOrder.setTextArea(mTextArea.getText().toString());
 
-                if(mDate.getText().toString().equals("") || mDriver.getText().toString().equals("") || mTruckNumber.getText().toString().equals("") || mTruckID.getText().toString().equals("") ||
-                        mPlatformID.getText().toString().equals("") || mClient.getText().toString().equals("") || mCharger.getText().toString().equals("") || mAddress.getText().toString().equals("") ||
+                if(mDate.getText().toString().equals("") || mDriver.getText().toString().equals("") || mTruckNumber.getText().toString().equals("") || mTruckId.getText().toString().equals("") ||
+                        mPlatformId.getText().toString().equals("") || mClient.getText().toString().equals("") || mCharger.getText().toString().equals("") || mAddress.getText().toString().equals("") ||
                         mApertureHour.getText().toString().equals("") || mPhone.getText().toString().equals("") || mContainerNumber.getText().toString().equals("") ||
                         mArrivalHour.getText().toString().equals("") || mDepartureHour.getText().toString().equals("") || mContainerChargeDay.getText().toString().equals("") || mContainerChargeHour.getText().toString().equals("") ||
                         mContainerDischargeDay.getText().toString().equals("") || mContainerDischargeHour.getText().toString().equals("") || mState.getText().toString().equals("")
@@ -864,14 +866,15 @@ public class NewOrderActivity extends AppCompatActivity {
 
     public String calcDstPrices(String city){
 
-        String solution = "---";
+        Log.v("CIUDAD-->", city);
+        String solution="";
         double aux = 0.0;
-
+        Log.v("CIUDAD_LIST-->", distancesList.toString());
         for(Prices pr : distancesList){
-
+            Log.v("FOR-->", pr.getCityName());
             if(pr.getCityName().equals(city)){
 
-                String distance = pr.getCityDistance();
+                //String distance = pr.getCityDistance();
                 int dst = Integer.parseInt(pr.getCityDistance());
 
                 if(dst <=50){
@@ -889,10 +892,12 @@ public class NewOrderActivity extends AppCompatActivity {
                 }else if(dst >200){
                     aux =  (dst *0.08)*2;
                 }
-
                 solution = String.valueOf(aux);
             }
         }
+        Log.v("RESULTADO-->", String.valueOf(aux));
+//        if(solution.isEmpty())solution="000";
+        Log.v("---------¿?-->", solution);
         return solution;
     }
 

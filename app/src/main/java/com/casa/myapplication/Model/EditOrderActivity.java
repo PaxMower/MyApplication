@@ -28,7 +28,7 @@ public class EditOrderActivity extends AppCompatActivity {
     private Button mSend;
     private TextView mPrice;
 
-    NewOrderActivity noa;
+    NewOrderActivity noa = new NewOrderActivity();
 
     private ProgressDialog mProgressLoad;
 
@@ -156,13 +156,15 @@ public class EditOrderActivity extends AppCompatActivity {
                     mProgressLoad.setCanceledOnTouchOutside(false);
                     mProgressLoad.show();
 
+                    //String newPrice = noa.calcDstPrices(mCity.getText().toString()); //recalc price
+
                     mDatabase.child(id).child("driver").setValue(mDriver.getText().toString());
-                    mDatabase.child(id).child("truckID").setValue(mTruckId.getText().toString());
+                    mDatabase.child(id).child("truckId").setValue(mTruckId.getText().toString());
                     mDatabase.child(id).child("truckNumber").setValue(mTruckNum.getText().toString());
-                    mDatabase.child(id).child("platformID").setValue(mPlatform.getText().toString());
+                    mDatabase.child(id).child("platformId").setValue(mPlatform.getText().toString());
                     mDatabase.child(id).child("date").setValue(mDate.getText().toString());
                     mDatabase.child(id).child("containerNumber").setValue(mContainer.getText().toString());
-                    mDatabase.child(id).child("price").setValue(noa.calcDstPrices(mCity.getText().toString()));
+                    mDatabase.child(id).child("price").setValue(mPrice.getText().toString());
                     mDatabase.child(id).child("charger").setValue(mCharger.getText().toString());
                     mDatabase.child(id).child("client").setValue(mClient.getText().toString());
                     mDatabase.child(id).child("address").setValue(mAddress.getText().toString());

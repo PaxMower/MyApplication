@@ -106,7 +106,7 @@ public class CustomExpandableListView extends BaseExpandableListAdapter {
         date.setText(item.getDate());
         truckId.setText(item.getTruckId());
         truckNum.setText(item.getTruckNumber());
-        platformId.setText(item.getPlatformID());
+        platformId.setText(item.getPlatformId());
         containerId.setText(item.getContainerNumber());
 //        charger.setText(item.getCharger());
         client.setText(item.getClient());
