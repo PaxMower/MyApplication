@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Model.LoginActivity"
+            android:name=".Controller.LoginActivity"
             android:noHistory="true"
             android:windowSoftInputMode="stateHidden">
             >
@@ -32,59 +32,59 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Model.MenuActivity"
+            android:name=".Controller.MenuActivity"
             android:label="@string/app_menu"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.NewOrderActivity"
+            android:name=".Controller.NewOrderActivity"
             android:label="@string/app_new_order"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.WatchOrdersActivity"
+            android:name=".Controller.WatchOrdersActivity"
             android:label="@string/app_watch_order"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.SettingsActivity"
+            android:name=".Controller.SettingsActivity"
             android:label="@string/app_settings"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.ChangeSettingsActivity"
+            android:name=".Controller.ChangeSettingsActivity"
             android:label="@string/app_change_settings"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.PetrolActivity"
+            android:name=".Controller.PetrolActivity"
             android:label="@string/app_petrol"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.MapsActivity"
+            android:name=".Controller.MapsActivity"
             android:label="@string/app_maps"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.AddClientActivity"
+            android:name=".Controller.AddClientActivity"
             android:label="@string/app_add_client"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.WatchPetrolActivity"
+            android:name=".Controller.WatchPetrolActivity"
             android:label="@string/app_watch_petrol"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.MaintenanceActivity"
+            android:name=".Controller.MaintenanceActivity"
             android:label="@string/app_maintenance"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.WatchMaintenanceActivity"
+            android:name=".Controller.WatchMaintenanceActivity"
             android:label="@string/app_watch_maintenance"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.EditMaintenanceActivity"
+            android:name=".Controller.EditMaintenanceActivity"
             android:label="@string/app_edit_maintenance"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.EditPetrolActivity"
+            android:name=".Controller.EditPetrolActivity"
             android:label="@string/app_edit_petrol"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Model.EditOrderActivity"
+            android:name=".Controller.EditOrderActivity"
             android:label="@string/app_edit_maintenance"
             android:windowSoftInputMode="stateHidden" />
 

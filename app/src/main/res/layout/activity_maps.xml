@@ -9,7 +9,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.casa.myapplication.Model.MapsActivity" />
+        tools:context="com.casa.myapplication.Controller.MapsActivity" />
 
     <Button
         android:id="@+id/button_terrain"

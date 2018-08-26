@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.casa.myapplication.Logic.Order;
+import com.casa.myapplication.Model.Order;
 import com.casa.myapplication.R;
 
 import java.util.HashMap;

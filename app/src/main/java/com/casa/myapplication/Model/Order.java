@@ -1,4 +1,4 @@
-package com.casa.myapplication.Logic;
+package com.casa.myapplication.Model;
 
 public class Order {
 

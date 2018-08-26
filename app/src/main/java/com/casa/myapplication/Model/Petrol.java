@@ -1,4 +1,4 @@
-package com.casa.myapplication.Logic;
+package com.casa.myapplication.Model;
 
 /**
  * Created by Gastby on 29/05/2018.
