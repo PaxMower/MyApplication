@@ -6,7 +6,8 @@ public class User {
 
     private String employeeNameSettings, platformIdSettings, truckIdSettings, truckNumSettings;
 
-    public User(String employeeNameSettings, String platformIdSettings, String truckIdSettings, String truckNumSettings) {
+    public User(String employeeNameSettings, String platformIdSettings,
+                String truckIdSettings, String truckNumSettings) {
 
         this.employeeNameSettings = employeeNameSettings;
         this.platformIdSettings = platformIdSettings;

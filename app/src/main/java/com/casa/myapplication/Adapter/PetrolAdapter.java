@@ -21,7 +21,8 @@ public class PetrolAdapter extends RecyclerView.Adapter<PetrolAdapter.PetrolView
 
     @Override
     public PetrolViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PetrolAdapter.PetrolViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_petrol, parent, false));
+        return new PetrolAdapter.PetrolViewHolder(LayoutInflater.
+                from(parent.getContext()).inflate(R.layout.item_petrol, parent, false));
     }
 
     @Override

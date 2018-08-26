@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mMailField, mPassField;
     private Button mButtonLog;
     private ProgressDialog mProgressLoad;
-
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -46,8 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //progress load bar
-        mProgressLoad  = new ProgressDialog(LoginActivity.this);
+        mProgressLoad  = new ProgressDialog(LoginActivity.this); //progress load bar
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -63,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
                     Intent mainIntent = new Intent(LoginActivity.this, MenuActivity.class);//load next activity
                     mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //Clear previous activity
                     startActivity(mainIntent);
-
                 }
             }
         };

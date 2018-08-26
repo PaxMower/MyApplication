@@ -4,7 +4,8 @@ public class Maintenance {
 
     private String date, truckId, truckNum, km, type, comments;
 
-    public Maintenance(String date, String truckId, String truckNum, String km, String type, String comments) {
+    public Maintenance(String date, String truckId, String truckNum,
+                       String km, String type, String comments) {
         this.date = date;
         this.truckId = truckId;
         this.truckNum = truckNum;

@@ -15,17 +15,4 @@
         android:text="-"
         android:textColor="#ffffff" />
 
-    <!--
-    <TextView
-        android:id="@+id/headerText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@color/colorSecondary"
-        android:paddingBottom="10dp"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:paddingTop="10dp"
-        android:text="-"
-        android:textColor="#ffffff" />
-        -->
 </LinearLayout>

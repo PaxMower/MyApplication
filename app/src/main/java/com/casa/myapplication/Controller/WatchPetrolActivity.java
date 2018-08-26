@@ -36,7 +36,7 @@ public class WatchPetrolActivity extends AppCompatActivity {
     private ProgressDialog mProgressLoad;
 
     private RecyclerView recyclerView;
-    private List<Petrol> petrolList = new ArrayList<>();;
+    private List<Petrol> petrolList = new ArrayList<>();
     private PetrolAdapter adapter;
 
     @Override
