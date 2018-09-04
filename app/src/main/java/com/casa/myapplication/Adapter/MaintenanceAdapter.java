@@ -15,14 +15,14 @@ public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.
 
     private List<Maintenance> list;
 
-    //list constructor
     public MaintenanceAdapter(List<Maintenance> list) {
         this.list = list;
     }
 
     @Override
     public MaintenanceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MaintenanceViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_maintenance, parent, false));
+        return new MaintenanceViewHolder(LayoutInflater.
+                from(parent.getContext()).inflate(R.layout.item_maintenance, parent, false));
     }
 
     @Override
@@ -47,7 +47,6 @@ public class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.
 
         public MaintenanceViewHolder(View itemView) {
             super(itemView);
-
             mTruckId = (TextView) itemView.findViewById(R.id.watch_maintenance_truckId);
             mTruckNum = (TextView) itemView.findViewById(R.id.watch_maintenance_truck_number);
             mKm = (TextView) itemView.findViewById(R.id.watch_maintenance_km);

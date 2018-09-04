@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ParseException;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +22,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -56,34 +54,36 @@ import java.util.List;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class NewOrderActivity extends AppCompatActivity {
 
-    private EditText mDriver, mDate, mTruckId, mTruckNumber, mPlatformId, mAddress, mPhone, mTextArea, mApertureHour, mCity, mState, mPrice;
-    private EditText mContainerChargeDay, mContainerChargeHour, mCharger, mDestiny, mContainerNumber, mArrivalHour, mDepartureHour, mContainerDischargeHour, mContainerDischargeDay;
+    private TextView mPrice;
+    private EditText mDriver, mDate, mTruckId, mTruckNumber,
+            mPlatformId, mAddress, mPhone, mTextArea, mApertureHour,
+            mCity, mState, mContainerChargeDay,
+            mContainerChargeHour, mCharger, mContainerNumber,
+            mArrivalHour, mDepartureHour, mContainerDischargeHour,
+            mContainerDischargeDay;
     private AutoCompleteTextView mClient;
-    private Button bSend, bMap, bTime, bChargeDay, bChargeHour, bDischargeDay, bDischargeHour, bPetrol, bAddClient;
+    private Button bSend, bMap, bPetrol, bAddClient, bMaintenance;
     private Calendar mCalendarPicker = Calendar.getInstance();
     private Calendar mTimePicker = Calendar.getInstance();
     private ProgressDialog mProgressLoad;
 
     private DatabaseReference mDatabase, mSettings, mDistances;
-    //private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser userAuth = mAuth.getCurrentUser();
     private String userID = userAuth.getUid();
 
-    Client newClient;
-    User user;
-    Prices newPrices;
-    SettingsActivity settings;
-    Prices newPrice;
+    private Client newClient;
+    private User user;
+    private Prices newPrices;
+    private SettingsActivity settings;
+    private Prices newPrice;
 
     List<String> cl = new ArrayList<String>();//load client names
     List<Client> clientsList = new ArrayList<Client>();//load clients with all their values
     List<Prices> distancesList = new ArrayList<Prices>();//load cities with all their distances from valencia port
 
-    SharedPreferences sharedPref;
-
-
+//    SharedPreferences sharedPref;
 
     @SuppressLint("WrongViewCast")
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -111,16 +111,17 @@ public class NewOrderActivity extends AppCompatActivity {
         mContainerNumber = (EditText) findViewById(R.id.container_number);
         mContainerDischargeHour = (EditText) findViewById(R.id.button_obtain_discharge_hour);
         mContainerDischargeDay = (EditText) findViewById(R.id.button_obtain_discharge_day);
-        bMap = (Button) findViewById(R.id.view_map);
-        bSend = (Button) findViewById(R.id.save_order);
-        bPetrol = (Button) findViewById(R.id.petrol);
-        bAddClient = (Button) findViewById(R.id.save_new_client);
+        bMap = (Button) findViewById(R.id.button_view_map);
+        bSend = (Button) findViewById(R.id.button_save_order);
+        bPetrol = (Button) findViewById(R.id.button_add_petrol);
+        bAddClient = (Button) findViewById(R.id.button_add_client);
+        bMaintenance = (Button) findViewById(R.id.button_add_maint);
         mTextArea = (EditText) findViewById(R.id.text_area);
         mArrivalHour = (EditText) findViewById(R.id.button_obtain_arrival_time);
         mDepartureHour = (EditText) findViewById(R.id.button_obtain_departure_time);
         mCity = (EditText) findViewById(R.id.city_new_order);
         mState = (EditText) findViewById(R.id.state_new_order);
-        mPrice = (EditText) findViewById(R.id.new_order_price);
+        mPrice = (TextView) findViewById(R.id.new_order_price);
 
 
         askSettings();
@@ -139,8 +140,10 @@ public class NewOrderActivity extends AppCompatActivity {
                 .setMessage("¿Ha cambiado de plataforma o de camión desde el último viaje?")
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent goToMainPage = new Intent(NewOrderActivity.this, ChangeSettingsActivity.class);
-                        goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        Intent goToMainPage = new Intent(
+                                NewOrderActivity.this, ChangeSettingsActivity.class);
+                        goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(goToMainPage);
                     }
                 })
@@ -152,49 +155,39 @@ public class NewOrderActivity extends AppCompatActivity {
     }
 
     private void loadUserSettings() {
-
         mSettings = mFirebaseDatabase.getReference().child("Users").child(userID).child("Settings");
         mSettings.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 user = dataSnapshot.getValue(User.class);
-
                 mDriver.setText(user.getEmployeeNameSettings());
                 mTruckId.setText(user.getTruckIdSettings());
                 mTruckNumber.setText(user.getTruckNumSettings());
                 mPlatformId.setText(user.getPlatformIdSettings());
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(NewOrderActivity.this, "Error al cargar los datos personales", Toast.LENGTH_LONG).show();
+                Toast.makeText(NewOrderActivity.this,
+                        "Error al cargar los datos personales", Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
 
     public void loadDistances() {
-
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mDistances = mFirebaseDatabase.getReference().child("Distances");
-
         mDistances.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     Prices prices = ds.getValue(Prices.class);
                     distancesList.add(prices);
                 }
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(NewOrderActivity.this, "Error al cargar localidades", Toast.LENGTH_LONG).show();
+                Toast.makeText(NewOrderActivity.this,
+                        "Error al cargar localidades", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -203,43 +196,32 @@ public class NewOrderActivity extends AppCompatActivity {
     private void loadClients() {
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mData = mFirebaseDatabase.getReference().child("Clients");
-
         mData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    //Obtain client object
                     Client client = ds.getValue(Client.class);
                     cl.add(client.getName().toString());
                     clientsList.add(client);
                 }
-
-                //load method for autocomplete text and load data
                 loadClientsData();
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
-
     }
 
     private void loadClientsData() {
-        //add expandable list of clients name for autocomplete form
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,cl);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,android.R.layout.simple_dropdown_item_1line,cl);
         mClient.setThreshold(1);
         mClient.setAdapter(adapter);
-
         mClient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                 for(Client cli : clientsList){
-
                     if(mClient.getText().toString().equals(cli.getName().toString())){
-
                         newClient = new Client();
                         newClient.setName(cli.getName().toString());
                         newClient.setAddress(cli.getAddress().toString());
@@ -250,13 +232,11 @@ public class NewOrderActivity extends AppCompatActivity {
                         newClient.setLongitude(cli.getLongitude().toString());
                         newClient.setCity(cli.getCity().toString());
                         newClient.setState(cli.getState().toString());
-
                         mAddress.setText(cli.getAddress().toString());
                         mCity.setText(cli.getCity().toString());
                         mState.setText(cli.getState().toString());
                         mApertureHour.setText(cli.getTimeSchedule().toString());
                         mPhone.setText(cli.getPhone().toString());
-
                         mPrice.setText(calcDstPrices(mCity.getText().toString()));
                     }
                 }
@@ -265,50 +245,50 @@ public class NewOrderActivity extends AppCompatActivity {
     }
 
     //Method for save data on device memory
-    public void saveSharedPreferences(){
-
-        sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-
-        editor.putString("mDate", mDate.getText().toString());
-        editor.putString("mDriver", mDriver.getText().toString());
-        editor.putString("mClient", mClient.getText().toString());
-        editor.putString("mCharger", mCharger.getText().toString());
-        editor.putString("mAddress", mAddress.getText().toString());
-        editor.putString("mApertureHour", mApertureHour.getText().toString());
-        editor.putString("mContainerNumber", mContainerNumber.getText().toString());
-        editor.putString("mArrivalHour", mArrivalHour.getText().toString());
-        editor.putString("mDepartureHour", mDepartureHour.getText().toString());
-        editor.putString("mContainerChargeDay", mContainerChargeDay.getText().toString());
-        editor.putString("mContainerChargeHour", mContainerChargeHour.getText().toString());
-        editor.putString("mContainerDischargeHour", mContainerDischargeHour.getText().toString());
-        editor.putString("mContainerDischargeDay", mContainerDischargeDay.getText().toString());
-        editor.putString("mTextArea", mTextArea.getText().toString());
-
-        editor.commit();
-
-    }
+//    public void saveSharedPreferences(){
+//
+//        sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPref.edit();
+//
+//        editor.putString("mDate", mDate.getText().toString());
+//        editor.putString("mDriver", mDriver.getText().toString());
+//        editor.putString("mClient", mClient.getText().toString());
+//        editor.putString("mCharger", mCharger.getText().toString());
+//        editor.putString("mAddress", mAddress.getText().toString());
+//        editor.putString("mApertureHour", mApertureHour.getText().toString());
+//        editor.putString("mContainerNumber", mContainerNumber.getText().toString());
+//        editor.putString("mArrivalHour", mArrivalHour.getText().toString());
+//        editor.putString("mDepartureHour", mDepartureHour.getText().toString());
+//        editor.putString("mContainerChargeDay", mContainerChargeDay.getText().toString());
+//        editor.putString("mContainerChargeHour", mContainerChargeHour.getText().toString());
+//        editor.putString("mContainerDischargeHour", mContainerDischargeHour.getText().toString());
+//        editor.putString("mContainerDischargeDay", mContainerDischargeDay.getText().toString());
+//        editor.putString("mTextArea", mTextArea.getText().toString());
+//
+//        editor.commit();
+//
+//    }
 
     //Method for load data on device memory
-    public void loadSharedPreferences(){
-        sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
-
-        mDate.setText(sharedPref.getString("mDate", ""));
-        mDriver.setText(sharedPref.getString("mDriver", ""));
-        mClient.setText(sharedPref.getString("mClient", ""));
-        mCharger.setText(sharedPref.getString("mCharger", ""));
-        mAddress.setText(sharedPref.getString("mAddress", ""));
-        mApertureHour.setText(sharedPref.getString("mApertureHour", ""));
-        mContainerNumber.setText(sharedPref.getString("mContainerNumber", ""));
-        mArrivalHour.setText(sharedPref.getString("mArrivalHour", ""));
-        mDepartureHour.setText(sharedPref.getString("mDepartureHour", ""));
-        mContainerChargeDay.setText(sharedPref.getString("mContainerChargeDay", ""));
-        mContainerChargeHour.setText(sharedPref.getString("mContainerChargeHour", ""));
-        mContainerDischargeHour.setText(sharedPref.getString("mContainerDischargeHour", ""));
-        mContainerDischargeDay.setText(sharedPref.getString("mContainerDischargeDay", ""));
-        mTextArea.setText(sharedPref.getString("mTextArea", ""));
-
-    }
+//    public void loadSharedPreferences(){
+//        sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+//
+//        mDate.setText(sharedPref.getString("mDate", ""));
+//        mDriver.setText(sharedPref.getString("mDriver", ""));
+//        mClient.setText(sharedPref.getString("mClient", ""));
+//        mCharger.setText(sharedPref.getString("mCharger", ""));
+//        mAddress.setText(sharedPref.getString("mAddress", ""));
+//        mApertureHour.setText(sharedPref.getString("mApertureHour", ""));
+//        mContainerNumber.setText(sharedPref.getString("mContainerNumber", ""));
+//        mArrivalHour.setText(sharedPref.getString("mArrivalHour", ""));
+//        mDepartureHour.setText(sharedPref.getString("mDepartureHour", ""));
+//        mContainerChargeDay.setText(sharedPref.getString("mContainerChargeDay", ""));
+//        mContainerChargeHour.setText(sharedPref.getString("mContainerChargeHour", ""));
+//        mContainerDischargeHour.setText(sharedPref.getString("mContainerDischargeHour", ""));
+//        mContainerDischargeDay.setText(sharedPref.getString("mContainerDischargeDay", ""));
+//        mTextArea.setText(sharedPref.getString("mTextArea", ""));
+//
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void formData(){
@@ -326,20 +306,18 @@ public class NewOrderActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-
                 if(!mContainerChargeHour.getText().toString().matches("")){
-
                     AlertDialog.Builder alertBuild = new AlertDialog.Builder(NewOrderActivity.this);
                     alertBuild.setMessage("Ya se ha anotado una hora en este campo, ¿Desea cambiarla?")
                             .setCancelable(false)
                             .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    final TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                                    final TimePickerDialog timePickerDialog  = new TimePickerDialog(
+                                            NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
                                         @Override
                                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-                                            mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
+                                                mContainerChargeHour.setText(String.format("%02d:%02d",hourOfDay,minute));
                                         }
                                     },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
                                     timePickerDialog.show();
@@ -355,7 +333,6 @@ public class NewOrderActivity extends AppCompatActivity {
                     alertBuild.show();
 
                 }else {
-
                     TimePickerDialog timePickerDialog  = new TimePickerDialog(NewOrderActivity.this, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -363,9 +340,7 @@ public class NewOrderActivity extends AppCompatActivity {
                         }
                     },mTimePicker.get(Calendar.HOUR_OF_DAY), mTimePicker.get(Calendar.MINUTE), true);
                     timePickerDialog.show();
-
                 }
-
             }
         });
 
@@ -638,7 +613,7 @@ public class NewOrderActivity extends AppCompatActivity {
         });
 
         //open map with the position
-        bMap.setOnClickListener(new View.OnClickListener() {
+            bMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -676,6 +651,13 @@ public class NewOrderActivity extends AppCompatActivity {
             }
         });
 
+        bMaintenance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NewOrderActivity.this, MaintenanceActivity.class));
+            }
+        });
+
     }
 
 
@@ -691,13 +673,20 @@ public class NewOrderActivity extends AppCompatActivity {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = current_user.getUid();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid).child("Orders").child(getYear()+"-"+getMonth());
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(uid).child("Orders").child(getYear()+"-"+getMonth());
 
         bSend.setOnClickListener(new View.OnClickListener() { //listener que se ejecuta cuando se pulsa el botón
             @Override
             public void onClick(View v) {
 
                 Order newOrder = new Order();
+                newOrder.setDate(mDate.getText().toString());
+                newOrder.setDriver(mDriver.getText().toString());
+                newOrder.setTruckNumber(mTruckNumber.getText().toString());
+                newOrder.setTruckId(mTruckId.getText().toString());
+                newOrder.setPlatformId(mPlatformId.getText().toString());
+                newOrder.setContainerNumber(mContainerNumber.getText().toString());
 
                 newOrder.setDay(getDay());
                 newOrder.setMonth(getMonth());
@@ -705,12 +694,6 @@ public class NewOrderActivity extends AppCompatActivity {
                 newOrder.setHour(getHour());
                 newOrder.setMinutes(getMinutes());
 
-                newOrder.setDate(mDate.getText().toString());
-                newOrder.setDriver(mDriver.getText().toString());
-                newOrder.setTruckNumber(mTruckNumber.getText().toString());
-                newOrder.setTruckId(mTruckId.getText().toString());
-                newOrder.setPlatformId(mPlatformId.getText().toString());
-                newOrder.setContainerNumber(mContainerNumber.getText().toString());
 
                 newOrder.setCharger(mCharger.getText().toString());
                 newOrder.setClient(mClient.getText().toString());
@@ -748,17 +731,10 @@ public class NewOrderActivity extends AppCompatActivity {
 
                 }else{
                     mProgressLoad.show();
-
                     mDatabase.push().setValue(newOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-
                             if(task.isSuccessful()){
-
-                                clearSharedPreferences();
-                                //clearData();
-
-                                //Load main page when the order is sent
                                 Intent goToMainPage = new Intent(NewOrderActivity.this, MenuActivity.class);
                                 goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(goToMainPage);
@@ -768,7 +744,6 @@ public class NewOrderActivity extends AppCompatActivity {
                                 mProgressLoad.hide();
                                 Toast.makeText(NewOrderActivity.this, "Error al guardar los datos", Toast.LENGTH_LONG).show();
                             }
-
                         }
                     });
                 }
@@ -777,14 +752,14 @@ public class NewOrderActivity extends AppCompatActivity {
     }
 
     //Clear data from the previous form
-    private void clearSharedPreferences() {
-
-        sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        //sharedPref.edit().remove("mDriver").apply();
-        editor.clear();
-        editor.apply();
-    }
+//    private void clearSharedPreferences() {
+//
+//        sharedPref = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPref.edit();
+//        //sharedPref.edit().remove("mDriver").apply();
+//        editor.clear();
+//        editor.apply();
+//    }
 
     //Close actual activity when back button is selected
     @Override
@@ -847,12 +822,9 @@ public class NewOrderActivity extends AppCompatActivity {
         try {
             Date dateAfter = formatAfter.parse(after);
             Date dateBefore = formatBefore.parse(before);
-            System.out.println(dateAfter+"//////////////"+dateBefore);
             if(dateAfter.after(dateBefore) || dateAfter.equals(dateBefore)){
-                System.out.println("Es bien");
                 return true;
             }else {
-                System.out.println("No mal");
                 return false;
             }
         } catch (ParseException e) {
@@ -865,18 +837,11 @@ public class NewOrderActivity extends AppCompatActivity {
 
 
     public String calcDstPrices(String city){
-
-        Log.v("CIUDAD-->", city);
         String solution="";
         double aux = 0.0;
-        Log.v("CIUDAD_LIST-->", distancesList.toString());
         for(Prices pr : distancesList){
-            Log.v("FOR-->", pr.getCityName());
             if(pr.getCityName().equals(city)){
-
-                //String distance = pr.getCityDistance();
                 int dst = Integer.parseInt(pr.getCityDistance());
-
                 if(dst <=50){
                     aux = 12.0;
                 }else if(dst >50 && dst <=75){
@@ -895,18 +860,15 @@ public class NewOrderActivity extends AppCompatActivity {
                 solution = String.valueOf(aux);
             }
         }
-        Log.v("RESULTADO-->", String.valueOf(aux));
-//        if(solution.isEmpty())solution="000";
-        Log.v("---------¿?-->", solution);
         return solution;
     }
 
-    @Override
-    protected void onPause(){
-        super.onPause();
-        //Toast.makeText(this, "Orden guardada", Toast.LENGTH_SHORT).show();
-        //saveSharedPreferences();
-    }
+//    @Override
+//    protected void onPause(){
+//        super.onPause();
+//        //Toast.makeText(this, "Orden guardada", Toast.LENGTH_SHORT).show();
+//        //saveSharedPreferences();
+//    }
 
 }
 

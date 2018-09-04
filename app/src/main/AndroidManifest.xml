@@ -85,7 +85,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Controller.EditOrderActivity"
-            android:label="@string/app_edit_maintenance"
+            android:label="@string/app_edit_order"
             android:windowSoftInputMode="stateHidden" />
 
         <meta-data

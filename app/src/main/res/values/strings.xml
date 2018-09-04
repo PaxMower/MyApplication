@@ -23,6 +23,7 @@
     <string name="clients">Añadir cliente</string>
 
     <string name="driver">Nombre</string>
+    <string name="transp">Transportista</string>
     <string name="truck_id">Matrícula camión</string>
     <string name="truck_number">Número camión</string>
     <string name="platform_id">Matrícula plataforma</string>
@@ -40,8 +41,8 @@
     <string name="address">Dirección del cliente</string>
     <string name="phone_number">Teléfono del cliente</string>
     <string name="container_id">Número de contenedor</string>
-    <string name="arrival_time">Hora llegada</string>
-    <string name="departure_time">Hora salida</string>
+    <string name="arrival_time">Llegada</string>
+    <string name="departure_time">Salida</string>
     <string name="text_area">Observaciones</string>
     <string name="hour_aperture">Horario</string>
     <string name="city">Ciudad</string>
@@ -67,6 +68,8 @@
     <string name="button_maintenance">Mantenimiento</string>
     <string name="button_watch_petrol">Ver repostajes</string>
     <string name="button_add_maintenance">Añadir mantenimiento</string>
+    <string name="button_add_maint">Añadir mantenim.</string>
+    <string name="button_add_petrol">Añadir repostaje</string>
     <string name="button_watch_maintenance">Ver mantenimientos</string>
     <string name="button_edit_maintenance">Guardar cambios</string>
     <string name="petrol_date">Fecha repostaje</string>
@@ -89,5 +92,6 @@
     <string name="edit_order_phone">Teléfono</string>
 
 </resources>
+
 
 

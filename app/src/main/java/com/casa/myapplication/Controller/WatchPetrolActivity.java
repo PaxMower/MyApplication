@@ -27,17 +27,16 @@ import java.util.List;
 
 public class WatchPetrolActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private List<Petrol> petrolList = new ArrayList<>();
+    private List<String> identifier = new ArrayList<>();
+    private PetrolAdapter adapter;
+
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private String userID;
 
-    private List<String> identifier = new ArrayList<>();
-
     private ProgressDialog mProgressLoad;
-
-    private RecyclerView recyclerView;
-    private List<Petrol> petrolList = new ArrayList<>();
-    private PetrolAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,6 @@ public class WatchPetrolActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLauyoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLauyoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
 
         //watch for load data
@@ -71,7 +69,6 @@ public class WatchPetrolActivity extends AppCompatActivity {
         userID = user.getUid();
 
         loadDataFirebase();
-
         itemSelected();
     }
 
@@ -85,25 +82,19 @@ public class WatchPetrolActivity extends AppCompatActivity {
                     petrolList.add(m);
                     identifier.add(ds.getKey());
                 }
-
                 adapter.notifyDataSetChanged();
-
                 if (mProgressLoad != null && mProgressLoad.isShowing()) {
                     mProgressLoad.dismiss();
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
-
     }
 
     private void itemSelected() {
-
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(),
+                recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Petrol petrol = petrolList.get(position);
@@ -121,13 +112,9 @@ public class WatchPetrolActivity extends AppCompatActivity {
 
                 i.putExtras(bundle);
                 startActivity(i);
-
             }
-
             @Override
-            public void onLongClick(View view, int position) {
-
-            }
+            public void onLongClick(View view, int position) {}
         }));
     }
 

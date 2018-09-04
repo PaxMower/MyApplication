@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.casa.myapplication.Model.Client;
 import com.casa.myapplication.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -34,7 +33,7 @@ import static com.google.android.gms.common.api.GoogleApiClient.Builder;
 import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import static com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 
-public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implements OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
 
     private GoogleMap mMap;
     private Marker marker;
@@ -44,7 +43,7 @@ public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implemen
     private LocationRequest locationRequest;
     private Location lastLocation;
     public static final int REQUEST_LOCATION_CODE = 99;
-    Client newClient = new Client();
+//    Client newClient = new Client();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,33 +56,53 @@ public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implemen
 
         mTerrain = (Button) findViewById(R.id.button_terrain);
         mSatellite = (Button) findViewById(R.id.button_satellite);
-
-        //Add back buttons on toolbar
-        //getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         Bundle bundle = getIntent().getExtras();
         lat = bundle.getDouble("lat");
         lon = bundle.getDouble("lon");
+        //Add back buttons on toolbar
+        //getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
 
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+        @NonNull String[] permissions, @NonNull int[] grantResults) {
+            switch (requestCode){
+                case REQUEST_LOCATION_CODE:
+                    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                        //PERMISSION GRANTED
+                        if(ContextCompat.checkSelfPermission(
+                                this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                                    if(client == null){
+                                        buildGoogleApiClient();
+                                    }
+                                    mMap.setMyLocationEnabled(true);
+                        }
+                    }else{ // permission is denied
+                        Toast.makeText(this, "Debe aceptar los permisos para utilizar el GPS",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    return;
+            }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        if(ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-
         //add zoom controls
         mMap.getUiSettings().setZoomControlsEnabled(true);
-
         //Put normal view on map when this button is pressed
         mTerrain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +110,6 @@ public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implemen
                 mMap.setMapType(mMap.MAP_TYPE_NORMAL);
             }
         });
-
         //Put sattelite view on map when this button is pressed
         mSatellite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,30 +117,9 @@ public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implemen
                 mMap.setMapType(mMap.MAP_TYPE_SATELLITE);
             }
         });
-
         onMarkersRetrieved();
-
     }
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case REQUEST_LOCATION_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    //PERMISSION GRANTED
-                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                        if(client == null){
-                            buildGoogleApiClient();
-                        }
-                        mMap.setMyLocationEnabled(true);
-                    }
-                }else{ // permission is denied
-                    Toast.makeText(this, "Debe aceptar los permisos para utilizar el GPS", Toast.LENGTH_SHORT).show();
-                }
-                return;
-        }
-    }
 
 
     public void onMarkersRetrieved(){
@@ -130,8 +127,6 @@ public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implemen
         mMap.addMarker(new MarkerOptions().position(companie));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(companie));
         mMap.setMinZoomPreference(1.0f);
-        //mMap.setMaxZoomPreference(5.0f);
-
     }
 
     //Close actual activity when back button is selected
@@ -165,9 +160,7 @@ public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implemen
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-
         client.connect();
-
     }
 
 
@@ -175,15 +168,14 @@ public class MapsActivity extends /*AppCompatActivity*/FragmentActivity implemen
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         locationRequest = new LocationRequest();
-
         locationRequest.setInterval(1000);
         locationRequest.setFastestInterval(1000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        if(ContextCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             LocationServices.FusedLocationApi.requestLocationUpdates(client, locationRequest, this);
         }
-
     }
 
     @Override

@@ -48,11 +48,9 @@ public class PetrolActivity extends AppCompatActivity{
     private Calendar mTimePicker = Calendar.getInstance();
     private ProgressDialog mProgressLoad;
     private DatabaseReference mDatabase;
-    private String TAG = "";
 
     private User user = new User();
 
-    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private String userID;
@@ -218,9 +216,9 @@ public class PetrolActivity extends AppCompatActivity{
                 newPetrol.setTruckId(mTruckId.getText().toString());
                 newPetrol.setTruckNum(mTruckNum.getText().toString());
 
-
-                if(mPetrolDate.getText().toString().equals("") || mTruckNum.getText().toString().equals("") || mTruckId.getText().toString().equals("") || mPetrolHour.getText().toString().equals("") || mPetrolKm.getText().toString().equals("") || mPetrolLiters.getText().toString().equals("")){
-
+                if(mPetrolDate.getText().toString().equals("") || mTruckNum.getText().toString().equals("")
+                        || mTruckId.getText().toString().equals("") || mPetrolHour.getText().toString().equals("")
+                        || mPetrolKm.getText().toString().equals("") || mPetrolLiters.getText().toString().equals("")){
                     new AlertDialog.Builder(PetrolActivity.this)
                             .setTitle("Campos en blanco")
                             .setMessage("No pueden haber campos en blanco para poder añadir nuevos clientes")
@@ -229,10 +227,8 @@ public class PetrolActivity extends AppCompatActivity{
                                     dialog.cancel();
                                 }
                             }).show();
-
                 }else{
                     mProgressLoad.show();
-
                     mDatabase.push().setValue(newPetrol).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

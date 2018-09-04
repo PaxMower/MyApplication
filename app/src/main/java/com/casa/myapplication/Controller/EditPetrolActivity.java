@@ -17,17 +17,15 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class EditPetrolActivity extends AppCompatActivity {
 
-    private String km, truckId, truckNum, date, id, hour, liters;
+    private String id;
     private EditText mKm, mTruckId, mTruckNum,  mDate, mHour, mLiters;
     private Button mSend;
 
     private ProgressDialog mProgressLoad;
 
-
     private DatabaseReference mDatabase;
-    private FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser userAuth = mAuth.getCurrentUser();
+    private FirebaseUser userAuth = mAuth.getCurrentUser();
     private String userID = userAuth.getUid();
 
     @Override
@@ -53,20 +51,14 @@ public class EditPetrolActivity extends AppCompatActivity {
 
     private void loadBundle() {
         Bundle bundle = getIntent().getExtras();
-        hour = bundle.getString("hour");
-        liters = bundle.getString("liters");
-        km = bundle.getString("km");
-        truckId = bundle.getString("truckId");
-        truckNum = bundle.getString("truckNum");
-        date = bundle.getString("date");
         id = bundle.getString("id");
 
-        mHour.setText(hour);
-        mLiters.setText(liters);
-        mKm.setText(km);
-        mTruckId.setText(truckId);
-        mTruckNum.setText(truckNum);
-        mDate.setText(date);
+        mHour.setText(bundle.getString("hour"));
+        mLiters.setText(bundle.getString("liters"));
+        mKm.setText(bundle.getString("km"));
+        mTruckId.setText(bundle.getString("truckId"));
+        mTruckNum.setText(bundle.getString("truckNum"));
+        mDate.setText(bundle.getString("date"));
     }
 
     private void sendData() {

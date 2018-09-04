@@ -34,10 +34,10 @@ import java.util.Calendar;
 
 public class MaintenanceActivity extends AppCompatActivity {
 
-    private EditText mMaintenanceDate, mMaintenanceTruckId, mMaintenanceTruckNum, mMaintenanceKm, mMaintenanceType, mMaintenanceComment;
+    private EditText mMaintenanceDate, mMaintenanceTruckId, mMaintenanceTruckNum,
+            mMaintenanceKm, mMaintenanceType, mMaintenanceComment;
     private Button bSendMaintenance;
     private Calendar mCalendarPicker = Calendar.getInstance();
-    private Calendar mTimePicker = Calendar.getInstance();
     private ProgressDialog mProgressLoad;
 
     private User user = new User();
@@ -84,7 +84,8 @@ public class MaintenanceActivity extends AppCompatActivity {
     }
 
     private void loadSettings() {
-        DatabaseReference mSettings = mFirebaseDatabase.getReference().child("Users").child(userID).child("Settings");
+        DatabaseReference mSettings = mFirebaseDatabase.getReference()
+                .child("Users").child(userID).child("Settings");
         mSettings.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -97,7 +98,6 @@ public class MaintenanceActivity extends AppCompatActivity {
                     mProgressLoad.dismiss();
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -110,7 +110,6 @@ public class MaintenanceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!mMaintenanceDate.getText().toString().matches("")){
-
                     AlertDialog.Builder alertBuild = new AlertDialog.Builder(MaintenanceActivity.this);
                     alertBuild.setMessage("Ya se ha anotado una fecha en este campo, ¿Desea cambiarla?")
                             .setCancelable(false)
@@ -118,7 +117,8 @@ public class MaintenanceActivity extends AppCompatActivity {
                                 @RequiresApi(api = Build.VERSION_CODES.N)
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    DatePickerDialog datePickerDialog = new DatePickerDialog(MaintenanceActivity.this, new DatePickerDialog.OnDateSetListener() {
+                                    DatePickerDialog datePickerDialog =
+                                            new DatePickerDialog(MaintenanceActivity.this, new DatePickerDialog.OnDateSetListener() {
                                         @Override
                                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                             mMaintenanceDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
@@ -138,12 +138,14 @@ public class MaintenanceActivity extends AppCompatActivity {
 
                 }else {
 
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(MaintenanceActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    DatePickerDialog datePickerDialog =
+                            new DatePickerDialog(MaintenanceActivity.this, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            mMaintenanceDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                                mMaintenanceDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                         }
-                    },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH), mCalendarPicker.get(Calendar.DAY_OF_MONTH));
+                    },mCalendarPicker.get(Calendar.YEAR),mCalendarPicker.get(Calendar.MONTH),
+                                    mCalendarPicker.get(Calendar.DAY_OF_MONTH));
                     datePickerDialog.show();
                 }
             }
@@ -158,6 +160,7 @@ public class MaintenanceActivity extends AppCompatActivity {
         bSendMaintenance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Maintenance newMaintenance = new Maintenance();
 
                 newMaintenance.setDate(mMaintenanceDate.getText().toString());
@@ -167,7 +170,9 @@ public class MaintenanceActivity extends AppCompatActivity {
                 newMaintenance.setType(mMaintenanceType.getText().toString());
                 newMaintenance.setComments(mMaintenanceComment.getText().toString());
 
-                if(mMaintenanceDate.getText().toString().equals("") || mMaintenanceTruckId.getText().toString().equals("") || mMaintenanceTruckNum.getText().toString().equals("") || mMaintenanceKm.getText().toString().equals("") || mMaintenanceType.getText().toString().equals("") || mMaintenanceComment.getText().toString().equals("")){
+                if(mMaintenanceDate.getText().toString().equals("") || mMaintenanceTruckId.getText().toString().equals("") ||
+                        mMaintenanceTruckNum.getText().toString().equals("") || mMaintenanceKm.getText().toString().equals("") ||
+                        mMaintenanceType.getText().toString().equals("") || mMaintenanceComment.getText().toString().equals("")){
 
                     new AlertDialog.Builder(MaintenanceActivity.this)
                             .setTitle("Campos en blanco")

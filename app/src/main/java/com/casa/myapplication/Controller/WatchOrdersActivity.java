@@ -34,21 +34,13 @@ public class WatchOrdersActivity extends AppCompatActivity {
     private CustomExpandableListView customExpandableListView;
     private List<String> listDataHeader;
     private HashMap<String, List<Order>> listDataChild;
-
-
-    ////////////////////////////////////////////////////////
     private List<String> identifiersChild;
     private HashMap<String, List<String>> identifiersHeader;
-    private Map<String, List<String>> sortedMap;//order map select the correct child id
-    ////////////////////////////////////////////////////////
-
-
-    //private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    private Map<String, List<String>> sortedMap;
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private String userID, identifier;
     private Double amount = 0.0;
-
     private ProgressDialog mProgressLoad;
 
     @Override
@@ -84,11 +76,6 @@ public class WatchOrdersActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-//                            mProgressLoad = new ProgressDialog(WatchOrdersActivity.this);
-//                            mProgressLoad.setTitle("Cargando");
-//                            mProgressLoad.setMessage("Cargando datos, por favor espere");
-//                            mProgressLoad.setCanceledOnTouchOutside(false);
-//                            mProgressLoad.show();
                             addControl();
                         }
                     });
@@ -97,6 +84,7 @@ public class WatchOrdersActivity extends AppCompatActivity {
                 }
             }
         }.start();
+
 
         buttonClick();
 
@@ -126,30 +114,21 @@ public class WatchOrdersActivity extends AppCompatActivity {
 
                     for(DataSnapshot ds2 : ds.getChildren()){
                         Order order = ds2.getValue(Order.class);
-
                         uno.add(order);
                         listDataChild.put(listDataHeader.get(x), uno);
-
                         identifiersChild.add(ds2.getKey());
                     }
-
                     identifiersHeader.put(ds.getKey(), identifiersChild);
-
                     x++;
-
-
                 }
                 sortedMap = new TreeMap<String, List<String>>(identifiersHeader);
-
-                customExpandableListView = new CustomExpandableListView(WatchOrdersActivity.this, listDataHeader, listDataChild);
+                customExpandableListView = new CustomExpandableListView(
+                        WatchOrdersActivity.this, listDataHeader, listDataChild);
                 expandableListView.setAdapter(customExpandableListView);
-
                 if (mProgressLoad != null && mProgressLoad.isShowing()) {
                     mProgressLoad.dismiss();
                 }
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -161,7 +140,6 @@ public class WatchOrdersActivity extends AppCompatActivity {
     private void loadIdentifier(int groupPosition, int childPosition){
         String y = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getYear();
         String m =listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).getMonth();
-
         identifier = identifiersHeader.get(y + "-" + m).get(childPosition);
     }
 

@@ -50,7 +50,6 @@ public class WatchMaintenanceActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLauyoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLauyoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
 
         //watch for load data
@@ -74,9 +73,7 @@ public class WatchMaintenanceActivity extends AppCompatActivity {
     }
 
     private void loadDataFirebase() {
-
         DatabaseReference mData = mFirebaseDatabase.getReference("Users").child(userID).child("Maintenance");
-
         mData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -85,25 +82,19 @@ public class WatchMaintenanceActivity extends AppCompatActivity {
                     maintenanceList.add(m);
                     identifier.add(ds.getKey());
                 }
-
                 adapter.notifyDataSetChanged();
-
                 if (mProgressLoad != null && mProgressLoad.isShowing()) {
                     mProgressLoad.dismiss();
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
-
     }
 
     private void itemSelected() {
-
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(),
+                recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Maintenance maint = maintenanceList.get(position);
@@ -122,11 +113,8 @@ public class WatchMaintenanceActivity extends AppCompatActivity {
                 i.putExtras(bundle);
                 startActivity(i);
             }
-
             @Override
-            public void onLongClick(View view, int position) {
-
-            }
+            public void onLongClick(View view, int position) {}
         }));
     }
 

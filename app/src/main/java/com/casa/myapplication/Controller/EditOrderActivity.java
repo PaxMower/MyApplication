@@ -20,23 +20,21 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class EditOrderActivity extends AppCompatActivity {
 
-    private String driver, truckId, truckNum, platform, date, container, charger, client, address, price, id, month, year;
-    private String city, state, phone, schedule, arrivalHour, departureHour, chargeDay, chargeHour, dischargeHour, dischargeDay, comments;
-
-    private EditText mDriver, mTruckId, mTruckNum, mPlatform, mDate, mContainer, mCharger, mClient, mAddress;
-    private EditText mCity, mState, mPhone, mSchedule, mArrivalHour, mDepartureHour, mChargeDay, mChargeHour, mDischargeHour, mDischargeDay, mComments;
+    private String  id, month, year;
+    private EditText mDriver, mTruckId, mTruckNum, mPlatform,
+            mDate, mContainer, mCharger, mClient, mAddress,
+            mCity, mState, mPhone, mSchedule, mArrivalHour,
+            mDepartureHour, mChargeDay, mChargeHour,
+            mDischargeHour, mDischargeDay, mComments;
     private Button mSend;
     private TextView mPrice;
-
-    NewOrderActivity noa = new NewOrderActivity();
-
+    private NewOrderActivity noa;
     private ProgressDialog mProgressLoad;
-
     private DatabaseReference mDatabase;
-    private FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser userAuth = mAuth.getCurrentUser();
-    private String userID = userAuth.getUid();
+    private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseAuth mAuth;
+    private FirebaseUser userAuth;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +44,12 @@ public class EditOrderActivity extends AppCompatActivity {
         //Add back buttons on toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
+
+        noa = new NewOrderActivity();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        userAuth = mAuth.getCurrentUser();
+        userID = userAuth.getUid();
 
         mDriver = (EditText) findViewById(R.id.edit_expandable_driver);
         mTruckId = (EditText) findViewById(R.id.edit_expandable_truckId);
@@ -76,65 +80,39 @@ public class EditOrderActivity extends AppCompatActivity {
 
     private void loadBundle() {
         Bundle bundle = getIntent().getExtras();
-//        private String driver, truckId, truckNum, platform, date, container, charger, client, address;
-//        private String city, state, phone, schedule, arrivalHour, departureHour, chargeDay, chargeHour, dischargeHour, dischargeDay, comments;
-//        hour = bundle.getString("hour");
-        driver = bundle.getString("driver");
-        truckId = bundle.getString("truckId");
-        truckNum = bundle.getString("truckNum");
-        platform = bundle.getString("platformId");
-        date = bundle.getString("date");
-        container = bundle.getString("containerNum");
-        charger = bundle.getString("charger");
-        address = bundle.getString("address");
-        client = bundle.getString("client");
-        city = bundle.getString("city");
-        price = bundle.getString("price");
-        state = bundle.getString("state");
-        phone = bundle.getString("phone");
-        schedule = bundle.getString("timeSchedule");
-        arrivalHour = bundle.getString("arrivalHour");
-        departureHour = bundle.getString("departureHour");
-        chargeDay = bundle.getString("chargingDay");
-        chargeHour = bundle.getString("chargingHour");
-        dischargeHour = bundle.getString("dischargingHour");
-        dischargeDay = bundle.getString("dischargingDay");
-        comments = bundle.getString("textArea");
-        id = bundle.getString("id");
-        month = bundle.getString("month");
         year = bundle.getString("year");
-
-        mDriver.setText(driver);
-        mTruckId.setText(truckId);
-        mTruckNum.setText(truckNum);
-        mPlatform.setText(platform);
-        mDate.setText(date);
-        mContainer.setText(container);
-        mCharger.setText(charger);
-        mClient.setText(client);
-        mAddress.setText(address);
-        mCity.setText(city);
-        mState.setText(state);
-        mPhone.setText(phone);
-        mSchedule.setText(schedule);
-        mArrivalHour.setText(arrivalHour);
-        mDepartureHour.setText(departureHour);
-        mChargeDay.setText(chargeDay);
-        mChargeHour.setText(chargeHour);
-        mDischargeHour.setText(dischargeHour);
-        mDischargeDay.setText(dischargeDay);
-        mComments.setText(comments);
-        mPrice.setText(price);
+        month = bundle.getString("month");
+        id = bundle.getString("id");
+        mTruckId.setText(bundle.getString("truckId"));
+        mTruckNum.setText(bundle.getString("truckNum"));
+        mPlatform.setText(bundle.getString("platformId"));
+        mDate.setText(bundle.getString("date"));
+        mContainer.setText(bundle.getString("containerNum"));
+        mDriver.setText(bundle.getString("driver"));
+        mCharger.setText(bundle.getString("charger"));
+        mClient.setText(bundle.getString("client"));
+        mAddress.setText(bundle.getString("address"));
+        mCity.setText(bundle.getString("city"));
+        mState.setText(bundle.getString("state"));
+        mPhone.setText(bundle.getString("phone"));
+        mSchedule.setText(bundle.getString("timeSchedule"));
+        mArrivalHour.setText(bundle.getString("arrivalHour"));
+        mDepartureHour.setText(bundle.getString("departureHour"));
+        mChargeDay.setText(bundle.getString("chargingDay"));
+        mChargeHour.setText(bundle.getString("chargingHour"));
+        mDischargeHour.setText(bundle.getString("dischargingHour"));
+        mDischargeDay.setText(bundle.getString("dischargingDay"));
+        mComments.setText(bundle.getString("textArea"));
+        mPrice.setText(bundle.getString("price"));
     }
 
     private void sendData() {
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("Orders").child(year+"-"+month);
-
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(userID).child("Orders").child(year+"-"+month);
         mSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(mDate.getText().toString().equals("") || mDriver.getText().toString().equals("") || mTruckNum.getText().toString().equals("") || mTruckId.getText().toString().equals("") ||
                         mPlatform.getText().toString().equals("") || mClient.getText().toString().equals("") || mCharger.getText().toString().equals("") || mAddress.getText().toString().equals("") ||
                         mSchedule.getText().toString().equals("") || mPhone.getText().toString().equals("") || mContainer.getText().toString().equals("") ||
@@ -155,8 +133,6 @@ public class EditOrderActivity extends AppCompatActivity {
                     mProgressLoad.setMessage("Guardando datos, por favor espere");
                     mProgressLoad.setCanceledOnTouchOutside(false);
                     mProgressLoad.show();
-
-                    //String newPrice = noa.calcDstPrices(mCity.getText().toString()); //recalc price
 
                     mDatabase.child(id).child("driver").setValue(mDriver.getText().toString());
                     mDatabase.child(id).child("truckId").setValue(mTruckId.getText().toString());

@@ -52,29 +52,21 @@ public class EditMaintenanceActivity extends AppCompatActivity {
 
     private void loadBundle() {
         Bundle bundle = getIntent().getExtras();
-        comments = bundle.getString("comments");
-        type = bundle.getString("type");
-        km = bundle.getString("km");
-        truckId = bundle.getString("truckId");
-        truckNum = bundle.getString("truckNum");
-        date = bundle.getString("date");
         id = bundle.getString("id");
-
-        mComments.setText(comments);
-        mType.setText(type);
-        mKm.setText(km);
-        mTruckId.setText(truckId);
-        mTruckNum.setText(truckNum);
-        mDate.setText(date);
+        mComments.setText(bundle.getString("comments"));
+        mType.setText(bundle.getString("type"));
+        mKm.setText(bundle.getString("km"));
+        mTruckId.setText(bundle.getString("truckId"));
+        mTruckNum.setText(bundle.getString("truckNum"));
+        mDate.setText(bundle.getString("date"));
     }
 
     private void sendData() {
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("Maintenance");
-
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(userID).child("Maintenance");
         mSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mProgressLoad = new ProgressDialog(EditMaintenanceActivity.this);
                 mProgressLoad.setTitle("Guardando");
                 mProgressLoad.setMessage("Guardando datos, por favor espere");
@@ -91,13 +83,12 @@ public class EditMaintenanceActivity extends AppCompatActivity {
                 if (mProgressLoad != null && mProgressLoad.isShowing()) {
                     mProgressLoad.dismiss();
                 }
-
-                Intent goToMainPage = new Intent(EditMaintenanceActivity.this, WatchMaintenanceActivity.class);
+                Intent goToMainPage = new Intent(EditMaintenanceActivity.this,
+                        WatchMaintenanceActivity.class);
                 goToMainPage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(goToMainPage);
             }
         });
-
     }
 
     //Close actual activity when back button is selected
