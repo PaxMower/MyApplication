@@ -46,6 +46,8 @@ public class SettingsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+//        mProgressLoad.dismiss();
+
         //mDatabase = mFirebaseDatabase.getReference();
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();

@@ -36,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+//        mProgressLoad.dismiss();
+
         //hide action bar
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){

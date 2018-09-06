@@ -51,6 +51,7 @@
     <string name="lat">Latitud</string>
     <string name="lon">Longitud</string>
     <string name="price">Precio</string>
+    <string name="add_client">Nombre del cliente</string>
 
 
     <string name="button_login">Acceder</string>

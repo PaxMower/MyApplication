@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/truck_id"
         android:textColor="@color/colorSecondaryDark"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_maintenance_date" />
 
     <EditText
         android:id="@+id/edit_maintenance_truckId"
@@ -58,7 +58,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="number"
         android:selectAllOnFocus="false"
@@ -79,7 +78,7 @@
         android:textColor="@color/colorSecondaryDark"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_maintenance_truckNum" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView13"
@@ -92,7 +91,7 @@
         android:textColor="@color/colorSecondaryDark"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_maintenance_date" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_maintenance_truckNum" />
 
     <TextView
         android:id="@+id/textView17"
@@ -162,7 +161,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="text"
         android:selectAllOnFocus="false"

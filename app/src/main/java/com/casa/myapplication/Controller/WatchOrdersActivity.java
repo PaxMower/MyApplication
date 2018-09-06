@@ -48,6 +48,8 @@ public class WatchOrdersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_orders);
 
+//        mProgressLoad.dismiss();
+
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<String, List<Order>>();

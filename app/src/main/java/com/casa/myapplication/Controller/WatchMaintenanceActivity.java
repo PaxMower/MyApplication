@@ -43,6 +43,8 @@ public class WatchMaintenanceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_maintenance);
 
+//        mProgressLoad.dismiss();
+
         //setting up the recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recyclerMaint);
         adapter = new MaintenanceAdapter(maintenanceList);

@@ -53,6 +53,7 @@ public class MaintenanceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintenance);
 
+//        mProgressLoad.dismiss();
         mProgressLoad = new ProgressDialog(MaintenanceActivity.this);
         mProgressLoad.setTitle("Cargando");
         mProgressLoad.setMessage("Cargando datos, por favor espere");

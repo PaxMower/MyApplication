@@ -67,6 +67,7 @@ public class PetrolActivity extends AppCompatActivity{
         userID = user.getUid();
 
         //load progres dialog
+//        mProgressLoad.dismiss();
         mProgressLoad = new ProgressDialog(PetrolActivity.this);
         mProgressLoad.setTitle("Guardando");
         mProgressLoad.setMessage("Guardando datos, por favor espere");

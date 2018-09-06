@@ -41,6 +41,8 @@ public class EditOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_order);
 
+//        mProgressLoad.dismiss();
+
         //Add back buttons on toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
@@ -68,8 +70,8 @@ public class EditOrderActivity extends AppCompatActivity {
         mDepartureHour = (EditText) findViewById(R.id.edit_expandable_departureTime);
         mChargeDay = (EditText) findViewById(R.id.edit_expandable_chargerDay);
         mChargeHour = (EditText) findViewById(R.id.edit_expandable_chargerHour);
-        mDischargeHour = (EditText) findViewById(R.id.edit_expandable_dischargerDay);
-        mDischargeDay = (EditText) findViewById(R.id.edit_expandable_dischargerHour);
+        mDischargeHour = (EditText) findViewById(R.id.edit_expandable_dischargerHour);
+        mDischargeDay = (EditText) findViewById(R.id.edit_expandable_dischargerDay);
         mComments = (EditText) findViewById(R.id.edit_expandable_textArea);
         mPrice = (TextView) findViewById(R.id.edit_expandable_price);
         mSend = (Button) findViewById(R.id.edit_expandable_button);

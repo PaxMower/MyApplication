@@ -92,6 +92,8 @@ public class NewOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order);
 
+//        mProgressLoad.dismiss();
+
         //Add back buttons on toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
@@ -730,6 +732,7 @@ public class NewOrderActivity extends AppCompatActivity {
                             }).show();
 
                 }else{
+
                     mProgressLoad.show();
                     mDatabase.push().setValue(newOrder).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

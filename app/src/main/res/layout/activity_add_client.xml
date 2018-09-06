@@ -14,242 +14,84 @@
 
 
         <TextView
-            android:id="@+id/client_name_1"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:gravity="left|fill_vertical"
-            android:paddingLeft="10dp"
-            android:text="@string/client"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/client_name"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/client_name_1"
-            tools:layout_editor_absoluteY="0dp" />
-
-
-        <TextView
-            android:id="@+id/client_Address1"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:gravity="left|fill_vertical"
-            android:paddingLeft="10dp"
-            android:text="@string/address"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/client_name_1" />
-
-        <EditText
-            android:id="@+id/client_address"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/client_Address1"
-            app:layout_constraintTop_toBottomOf="@+id/client_name" />
-
-
-        <TextView
-            android:id="@+id/client_phone1"
-            android:layout_width="120dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:gravity="left|fill_vertical"
-            android:paddingLeft="10dp"
+            android:id="@+id/textView87"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="@string/phone_number"
-            android:textSize="16sp"
+            android:textColor="@color/colorSecondaryDark"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/client_state_1" />
-
-        <EditText
-            android:id="@+id/client_phone"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/client_phone1"
             app:layout_constraintTop_toBottomOf="@+id/client_state" />
 
-
         <TextView
-            android:id="@+id/client_time_schedule_1"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:gravity="left|fill_vertical"
-            android:paddingLeft="10dp"
+            android:id="@+id/textView88"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="@string/hour_aperture"
-            android:textSize="16sp"
+            android:textColor="@color/colorSecondaryDark"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/client_phone1" />
-
-        <EditText
-            android:id="@+id/client_time_schedule"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/client_time_schedule_1"
             app:layout_constraintTop_toBottomOf="@+id/client_phone" />
 
         <TextView
-            android:id="@+id/client_city_1"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:gravity="left|fill_vertical"
-            android:paddingLeft="10dp"
-            android:text="@string/city"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/client_Address1" />
-
-        <EditText
-            android:id="@+id/client_city"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/client_city_1"
-            app:layout_constraintTop_toBottomOf="@+id/client_address" />
-
-        <TextView
-            android:id="@+id/client_state_1"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:gravity="left|fill_vertical"
-            android:paddingLeft="10dp"
-            android:text="@string/state"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/client_PC_1" />
-
-        <EditText
-            android:id="@+id/client_state"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/client_city_1"
-            app:layout_constraintTop_toBottomOf="@+id/client_PC" />
-
-        <TextView
-            android:id="@+id/client_PC_1"
-            android:layout_width="120dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:gravity="left|fill_vertical"
-            android:paddingLeft="10dp"
-            android:text="@string/PC"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/client_city_1" />
-
-        <EditText
-            android:id="@+id/client_PC"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/client_city_1"
-            app:layout_constraintTop_toBottomOf="@+id/client_city" />
-
-
-        <TextView
             android:id="@+id/client_lat1"
-            android:layout_width="80dp"
+            android:layout_width="64dp"
             android:layout_height="45dp"
-            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
             android:text="@string/lat"
-            android:textSize="16sp"
+            android:textColor="@color/colorSecondaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule_1" />
+            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule" />
 
         <EditText
             android:id="@+id/client_lat"
             android:layout_width="100dp"
             android:layout_height="45dp"
-            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="numberDecimal"
             android:focusable="false"
+            android:inputType="numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/client_lat1"
-            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule_1" />
+            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule" />
 
 
         <TextView
             android:id="@+id/client_lon_1"
-            android:layout_width="80dp"
+            android:layout_width="77dp"
             android:layout_height="45dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:focusable="false"
             android:gravity="left|fill_vertical"
             android:paddingLeft="10dp"
             android:text="@string/lon"
-            android:textSize="16sp"
+            android:textColor="@color/colorSecondaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/client_lat"
-            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule_1" />
+            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule" />
 
         <EditText
             android:id="@+id/client_lon"
-            android:layout_width="100dp"
+            android:layout_width="111dp"
             android:layout_height="45dp"
-            android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="numberDecimal"
             android:focusable="false"
+            android:inputType="numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/client_lon_1"
-            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule_1" />
+            app:layout_constraintTop_toBottomOf="@+id/client_time_schedule" />
 
 
         <Button
@@ -257,7 +99,7 @@
             android:layout_width="250dp"
             android:layout_height="48dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="0.38"
             android:background="@color/colorSecondary"
             android:focusable="false"
@@ -267,6 +109,181 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/client_lat1" />
+
+        <TextView
+            android:id="@+id/textView74"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/add_client"
+            android:textColor="@color/colorSecondaryDark"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView76"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/address"
+            android:textColor="@color/colorSecondaryDark"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_name" />
+
+        <TextView
+            android:id="@+id/textView84"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/city"
+            android:textColor="@color/colorSecondaryDark"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_address" />
+
+        <TextView
+            android:id="@+id/textView85"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/PC"
+            android:textColor="@color/colorSecondaryDark"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_city" />
+
+        <TextView
+            android:id="@+id/textView86"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/state"
+            android:textColor="@color/colorSecondaryDark"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/client_PC" />
+
+        <EditText
+            android:id="@+id/client_name"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView74" />
+
+        <EditText
+            android:id="@+id/client_address"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView76" />
+
+        <EditText
+            android:id="@+id/client_city"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView84" />
+
+        <EditText
+            android:id="@+id/client_PC"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="number"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView85" />
+
+        <EditText
+            android:id="@+id/client_state"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView86" />
+
+        <EditText
+            android:id="@+id/client_phone"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="phone"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView87" />
+
+        <EditText
+            android:id="@+id/client_time_schedule"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView88" />"
+            ndaryDark"
+            android:text="TextView
+             app:layout_constraintStart_toStartOf="pa />
 
 
     </android.support.constraint.ConstraintLayout>

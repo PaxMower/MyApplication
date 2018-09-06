@@ -43,6 +43,8 @@ public class WatchPetrolActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_petrol);
 
+//        mProgressLoad.dismiss();
+
         //setting up the recycler view
         recyclerView = (RecyclerView) findViewById(R.id.recyclerPetrl);
         adapter = new PetrolAdapter(petrolList);

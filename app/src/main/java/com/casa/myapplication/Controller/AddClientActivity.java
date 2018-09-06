@@ -52,6 +52,8 @@ public class AddClientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_client);
 
+//        mProgressLoad.dismiss();
+
         clientName = (EditText) findViewById(R.id.client_name);
         clientDir = (EditText) findViewById(R.id.client_address);
         clientPhone = (EditText) findViewById(R.id.client_phone);
