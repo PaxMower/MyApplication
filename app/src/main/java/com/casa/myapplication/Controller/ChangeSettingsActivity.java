@@ -31,8 +31,7 @@ public class ChangeSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_settings);
 
-        mProgressLoad.dismiss();
-
+//        mProgressLoad.dismiss();
         mNewTruckId = (TextView)findViewById(R.id.newTruckId);
         mNewTruckNum = (TextView)findViewById(R.id.newTruckNum);
         mNewPlatformId = (TextView)findViewById(R.id.newPlatformId);
