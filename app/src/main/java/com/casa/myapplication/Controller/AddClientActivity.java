@@ -69,7 +69,7 @@ public class AddClientActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true); //Establece si incluir la aplicación home en la toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Establece si el home se mopstrará como un UP
 
-        LoadPosition();
+        loadPosition();
 
         try {
             SendFirebaseData();
@@ -78,7 +78,7 @@ public class AddClientActivity extends AppCompatActivity {
         }
     }
 
-    private void LoadPosition() {
+    public void loadPosition() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Log.v("POSITION__", locationManager.toString());
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&

@@ -1,10 +1,12 @@
 package com.casa.myapplication.Controller;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -55,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         mPassField = (EditText) findViewById(R.id.passField);
         mButtonLog = (Button) findViewById(R.id.buttonLog);
 
+
         //auth users
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -83,22 +86,29 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void startLogin(){
+    private void startLogin() {
 
         String email = mMailField.getText().toString().trim();
         String pass = mPassField.getText().toString().trim();
 
-        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)){
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
 
-            Toast.makeText(LoginActivity.this, "Campos vacios", Toast.LENGTH_LONG).show();
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setTitle("Campos en blanco")
+                    .setMessage("No pueden haber campos en blanco para poder añadir nuevos clientes")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    }).show();
 
-        }else{
+        } else {
 
             mFirebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(!task.isSuccessful()){
-
+                    if (!task.isSuccessful()) {
+                        mProgressLoad.dismiss();
                         mProgressLoad.hide();
                         Toast.makeText(LoginActivity.this, "Error usuario y/o contraseña", Toast.LENGTH_LONG).show();
                     }
@@ -106,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             });
 
         }
-    }
 
+    }
 
 }

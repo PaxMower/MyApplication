@@ -83,7 +83,8 @@ public class NewOrderActivity extends AppCompatActivity {
     List<Client> clientsList = new ArrayList<Client>();//load clients with all their values
     List<Prices> distancesList = new ArrayList<Prices>();//load cities with all their distances from valencia port
 
-//    SharedPreferences sharedPref;
+
+    //    SharedPreferences sharedPref;
 
     @SuppressLint("WrongViewCast")
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -865,7 +866,21 @@ public class NewOrderActivity extends AppCompatActivity {
         }
         return solution;
     }
+    public List<Client> getClientsList() {
+        return clientsList;
+    }
 
+    public void setClientsList(List<Client> clientsList) {
+        this.clientsList = clientsList;
+    }
+
+    public List<Prices> getDistancesList() {
+        return distancesList;
+    }
+
+    public void setDistancesList(List<Prices> distancesList) {
+        this.distancesList = distancesList;
+    }
 //    @Override
 //    protected void onPause(){
 //        super.onPause();
